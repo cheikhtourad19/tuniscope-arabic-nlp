@@ -1,0 +1,45 @@
+# Local Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Notebook state
+.ipynb_checkpoints/
+
+# Secrets and operating-system files
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Local coding-agent instructions (not project documentation)
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+COPILOT.md
+CURSOR.md
+.agents/
+
+# Internal planning and agent-work documents
+ROADMAP.md
+PROJECT_CONTEXT.md
+AI_ASSISTANCE_LOG.md
+
+# Protected or generated project artifacts
+data/raw/
+data/interim/
+data/processed/
+artifacts/
+checkpoints/
+outputs/
+wandb/
+mlruns/
+
+# Keep data documentation and reproducibility artifacts tracked
+!data/README.md
+!data/manifests/
+!data/manifests/**
