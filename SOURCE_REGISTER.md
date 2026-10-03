@@ -4,13 +4,13 @@ Ce registre consigne l'accès aux corpus, leurs conditions d'utilisation et les 
 
 | Source | Usage | URL officielle | Accès vérifié | Licence et restrictions | Fichiers et étiquettes vérifiés | Décision |
 | --- | --- | --- | --- | --- | --- | --- |
-| MADAR Corpus-26 | Variété : MSA / TN / EG | https://camel.abudhabi.nyu.edu/madar-parallel-corpus/ | Oui — confirmation d'inscription reçue le 02/10/2026. | Usage interne de recherche et d'évaluation ; pas de droit de sous-licence, redistribution, cession ou modification du corpus. Archive brute privée et exclue de Git. | Oui — archive contrôlée ; les fichiers TSV MSA, Tunis, Sfax et Le Caire comportent `sentID.BTEC`, `split`, `lang` et `sent`. | Acquisition privée et audit autorisés. |
+| MADAR Corpus-26 | Variété : MSA / TN / EG | https://camel.abudhabi.nyu.edu/madar-parallel-corpus/ | Oui — inscription et acceptation des conditions confirmées par l'étudiant le 02/10/2026. | Usage interne de recherche et d'évaluation ; pas de droit de sous-licence, redistribution, cession ou modification du corpus. Archive brute privée et exclue de Git. | Oui — archive contrôlée ; les fichiers TSV MSA, Tunis, Sfax et Le Caire comportent `sentID.BTEC`, `split`, `lang` et `sent`. | Acquisition privée et audit autorisés. |
 | TSAC | Sentiment tunisien : POS / NEG | https://github.com/fbougares/TSAC | Oui — dépôt public et archive locale vérifiés le 02/10/2026. | Le dépôt affiche LGPL-3.0. Citer l'article source et confirmer les obligations avant toute publication de données dérivées ; corpus brut exclu de Git. | Oui — `train_pos.txt`, `train_neg.txt`, `test_pos.txt` et `test_neg.txt` sont présents ; archive ZIP intègre. | Acquisition privée et audit autorisés. |
 
 ## Acquisition et vérification de MADAR
 
 - Archive officielle : `MADAR.Parallel-Corpora-Public-Version1.1-25MAR2021.zip`.
-- URL de téléchargement : <https://camel.abudhabi.nyu.edu/madar-parallel-corpus/MADAR.Parallel-Corpora-Public-Version1.1-25MAR2021.zip>.
+- Accès : inscription et acceptation des conditions via la [page officielle](https://camel.abudhabi.nyu.edu/madar-parallel-corpus/) ; le lien reçu par courriel n'est pas publié dans le dépôt.
 - Stockage local exclu de Git : `data/raw/madar/`.
 - Copie extraite sans modification, exclue de Git : `data/raw/madar/original/MADAR.Parallel-Corpora-Public-Version1.1-25MAR2021/`.
 - SHA-256 de l'archive : `fc9c34638a9c8f8d5266d6431966b6ed933ad07b1e987514fa75f0b5eaf50a6a`.
