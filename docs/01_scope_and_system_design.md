@@ -1,84 +1,78 @@
-# TuniScope — Scope and System Design
+# TuniScope — Cadrage et architecture du système
 
-**Deliverable:** L01 Cadrage (working version)  
-**Owner:** one fifth-year computer-science engineering student  
-**Status:** scope fixed; no model has been trained and no result is claimed.
+**Livrable :** L01, version de travail.
 
-## 1. Purpose
+**Responsable :** un étudiant de cinquième année du cycle ingénieur en informatique.
 
-TuniScope evaluates practical NLP approaches for Arabic text when the language may be Modern Standard Arabic (MSA), Tunisian, Egyptian, Arabizi, or mixed with French/English. It is an experimental comparison under limited data and compute—not a system that claims to identify every Arabic dialect or make high-stakes decisions.
+**État :** périmètre défini ; aucun résultat expérimental n'est encore disponible.
 
-## 2. Research question
+## 1. Objectif
 
-**Main question:** Does LoRA adaptation of a small LLM improve Arabic variety identification and Tunisian sentiment classification compared with the same LLM before adaptation?
+TuniScope étudie l'identification de variétés de l'arabe et l'analyse de sentiment de textes tunisiens avec un budget limité en données et en calcul. L'étude compare des méthodes classiques, un encodeur Transformer adapté et un petit modèle génératif adapté par LoRA. Les limites liées à l'Arabizi et au mélange avec le français ou l'anglais sont examinées explicitement.
 
-The adapted LLM is compared with two distinct references: classical TF-IDF-based classifiers and a fine-tuned Arabic Transformer encoder. This comparison evaluates practical trade-offs; it does not isolate the causal effect of LoRA across identical architectures.
+## 2. Problématique
 
-## 3. Fixed core scope
+**Question principale :** l'adaptation LoRA d'un petit modèle de langue améliore-t-elle l'identification dialectale et la classification du sentiment tunisien par rapport au même modèle sans adaptation ?
 
-| Item | Decision |
+Les résultats seront également comparés à des classifieurs TF-IDF et à un encodeur finement ajusté. Cette comparaison mesure l'intérêt pratique de systèmes différents ; elle n'isole pas l'effet de LoRA à architecture constante.
+
+## 3. Périmètre
+
+| Élément | Décision de cadrage |
 | --- | --- |
-| Task 1 | Arabic variety identification: `MSA`, `TN`, `EG` |
-| Task 2 | Tunisian sentiment classification: `POS`, `NEG` |
-| Dialect data | MADAR: MSA, Tunis, Sfax, Cairo; Tunis and Sfax form the `TN` project class |
-| Sentiment data | TSAC; preserve its official test files and derive validation only from training data |
-| Classical models | Majority baseline, linguistic rules, TF-IDF word n-grams, TF-IDF character n-grams; light neural baseline if time allows |
-| Encoder | `CAMeL-Lab/bert-base-arabic-camelbert-mix`, with separate classification checkpoints accepted for the two tasks |
-| LLM | `Qwen/Qwen3-0.6B`, evaluated before and after one shared multitask LoRA adapter |
-| Retrieval | Small, cited RAG collection for methodology/protocol questions only |
-| Interface | Local text/CSV input, model comparison, source display, and JSON/CSV export |
+| Identification de variété | `MSA` (arabe standard moderne), `TN` (Tunis et Sfax) et `EG` (Le Caire). |
+| Sentiment tunisien | `POS` et `NEG` ; aucune classe neutre n'est supposée. |
+| Corpus | MADAR pour la variété ; TSAC pour le sentiment. |
+| Références classiques | Classe majoritaire, règles linguistiques, TF-IDF de mots et de caractères. |
+| Encodeur | CAMeLBERT Mix ; deux classifieurs distincts sont acceptés. |
+| Modèle génératif | Qwen3-0.6B, avant et après un adaptateur LoRA multitâche partagé. |
+| Recherche documentaire | Petit système RAG avec passages cités, limité aux questions sur la méthode et ses limites. |
+| Application | Saisie de texte, import CSV, comparaison des modèles et export des résultats. |
 
-The data audit will determine the final balanced training counts and exact grouped splits. It must not change the three dialect labels, the two sentiment labels, or the official TSAC test boundary without a recorded protocol revision.
+L'audit des données déterminera les effectifs exploitables. Toute modification des classes ou du test officiel TSAC exigera une révision écrite du protocole.
 
-## 4. System map
+## 4. Carte du système
 
 ```text
-Authorized raw corpora
-        │
-        ▼
-Data audit → manifests → cautious normalization → leakage checks
-        │
-        ├── Classical baselines ───┐
-        ├── Fine-tuned encoder ────┼──► shared evaluation ───► local application
-        └── Qwen3 + shared LoRA ───┘          │
-                                               ├── metrics and error analysis
-Verified method/source cards ─► RAG ──────────┘
+Corpus autorisés → audit → manifestes et partitions → normalisation tracée
+                                              │
+                       ┌──────────────────────┼──────────────────────┐
+                       ▼                      ▼                      ▼
+                Baselines classiques     Encodeur adapté       Qwen3 + LoRA
+                       └──────────────────────┼──────────────────────┘
+                                              ▼
+                              Évaluation commune et analyse d'erreurs
+                                              ▼
+                                      Application locale
+
+Fiches documentaires vérifiées → recherche RAG → réponses sur le protocole
 ```
 
-The RAG branch answers questions about the project method and its limits. It never provides evidence that a new text’s predicted sentiment or dialect is correct.
+Le RAG renseigne sur les sources et la méthode ; ses passages ne constituent pas une preuve de la justesse d'une prédiction de dialecte ou de sentiment.
 
-## 5. Data and evaluation protocol
+## 5. Principes expérimentaux
 
-- Preserve raw text and record all transformations in a separate normalized-text field.
-- Keep MADAR translations with the same `sentID.BTEC` in one split to prevent parallel-sentence leakage.
-- Keep TSAC’s official test split untouched; make validation only from the official training files.
-- Use validation—not the test set—for hyperparameters, normalization choices, prompts, thresholds, and checkpoint selection.
-- Report macro-F1 as the main classification metric, alongside per-class metrics and confusion matrices.
-- Run final stochastic configurations with seeds 13, 42, and 2026; report each score, mean, and standard deviation.
-- Record data manifest, data hash, configuration, model revision, hardware, runtime, memory, predictions, and errors for each meaningful experiment.
+- Conserver le texte brut et versionner les transformations appliquées au texte normalisé.
+- Regrouper les traductions MADAR d'un même `sentID.BTEC` dans une seule partition.
+- Préserver les fichiers de test officiels TSAC et créer la validation à partir de ses seuls fichiers d'entraînement.
+- Sélectionner paramètres, prompts, seuils et modèles sur validation ; réserver le test à l'évaluation finale.
+- Utiliser le macro-F1 comme métrique principale, accompagné des mesures par classe et de matrices de confusion.
+- Répéter les configurations finales stochastiques avec les graines 13, 42 et 2026, puis publier scores individuels, moyenne et écart-type.
+- Consigner manifestes, empreintes de données, configuration, révision des modèles, matériel, durée, prédictions et erreurs.
 
-## 6. Constraints and non-goals
+## 6. Contraintes et exclusions
 
-| Constraint | Consequence |
-| --- | --- |
-| One student, 14 weeks | Prioritize the required Silver core before any extension. |
-| Models under 1B parameters | No large-model training from scratch. |
-| No paid APIs | All inference and training use local or free notebook resources. |
-| MADAR licence restrictions | Raw MADAR data is private and never committed or redistributed. |
-| Apple Silicon + Kaggle CUDA | One portable codebase; device selection belongs in configuration/runtime detection. |
+Le travail est réalisé seul sur quatorze semaines. Les modèles entraînés restent sous un milliard de paramètres ; aucune API payante n'est requise. Le développement se fait sur Apple Silicon et les entraînements plus lourds sur GPU CUDA, avec un code commun. Les données MADAR sont conservées hors du dépôt selon leurs conditions d'utilisation.
 
-Out of scope until the required core is complete: all-dialect Arabic coverage, audio, commercial deployment, autonomous agents, NER, translation, active learning, and learned Arabizi transliteration.
+La couverture de tous les dialectes, l'audio, le déploiement commercial, l'entraînement d'un grand modèle à partir de zéro, le NER, la traduction et l'apprentissage actif sont exclus du socle. Une extension éventuelle ne sera étudiée qu'après validation du socle requis.
 
-## 7. Evidence expected at J1
+## 7. Preuves attendues au jalon J1
 
-- This scope and system-design document.
-- A source register with access, licences, and dataset provenance.
-- A data card, annotation guide, canonical schema, and leakage-safe split plan.
-- A realistic solo work plan and time budget.
+Le dossier de cadrage doit être accompagné d'un registre des sources et licences, d'une carte des données, d'un guide d'annotation, d'un schéma commun, d'un protocole de partitionnement et d'un plan de travail individuel réaliste. Le [protocole des données](02_data_protocol.md) précise la méthode retenue ; les cartes remplies et les manifestes restent à produire après l'audit.
 
-## References
+## Sources de référence
 
-- CAMeL Lab. [MADAR Parallel Corpus](https://camel.abudhabi.nyu.edu/madar-parallel-corpus/).
-- Bougares et al. [TSAC: Tunisian Sentiment Analysis Corpus](https://github.com/fbougares/TSAC).
-- CAMeL Lab. [CAMeLBERT Mix](https://huggingface.co/CAMeL-Lab/bert-base-arabic-camelbert-mix).
-- Qwen Team. [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
+- CAMeL Lab, [MADAR Parallel Corpus](https://camel.abudhabi.nyu.edu/madar-parallel-corpus/).
+- Bougares et collaborateurs, [TSAC](https://github.com/fbougares/TSAC).
+- CAMeL Lab, [CAMeLBERT Mix](https://huggingface.co/CAMeL-Lab/bert-base-arabic-camelbert-mix).
+- Équipe Qwen, [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).

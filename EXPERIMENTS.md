@@ -1,22 +1,22 @@
-# TuniScope — Experiment Log
+# TuniScope — Journal des expériences
 
-No experiments have been run.
+Aucune expérience n'a encore été exécutée.
 
-Use one entry per meaningful experiment.
+Créer une entrée pour chaque expérience significative.
 
-## Template
+## Modèle d'entrée
 
 ```markdown
-## YYYY-MM-DD — short experiment name
+## AAAA-MM-JJ — nom court de l'expérience
 
-- Git commit:
-- Objective:
-- Dataset and manifest version:
-- Split seed:
-- Model and revision:
-- Configuration file:
-- Hardware and environment:
-- Result summary:
-- Error analysis / observations:
-- Decision or next action:
+- Commit Git :
+- Objectif :
+- Corpus et version du manifeste :
+- Graine du partitionnement :
+- Modèle et révision :
+- Fichier de configuration :
+- Matériel et environnement :
+- Résumé des résultats :
+- Erreurs et observations :
+- Décision ou prochaine action :
 ```
