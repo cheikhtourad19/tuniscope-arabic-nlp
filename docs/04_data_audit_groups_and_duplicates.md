@@ -55,6 +55,7 @@ Ces recouvrements peuvent rendre un futur score trop optimiste si des copies res
 
 - Examiner de manière privée les quatre chaînes MADAR traversant les partitions, les 13 groupes TSAC à labels contradictoires et les recouvrements train–test ; ne publier aucun commentaire protégé dans Git.
 - Rechercher les quasi-doublons TSAC avec une méthode et un seuil documentés, puis vérifier les candidats avant toute exclusion.
+- Un [premier dépistage train–test](05_data_audit_near_duplicate_screen.md) a depuis produit des candidats et des index de revue privés ; il ne couvre pas encore les quasi-doublons internes ni leur validation humaine.
 - Choisir et tracer une politique de décontamination du train sans modifier le test officiel ; conserver des résultats officiels et, si nécessaire, des résultats décontaminés clairement séparés.
 - Après cette revue, établir les effectifs exploitables, les manifestes de partitions et les cartes de données MADAR/TSAC.
 

@@ -4,7 +4,7 @@
 
 **Version :** 0.1, 3 octobre 2026.
 
-**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md), puis les groupes MADAR et doublons exacts TSAC dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). La revue des cas, les quasi-doublons, les cartes de données remplies et les manifestes restent à produire.
+**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md), puis les groupes MADAR et doublons exacts TSAC dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). Un [dépistage train–test des quasi-doublons](05_data_audit_near_duplicate_screen.md) a produit des candidats non confirmés. La revue des cas, les quasi-doublons internes, les cartes de données remplies et les manifestes restent à produire.
 
 ## 1. Objectif et sources
 

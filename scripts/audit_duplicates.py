@@ -5,10 +5,13 @@ Prints aggregate counts only: no protected corpus text, text hashes, or row IDs.
 No cleaning, partitioning, or near-duplicate decisions are made here.
 """
 
+import argparse
 from collections import Counter, defaultdict
+import csv
 import json
+from pathlib import Path
 
-from audit_structure import MADAR_DIR, TSAC_DIR, decoded_lines
+from audit_structure import ROOT, MADAR_DIR, TSAC_DIR, decoded_lines
 
 
 MADAR_CITIES = ("MSA", "Tunis", "Sfax", "Cairo")
@@ -20,7 +23,7 @@ CORPUS26_SPLITS = {
 }
 
 
-def madar_audit():
+def madar_audit(review_rows=None):
     # Keys and sentences remain only in memory while this script runs.
     all_id_splits = defaultdict(set)
     scoped = defaultdict(lambda: defaultdict(list))
@@ -43,7 +46,9 @@ def madar_audit():
             all_id_splits[sentence_id].add(source_split)
             if source_split in CORPUS26_SPLITS:
                 scoped[sentence_id][city].append(source_split)
-                scoped_texts[sentence].append((sentence_id, CORPUS26_SPLITS[source_split]))
+                scoped_texts[sentence].append(
+                    (sentence_id, CORPUS26_SPLITS[source_split], city, line_number)
+                )
                 city_rows[city] += 1
 
     split_counts = Counter()
@@ -69,8 +74,17 @@ def madar_audit():
     # potential lexical leakage issue, even if the ID-based grouping is sound.
     cross_split_text_groups = [
         rows for rows in scoped_texts.values()
-        if len({split for _, split in rows}) > 1
+        if len({row[1] for row in rows}) > 1
     ]
+    if review_rows is not None:
+        for rows in cross_split_text_groups:
+            first = rows[0]
+            other = next(row for row in rows if row[1] != first[1])
+            review_rows.append((
+                "MADAR", "exact_text_cross_split",
+                f"MADAR.corpus.{first[2]}.tsv", first[3], first[1], first[2],
+                f"MADAR.corpus.{other[2]}.tsv", other[3], other[1], other[2], len(rows),
+            ))
     return {
         "corpus26_rows_by_city": dict(sorted(city_rows.items())),
         "unexpected_language_rows_by_city": {
@@ -99,7 +113,7 @@ def group_summary(groups):
     }
 
 
-def tsac_audit():
+def tsac_audit(review_rows=None):
     by_text = defaultdict(list)
     by_file = defaultdict(lambda: defaultdict(list))
     by_trimmed_text = defaultdict(list)
@@ -153,6 +167,23 @@ def tsac_audit():
     conflict_split_presence = Counter(
         "+".join(sorted({row[2] for row in rows})) for rows in label_conflicts
     )
+    if review_rows is not None:
+        for rows in cross_split:
+            first = next(row for row in rows if row[2] == "train")
+            other = next(row for row in rows if row[2] == "test")
+            review_rows.append((
+                "TSAC", "exact_train_test_overlap",
+                first[0], first[1], first[2], first[3],
+                other[0], other[1], other[2], other[3], len(rows),
+            ))
+        for rows in label_conflicts:
+            first = next(row for row in rows if row[3] == "POS")
+            other = next(row for row in rows if row[3] == "NEG")
+            review_rows.append((
+                "TSAC", "exact_pos_neg_conflict",
+                first[0], first[1], first[2], first[3],
+                other[0], other[1], other[2], other[3], len(rows),
+            ))
     return {
         "nonempty_rows_by_file": dict(sorted(rows_by_file.items())),
         "unique_exact_texts": len(by_text),
@@ -178,8 +209,41 @@ def tsac_audit():
     }
 
 
+def write_private_review_index(path, review_rows):
+    allowed_dir = (ROOT / "data/interim").resolve()
+    target = path.resolve()
+    if target == allowed_dir or allowed_dir not in target.parents:
+        raise ValueError("Review index must be inside Git-ignored data/interim/")
+    if target.exists():
+        raise FileExistsError(f"Review index already exists: {target}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.writer(stream, delimiter="\t")
+        writer.writerow((
+            "case_id", "source", "category", "file_a", "line_a", "split_a", "label_a",
+            "file_b", "line_b", "split_b", "label_b", "group_occurrences",
+        ))
+        for case_id, row in enumerate(review_rows, start=1):
+            writer.writerow((case_id, *row))
+
+
 def main():
-    print(json.dumps({"madar": madar_audit(), "tsac": tsac_audit()}, indent=2, sort_keys=True))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--review-index", type=Path,
+        help="Write a TSV of file/line references under Git-ignored data/interim/",
+    )
+    args = parser.parse_args()
+    review_rows = [] if args.review_index is not None else None
+    report = {
+        "madar": madar_audit(review_rows),
+        "tsac": tsac_audit(review_rows),
+    }
+    if args.review_index is not None:
+        write_private_review_index(args.review_index, review_rows)
+        report["private_review_index"] = str(args.review_index.resolve().relative_to(ROOT))
+        report["private_review_cases"] = len(review_rows)
+    print(json.dumps(report, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
