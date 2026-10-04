@@ -4,7 +4,7 @@
 
 **Version :** 0.1, 3 octobre 2026.
 
-**État :** les archives et les fichiers attendus ont été vérifiés ; les contrôles de doublons, les cartes de données remplies et les manifestes restent à produire.
+**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md) ; les contrôles de doublons, les cartes de données remplies et les manifestes restent à produire.
 
 ## 1. Objectif et sources
 
