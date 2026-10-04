@@ -60,4 +60,4 @@ Le train officiel contient donc 13 665 lignes non vides et le test officiel 3 40
 
 ## État et suite
 
-Les étapes d'intégrité et de structure sont vérifiées. Elles ne prouvent **pas** encore l'absence de doublons ni de fuite entre partitions. La prochaine passe contrôlera les identifiants MADAR, les doublons exacts et proches de TSAC, les conflits de labels et les recouvrements train–test. Les décisions de nettoyage, les manifestes et les cartes de données remplies viendront ensuite. L02 et L03 restent incomplets.
+Les étapes d'intégrité et de structure sont vérifiées. Elles ne prouvent **pas** encore l'absence de doublons ni de fuite entre partitions. Les contrôles des identifiants MADAR, des doublons exacts TSAC, des conflits de labels et des recouvrements train–test sont documentés dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). La revue des cas, les quasi-doublons, les décisions de nettoyage, les manifestes et les cartes de données remplies restent à réaliser. L02 et L03 demeurent incomplets.
