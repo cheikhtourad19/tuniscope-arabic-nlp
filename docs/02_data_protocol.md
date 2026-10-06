@@ -2,9 +2,9 @@
 
 **Livrable :** L02, protocole préalable à l'audit et à l'apprentissage.
 
-**Version :** 0.1, 3 octobre 2026.
+**Version :** 0.2, 6 octobre 2026.
 
-**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md), puis les groupes MADAR et doublons exacts TSAC dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). Un [dépistage train–test des quasi-doublons](05_data_audit_near_duplicate_screen.md) a produit des candidats non confirmés. La revue des cas, les quasi-doublons internes, les cartes de données remplies et les manifestes restent à produire.
+**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md), puis les groupes MADAR et doublons exacts TSAC dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). Un [dépistage train–test des quasi-doublons](05_data_audit_near_duplicate_screen.md) a produit des candidats. Une [revue humaine et politique de nettoyage proposée](06_revue_humaine_et_politique_nettoyage.md) a été enregistrée ; les quasi-doublons internes, les cartes de données remplies et les manifestes restent à produire.
 
 ## 1. Objectif et sources
 
@@ -32,7 +32,7 @@ Une observation n'obtient que l'étiquette justifiée par sa source. Les comment
 | `source_id` | MADAR : `sentID.BTEC` ; TSAC : nom du fichier et numéro de ligne d'origine. |
 | `group_id` | Famille à maintenir dans une même partition : phrase source MADAR ou groupe de doublons/variantes identifiable dans TSAC. |
 | `split` | `train`, `validation`, `test` ou `challenge`. |
-| `annotation_status` | Provenance de l'étiquette : `original`, `double_annotated`, `adjudicated`, `ambiguous` ou `synthetic`. |
+| `annotation_status` | Provenance de l'étiquette : `original`, `single_reviewed`, `double_annotated`, `adjudicated`, `ambiguous` ou `synthetic`. `single_reviewed` désigne une décision d'une seule personne et ne prouve pas un accord indépendant. |
 | `license` | Référence aux conditions d'utilisation de la source. |
 | `normalization_version` | Identifiant du prétraitement ; `raw-v0` tant qu'aucune transformation n'est appliquée. |
 
@@ -75,7 +75,7 @@ Les étiquettes existantes de MADAR et TSAC gardent le statut `original`. Pour u
 - Une variété `MSA`, `TN` ou `EG` n'est retenue que si des indices linguistiques suffisants permettent d'identifier la variété dominante. Sinon, le cas est `indeterminate` dans le jeu de défi.
 - Les jugements initiaux, les désaccords et l'arbitrage sont conservés séparément. L'incertitude d'annotation est distincte de l'abstention du système.
 
-Le cahier des charges prévoit une calibration indépendante de 50 exemples, puis une double annotation d'au moins 150 avis et 100 phrases dialectales. Le projet étant individuel, un second jugement humain compétent devra être obtenu pour déclarer un accord interannotateurs. Une seconde passe du même étudiant ou une proposition d'IA ne sera pas présentée comme une annotation humaine indépendante. Si ce dispositif n'est pas réalisable, la limite et tout écart au cahier seront explicités au responsable pédagogique et dans le rapport ; aucun coefficient kappa ne sera inventé.
+Le cahier des charges prévoit une calibration indépendante de 50 exemples, puis une double annotation d'au moins 150 avis et 100 phrases dialectales. Comme nous réalisons ce projet seuls, nous devrons obtenir un second jugement humain compétent pour déclarer un accord interannotateurs. Si nous annotons à nouveau les mêmes exemples, cette seconde passe ne constituera pas une annotation humaine indépendante ; il en va de même pour une proposition d'IA. Si ce dispositif n'est pas réalisable, nous expliciterons la limite et tout écart au cahier des charges auprès du responsable pédagogique et dans le rapport ; nous n'inventerons aucun coefficient kappa.
 
 ## 7. Carte de données et preuves à produire
 

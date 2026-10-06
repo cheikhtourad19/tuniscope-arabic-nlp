@@ -2,7 +2,7 @@
 
 **Livrable :** L01, version de travail.
 
-**Responsable :** un étudiant de cinquième année du cycle ingénieur en informatique.
+**Réalisation :** nous menons ce projet individuellement en cinquième année du cycle ingénieur en informatique.
 
 **État :** périmètre défini ; aucun résultat expérimental n'est encore disponible.
 
