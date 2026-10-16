@@ -1,0 +1,11 @@
+{
+  "madar_excluded_train_rows": 12,
+  "madar_rows": 7988,
+  "source_test_modified": false,
+  "split_seed": 42,
+  "tsac_excluded_train_rows": 1842,
+  "tsac_exclusion_ledger_sha256": "62fceba78f1af1c7988bb6c142cb48f77b60e819e09334b8efd5047bb5024e40",
+  "tsac_rows": 15227,
+  "tsac_validation_fraction_target": 0.15,
+  "version": "v1"
+}

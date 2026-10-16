@@ -2,9 +2,9 @@
 
 **Livrable :** L02, protocole préalable à l'audit et à l'apprentissage.
 
-**Version :** 0.2, 6 octobre 2026.
+**Version :** 0.3, 16 octobre 2026.
 
-**État :** l'intégrité et la structure des fichiers ont été vérifiées dans l'[audit initial](03_data_audit_structure.md), puis les groupes MADAR et doublons exacts TSAC dans l'[audit suivant](04_data_audit_groups_and_duplicates.md). Un [dépistage train–test des quasi-doublons](05_data_audit_near_duplicate_screen.md) a produit des candidats. Une [revue humaine et politique de nettoyage proposée](06_revue_humaine_et_politique_nettoyage.md) a été enregistrée ; les quasi-doublons internes, les cartes de données remplies et les manifestes restent à produire.
+**État :** les audits des sources et doublons, la revue humaine, la règle de regroupement TSAC et les [manifestes v1](11_manifestes_donnees_v1.md) ont été vérifiés. Les premières cartes de données [TSAC](12_carte_donnees_tsac.md) et [MADAR](13_carte_donnees_madar.md) sont rédigées. Le chargement des textes dans une copie de travail, l'analyse par écriture/langue et la finalisation des cartes restent à faire.
 
 ## 1. Objectif et sources
 
@@ -92,7 +92,7 @@ Une carte distincte sera remplie pour MADAR et TSAC après l'audit. Elle indique
 | Annotation | Provenance des étiquettes, guide, arbitrage et accord si mesuré indépendamment. |
 | Limites | Domaine, ancienneté, variété linguistique, métadonnées absentes et biais connus. |
 
-Le passage à l'apprentissage exige un manifeste versionné avec identifiants stables, `group_id`, étiquettes, partitions et empreintes des sources ; un contrôle démontrant l'absence de groupe MADAR entre partitions ; une preuve que le test TSAC officiel est préservé ; et un compte rendu des exclusions. Ces livrables sont **à produire** : le présent document ne certifie pas encore que les données sont prêtes pour l'entraînement.
+Les manifestes v1 apportent les identifiants stables, `group_id`, étiquettes, partitions et empreintes des sources ; les contrôles démontrent que les groupes MADAR restent entiers, que le test TSAC officiel est préservé et que les exclusions sont comptées. Le chargement des textes selon ces manifestes, les contrôles de composition et la finalisation des cartes manquent encore : le présent document ne certifie pas que les données sont prêtes pour l'entraînement.
 
 ## Références
 
