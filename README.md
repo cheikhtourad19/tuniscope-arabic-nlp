@@ -67,3 +67,10 @@ sh scripts/project_uv.sh run --locked python scripts/check_environment.py
 ```
 
 This check requires no protected dataset. `requirements.txt` is a generated export of the lockfile for pip-based environments.
+
+## Reproducible notebooks
+
+- [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.
+- [Initial classical baselines](notebooks/02_baselines_classiques.ipynb): majority and word/character/combined TF-IDF classification using the shared training scripts.
+
+Both contain French explanations and safe defaults using fictitious data. Real data access and training require explicit opt-in and authorized local sources. [Verification notes](docs/31_notebooks_reproductibles.md) distinguish completed sequential Python checks from pending native Jupyter and Kaggle validation.

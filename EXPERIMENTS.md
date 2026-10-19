@@ -4,6 +4,19 @@ Les premiers entraînements classiques ont été exécutés le 17 octobre 2026. 
 
 Créer une entrée pour chaque expérience significative.
 
+## 2026-10-19 — Vérification séquentielle des premiers notebooks
+
+- Objectif : vérifier les nouveaux points d'entrée L03/L04/L12, pas améliorer les scores. Deux notebooks sans sorties réutilisent le chargeur, la normalisation, les configurations et le runner TF-IDF existants. Aucun nouvel algorithme ou réglage.
+- Code : `scripts/notebook_support.py`, `scripts/check_notebooks.py`, `tests/test_notebooks.py` ; procédure et commandes dans `docs/31_notebooks_reproductibles.md`. Commit de départ inchangé `384f8a5aba14650b75ebd7a47a558433b56553ce`, état non commité.
+- Vérification fictive : deux notebooks exécutés cellule par cellule dans l'ordre ; tableau inventé 4 × 17 et contrôle scikit-learn réussis, sans lecture des corpus. C'est une vérification séquentielle Python, pas une exécution native Jupyter.
+- Vérification réelle données : v2 explicitement, TSAC 10 053/1 774 train/validation (11 827 × 17 en RAM), MADAR 6 388/800 (7 188 × 17), zéro groupe partagé ; normalisation modifie 917/144 et 18/3 lignes respectivement. Bruts conservés, aucune ligne test sélectionnée, aucun fichier de textes préparés écrit.
+- Trois smoke runs réels, graine 42, 100 lignes train et 100 validation par tâche ; configurations figées `baselines_grouped_v2.json`, `baselines_words_v2.json`, `baselines_combined_v2.json`. Mac ARM64, CPU, un thread par runner, Python 3.12.15 et dépendances inchangées de `uv.lock`. Les runs mots/combinaison ont été lancés en parallèle : leurs durées ne constituent pas une comparaison contrôlée de coût.
+- Dossiers privés : `outputs/baselines/notebooks/a0b7f297741c4a57b2b67a43ea4274bb_characters_smoke/`, `.../1b6923e152c6474eabf226b994971498_words_smoke/`, `.../11872d5cc4dd45a78926b0c2764a0d8b_combined_smoke/`. Chaque `results.json` enregistre paramètres, empreintes, environnement, effectifs, ressources et références des sauvegardes.
+- Macro-F1 **smoke uniquement**, brut/normalisé identiques : caractères TSAC 0,703325 et MADAR 0,449464 ; mots 0,546410 et 0,537970 ; combinaison 0,712644 et 0,534202. Majorités communes 0,342105 et 0,222222. Ces petits scores ne remplacent pas les résultats complets historiques ni le choix de référence.
+- Chaque série de six résultats a réussi `verify_baseline_run.py` : alignement, rechargement, prédictions et métriques recalculées. 93 tests passent, dont neuf nouveaux contrôles fictifs. Le mode full est arrêté si le smoke échoue ; un nouveau full via notebook n'a pas été exécuté.
+- Incident initial : destination de la passerelle refusée car hors du répertoire autorisé `outputs/baselines/`, avant entraînement ; destination corrigée sans modifier le runner historique, puis trois smoke runs réussis. Aucun résultat échoué présenté comme validé.
+- Décision : conserver les deux notebooks comme premiers supports exécutables commentés, sans sorties partagées. Jupyter natif, Kaggle/chemins privés et reproductibilité indépendante restent non vérifiés. Aucun téléchargement neuronal, modification des sources/labels/manifestes ou évaluation test ; livrables globaux toujours partiels.
+
 ## 2026-10-19 — Ajout lexical et négation au modèle caractères
 
 - Hypothèse et contrastes : tester si les voix du lexique aident le meilleur modèle caractères, malgré la faiblesse du lexique seul. Contraste principal caractères+lexique versus contrôle pour TSAC/MADAR ; contraste secondaire TSAC avec/sans négation dans le même bloc lexical. Contributions partielles L04/L07/L10/L12.
