@@ -1,0 +1,25 @@
+{
+  "version": "baseline-combined-v2",
+  "manifest_version": "v2",
+  "seed": 42,
+  "corpora": ["tsac", "madar"],
+  "labels": {"tsac": ["NEG", "POS"], "madar": ["MSA", "TN", "EG"]},
+  "variants": ["raw-v0", "norm-nfc-space-v1"],
+  "tfidf": {
+    "analyzer": "word_char",
+    "word": {
+      "analyzer": "word", "ngram_range": [1, 2], "lowercase": false,
+      "token_pattern": "(?u)\\b\\w+\\b",
+      "min_df": 2, "sublinear_tf": true, "norm": "l2", "dtype": "float64"
+    },
+    "char": {
+      "analyzer": "char", "ngram_range": [3, 5], "lowercase": false,
+      "min_df": 2, "sublinear_tf": true, "norm": "l2", "dtype": "float64"
+    },
+    "block_weights": {"word": 1.0, "char": 1.0},
+    "global_norm": "l2"
+  },
+  "classifier": {"C": 1.0, "class_weight": null, "max_iter": 1000, "solver": "lbfgs"},
+  "threads": 1,
+  "smoke_rows_per_partition": 100
+}

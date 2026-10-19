@@ -1,0 +1,171 @@
+{
+  "comparison_script_sha256": "133b577cc278e82d5777b0977a3f6251856d335bf93b089c371e74572b85085a",
+  "comparisons": [
+    {
+      "both_wrong": 85,
+      "character_correct_word_wrong": 142,
+      "character_errors": 126,
+      "character_macro_f1": 0.9288980669985036,
+      "corpus": "tsac",
+      "delta_word_minus_character": -0.056875414228163335,
+      "different_predictions": 183,
+      "validation_rows": 1774,
+      "variant": "raw-v0",
+      "word_correct_character_wrong": 41,
+      "word_errors": 227,
+      "word_macro_f1": 0.8720226527703403,
+      "word_zero_feature_train_rows": 744,
+      "word_zero_feature_validation_rows": 172
+    },
+    {
+      "both_wrong": 85,
+      "character_correct_word_wrong": 142,
+      "character_errors": 126,
+      "character_macro_f1": 0.9288927289408286,
+      "corpus": "tsac",
+      "delta_word_minus_character": -0.05687007617048834,
+      "different_predictions": 183,
+      "validation_rows": 1774,
+      "variant": "norm-nfc-space-v1",
+      "word_correct_character_wrong": 41,
+      "word_errors": 227,
+      "word_macro_f1": 0.8720226527703403,
+      "word_zero_feature_train_rows": 744,
+      "word_zero_feature_validation_rows": 172
+    },
+    {
+      "both_wrong": 24,
+      "character_correct_word_wrong": 38,
+      "character_errors": 39,
+      "character_macro_f1": 0.9492441926133318,
+      "corpus": "madar",
+      "delta_word_minus_character": -0.03216902480512618,
+      "different_predictions": 55,
+      "validation_rows": 800,
+      "variant": "raw-v0",
+      "word_correct_character_wrong": 15,
+      "word_errors": 62,
+      "word_macro_f1": 0.9170751678082056,
+      "word_zero_feature_train_rows": 46,
+      "word_zero_feature_validation_rows": 11
+    },
+    {
+      "both_wrong": 24,
+      "character_correct_word_wrong": 38,
+      "character_errors": 39,
+      "character_macro_f1": 0.9492441926133318,
+      "corpus": "madar",
+      "delta_word_minus_character": -0.03216902480512618,
+      "different_predictions": 55,
+      "validation_rows": 800,
+      "variant": "norm-nfc-space-v1",
+      "word_correct_character_wrong": 15,
+      "word_errors": 62,
+      "word_macro_f1": 0.9170751678082056,
+      "word_zero_feature_train_rows": 46,
+      "word_zero_feature_validation_rows": 11
+    }
+  ],
+  "configs": {
+    "character": {
+      "classifier": {
+        "C": 1.0,
+        "class_weight": null,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      },
+      "corpora": [
+        "tsac",
+        "madar"
+      ],
+      "labels": {
+        "madar": [
+          "MSA",
+          "TN",
+          "EG"
+        ],
+        "tsac": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "manifest_version": "v2",
+      "seed": 42,
+      "smoke_rows_per_partition": 100,
+      "tfidf": {
+        "analyzer": "char",
+        "dtype": "float64",
+        "lowercase": false,
+        "min_df": 2,
+        "ngram_range": [
+          3,
+          5
+        ],
+        "norm": "l2",
+        "sublinear_tf": true
+      },
+      "threads": 1,
+      "variants": [
+        "raw-v0",
+        "norm-nfc-space-v1"
+      ],
+      "version": "baseline-grouped-v2"
+    },
+    "word": {
+      "classifier": {
+        "C": 1.0,
+        "class_weight": null,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      },
+      "corpora": [
+        "tsac",
+        "madar"
+      ],
+      "labels": {
+        "madar": [
+          "MSA",
+          "TN",
+          "EG"
+        ],
+        "tsac": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "manifest_version": "v2",
+      "seed": 42,
+      "smoke_rows_per_partition": 100,
+      "tfidf": {
+        "analyzer": "word",
+        "dtype": "float64",
+        "lowercase": false,
+        "min_df": 2,
+        "ngram_range": [
+          1,
+          2
+        ],
+        "norm": "l2",
+        "sublinear_tf": true,
+        "token_pattern": "(?u)\\b\\w+\\b"
+      },
+      "threads": 1,
+      "variants": [
+        "raw-v0",
+        "norm-nfc-space-v1"
+      ],
+      "version": "baseline-words-v2"
+    }
+  },
+  "manifest_version": "v2",
+  "manifests_sha256": {
+    "madar": "3d81826b70437aa37a286d2d8fded745b01295165395b26cf868f91f90204474",
+    "tsac": "ac8a453de6115bea6b51255fe7badc1eab72e2649e0056a1ad918aa963730fa7"
+  },
+  "run_results_sha256": {
+    "character": "86965f1bb775fa89307458a0bcb804efa498f261297dec91b3f4a065b0ffcbba",
+    "word": "4b4d379983563c98d5cd7f788dfde03144525ceb8bcd15e4c930912529e7beda"
+  },
+  "test_loaded": false,
+  "uv_lock_sha256": "629a0344148d488e685dd6c70bebfa31a3a638e8c136684d833067e7639e7050"
+}

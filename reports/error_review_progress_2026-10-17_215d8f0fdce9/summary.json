@@ -1,0 +1,58 @@
+{
+  "recorded_at_utc": "2026-10-17T19:25:24.058Z",
+  "analysis_complete": false,
+  "all_label_opinions_recorded": true,
+  "inferred_fields": 0,
+  "workbook_modified": false,
+  "labels_or_predictions_changed": false,
+  "provenance": {
+    "workbook_sha256": "215d8f0fdce95cc9cb77e803fce92e98ac7a636e2dc5fc2d933ed4e2412a820e",
+    "payload_sha256": "127588b21b37c7ac22adda0cf9491226972e19d858a62a90d4338b9f227b2e91",
+    "index_sha256": "6c554f50c89061e86055937c701a8e65abbe4c1e97f9eded784ae16029415f61",
+    "source_run_results_sha256": "86965f1bb775fa89307458a0bcb804efa498f261297dec91b3f4a065b0ffcbba",
+    "importer_sha256": "b5794505a3bb51265c9a3c442fc8224c10182964b6a3885fa7ea952e056b1508",
+    "snapshot_sha256": "67ef3159eb4b52566422eded8b44cae93cd944597b9f04e0c0c066275ca1429d",
+    "report_generator_sha256": "9e383d117c70e7d66fe9ed0ef028c6d98ef3502d8f1e2fedd5fe82845ee132ed"
+  },
+  "summary": {
+    "tsac": {
+      "total_cases": 30,
+      "label_opinions_filled": 30,
+      "categories_filled": 5,
+      "hypotheses_filled": 0,
+      "complete_cases": 0,
+      "partial_cases": 30,
+      "pending_cases": 0,
+      "label_opinion_counts": {
+        "Label plausible": 23,
+        "Non interprétable": 1,
+        "Incertain": 2,
+        "Label discutable": 4
+      },
+      "category_counts": {
+        "Émoji / symbole": 1,
+        "Manque de contexte": 1,
+        "Avis mixte / ambigu": 2,
+        "Négation": 1
+      },
+      "trailing_whitespace_differences": 1
+    },
+    "madar": {
+      "total_cases": 30,
+      "label_opinions_filled": 30,
+      "categories_filled": 6,
+      "hypotheses_filled": 0,
+      "complete_cases": 0,
+      "partial_cases": 30,
+      "pending_cases": 0,
+      "label_opinion_counts": {
+        "Label discutable": 6,
+        "Label plausible": 24
+      },
+      "category_counts": {
+        "Variétés proches / texte commun": 6
+      },
+      "trailing_whitespace_differences": 0
+    }
+  }
+}

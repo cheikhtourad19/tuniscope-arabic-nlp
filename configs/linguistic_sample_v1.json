@@ -1,0 +1,25 @@
+{
+  "version": "linguistic-train-v1",
+  "manifest_version": "v2",
+  "seed": 42,
+  "split": "train",
+  "min_word_units": 4,
+  "max_word_units": 50,
+  "max_characters": 320,
+  "quotas": [
+    {"corpus":"tsac","label":"POS","script":"AR","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"POS","script":"AR","marker_candidate":false,"count":3},
+    {"corpus":"tsac","label":"NEG","script":"AR","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"NEG","script":"AR","marker_candidate":false,"count":2},
+    {"corpus":"tsac","label":"POS","script":"LATIN","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"POS","script":"LATIN","marker_candidate":false,"count":2},
+    {"corpus":"tsac","label":"NEG","script":"LATIN","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"NEG","script":"LATIN","marker_candidate":false,"count":2},
+    {"corpus":"tsac","label":"POS","script":"MIXED","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"POS","script":"MIXED","marker_candidate":false,"count":2},
+    {"corpus":"tsac","label":"NEG","script":"MIXED","marker_candidate":true,"count":2},
+    {"corpus":"tsac","label":"NEG","script":"MIXED","marker_candidate":false,"count":2},
+    {"corpus":"madar","label":"MSA","script":"AR","marker_candidate":true,"count":8},
+    {"corpus":"madar","label":"MSA","script":"AR","marker_candidate":false,"count":17}
+  ]
+}

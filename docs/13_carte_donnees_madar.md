@@ -1,6 +1,6 @@
 # TuniScope — Carte de données MADAR Corpus-26
 
-**Livrable :** L02, carte de données propre au sous-ensemble MADAR. **Version :** 0.1, 16 octobre 2026. **État :** fondée sur les sources et manifestes v1 vérifiés ; copie de travail et analyses de composition encore à compléter.
+**Livrable :** L02, carte de données propre au sous-ensemble MADAR. **Version :** 0.2, 16 octobre 2026. **État :** fondée sur les sources, manifestes v1 et audit d'écriture vérifiés ; normalisation et vérifications finales encore à compléter.
 
 ## Identification, accès et usage
 
@@ -26,10 +26,12 @@ Nous conservons les partitions officielles Corpus-26 : 1 600 groupes source dans
 
 Les étiquettes `MSA`, `TN` et `EG` découlent des fichiers de variété sélectionnés ; ce ne sont pas des annotations individuelles que nous avons recréées. Les quatre traductions parallèles partagent un `group_id` fondé sur `sentID.BTEC`. Les fichiers sources UTF-8, leurs colonnes, leurs empreintes SHA-256 et l'intégrité des groupes ont été vérifiés. Les fichiers originaux et leurs partitions officielles n'ont pas été modifiés.
 
-Le manifeste est une table de provenance et de partition ; il ne contient pas la colonne `sent`. Aucune copie textuelle préparée ni normalisation destinée aux modèles n'existe encore. La clé d'égalité exacte employée pour repérer les collisions n'est pas une procédure générale d'équivalence de sens. Nous ne pouvons donc pas affirmer que toute fuite sémantique entre paraphrases a été éliminée.
+Le manifeste est une table de provenance et de partition ; il ne contient pas la colonne `sent`. Un [chargeur raw-v0](14_chargement_donnees_en_memoire.md) retrouve le texte en mémoire depuis les sources autorisées, sans créer de copie textuelle sur disque. La [normalisation minimale `norm-nfc-space-v1`](16_normalisation_minimale_v1.md) a changé 18 lignes train et trois lignes validation en RAM, surtout pour les espaces, tout en conservant le brut. Elle ne crée aucun doublon exact train/validation, mais révèle 82 groupes de formes répétées à l'intérieur d'une partition, dont 13 à plusieurs labels de variété. Nous ne les supprimons ni ne les réétiquetons automatiquement. La clé d'égalité exacte ne démontre pas l'absence de paraphrases entre partitions.
+
+Un [audit séparé](18_audit_tatweel_repetitions.md) trouve une ligne train avec tatweel et une avec au moins trois lettres identiques ; aucune de ces règles candidates n'a été imposée à la variante de référence.
 
 ## Limites et contrôles restants
 
 Les classes sont déséquilibrées : `TN` contient deux villes et deux fois plus de lignes que `MSA` ou `EG`. Nous publierons donc les résultats par classe, en plus du macro-F1. Le domaine du voyage limite la généralisation à des textes spontanés ou à d'autres thèmes. La variété dominante dans un texte très court ou identique entre villes peut être linguistiquement indéterminée, même si le label de source est connu.
 
-La composition par écriture et longueur des textes retenus, les éventuelles ambiguïtés de variété et la procédure complète de chargement restent à établir. Nous devons aussi confirmer les modalités de citation et de diffusion de tout artefact dérivé avant publication. **Cette carte apporte la provenance, les comptes et la méthode de séparation à L02, mais L02 n'est pas achevé.**
+L'[audit d'écriture et de longueur](15_audit_ecriture_longueur.md) trouve dans le train **6 387 lignes `AR` et une `MIXED`** selon la présence de lettres Unicode ; les 800 lignes de validation sont `AR`. Il fournit aussi les longueurs P50/P95 par variété. Cela ne démontre pas la langue effective ou la non-ambiguïté de chaque texte. Nous devons examiner les éventuelles ambiguïtés de variété, définir la normalisation et confirmer les modalités de citation et de diffusion de tout artefact dérivé avant publication. **Cette carte apporte la provenance, les comptes et la méthode de séparation à L02, mais L02 n'est pas achevé.**

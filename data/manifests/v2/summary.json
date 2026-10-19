@@ -1,0 +1,37 @@
+{
+  "group_rule": "tsac-candidate-components-repetition-v2",
+  "groups_total": 11441,
+  "human_decision_ledger_sha256": "61416fd321495170e4cebfe41997906394e18d762870eb0b07f9b0ee9f7d36f5",
+  "human_same_meaning_pairs": 12,
+  "largest_group": 10,
+  "madar_excluded_train_rows": 12,
+  "madar_rows": 7988,
+  "mixed_label_groups": 8,
+  "multi_row_groups": 225,
+  "official_test_texts_loaded": 0,
+  "original_candidate_edges": 374,
+  "original_crossing_repetition_families": 9,
+  "original_manifest_sha256": "ef7400d2c2f7d82c247c735c90a048c3cfa5e23e0abe5231716e8ec1d4aca8d0",
+  "repetition_candidate_families_total": 49,
+  "revised_crossing_repetition_families": 0,
+  "rows_in_multi_row_groups": 611,
+  "rows_moved": {
+    "train_to_validation": 1476,
+    "validation_to_train": 1476
+  },
+  "source_test_modified": false,
+  "split_seed": 42,
+  "texts_or_labels_modified": false,
+  "tsac_excluded_train_rows": 1842,
+  "tsac_partition_labels": {
+    "test/NEG": 1700,
+    "test/POS": 1700,
+    "train/NEG": 4798,
+    "train/POS": 5255,
+    "validation/NEG": 847,
+    "validation/POS": 927
+  },
+  "tsac_rows": 15227,
+  "tsac_validation_fraction_target": 0.15,
+  "version": "v2"
+}

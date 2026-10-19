@@ -1,0 +1,13 @@
+id,source_file,source_line,source_id,group_id,city,official_split,split,label,reason
+madar:MSA:5657,MADAR.corpus.MSA.tsv,3367,5657,madar:5657,MSA,corpus-6-test-corpus-26-train,train,MSA,exact_text_cross_split_whole_source_group
+madar:MSA:7626,MADAR.corpus.MSA.tsv,4540,7626,madar:7626,MSA,corpus-6-test-corpus-26-train,train,MSA,exact_text_cross_split_whole_source_group
+madar:MSA:10976,MADAR.corpus.MSA.tsv,6540,10976,madar:10976,MSA,corpus-6-test-corpus-26-train,train,MSA,exact_text_cross_split_whole_source_group
+madar:Tunis:5657,MADAR.corpus.Tunis.tsv,3367,5657,madar:5657,Tunis,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Tunis:7626,MADAR.corpus.Tunis.tsv,4540,7626,madar:7626,Tunis,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Tunis:10976,MADAR.corpus.Tunis.tsv,6540,10976,madar:10976,Tunis,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Sfax:5657,MADAR.corpus.Sfax.tsv,568,5657,madar:5657,Sfax,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Sfax:7626,MADAR.corpus.Sfax.tsv,739,7626,madar:7626,Sfax,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Sfax:10976,MADAR.corpus.Sfax.tsv,1053,10976,madar:10976,Sfax,corpus-6-test-corpus-26-train,train,TN,exact_text_cross_split_whole_source_group
+madar:Cairo:5657,MADAR.corpus.Cairo.tsv,3367,5657,madar:5657,Cairo,corpus-6-test-corpus-26-train,train,EG,exact_text_cross_split_whole_source_group
+madar:Cairo:7626,MADAR.corpus.Cairo.tsv,4540,7626,madar:7626,Cairo,corpus-6-test-corpus-26-train,train,EG,exact_text_cross_split_whole_source_group
+madar:Cairo:10976,MADAR.corpus.Cairo.tsv,6540,10976,madar:10976,Cairo,corpus-6-test-corpus-26-train,train,EG,exact_text_cross_split_whole_source_group

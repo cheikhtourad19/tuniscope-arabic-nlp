@@ -4,7 +4,7 @@
 
 **Version :** 0.3, 16 octobre 2026.
 
-**État :** les audits des sources et doublons, la revue humaine, la règle de regroupement TSAC et les [manifestes v1](11_manifestes_donnees_v1.md) ont été vérifiés. Les premières cartes de données [TSAC](12_carte_donnees_tsac.md) et [MADAR](13_carte_donnees_madar.md) sont rédigées. Le chargement des textes dans une copie de travail, l'analyse par écriture/langue et la finalisation des cartes restent à faire.
+**État :** les audits des sources et doublons, la revue humaine, la règle de regroupement TSAC et les [manifestes v1](11_manifestes_donnees_v1.md) ont été vérifiés. Les premières cartes de données [TSAC](12_carte_donnees_tsac.md) et [MADAR](13_carte_donnees_madar.md) sont rédigées. Un [chargeur raw-v0 en mémoire](14_chargement_donnees_en_memoire.md) fonctionne sans sauvegarder les textes ; l'analyse par écriture/langue, la normalisation et la finalisation des cartes restent à faire.
 
 ## 1. Objectif et sources
 
@@ -92,7 +92,7 @@ Une carte distincte sera remplie pour MADAR et TSAC après l'audit. Elle indique
 | Annotation | Provenance des étiquettes, guide, arbitrage et accord si mesuré indépendamment. |
 | Limites | Domaine, ancienneté, variété linguistique, métadonnées absentes et biais connus. |
 
-Les manifestes v1 apportent les identifiants stables, `group_id`, étiquettes, partitions et empreintes des sources ; les contrôles démontrent que les groupes MADAR restent entiers, que le test TSAC officiel est préservé et que les exclusions sont comptées. Le chargement des textes selon ces manifestes, les contrôles de composition et la finalisation des cartes manquent encore : le présent document ne certifie pas que les données sont prêtes pour l'entraînement.
+Les manifestes v1 apportent les identifiants stables, `group_id`, étiquettes, partitions et empreintes des sources ; les contrôles démontrent que les groupes MADAR restent entiers, que le test TSAC officiel est préservé et que les exclusions sont comptées. Un chargement `raw-v0` en mémoire a été vérifié. Les contrôles de composition, la normalisation et la finalisation des cartes manquent encore : le présent document ne certifie pas que les données sont prêtes pour l'entraînement.
 
 ## Références
 

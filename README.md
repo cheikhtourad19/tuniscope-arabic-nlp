@@ -54,3 +54,16 @@ Dataset use follows the respective licences and attribution requirements. Raw da
 ## Expected outcome
 
 TuniScope produces an experimental NLP application together with comparative results, error analysis, reproducible training/evaluation workflows, model and data documentation, and a scientific report on the behaviour of the approaches across the two tasks.
+
+## Development environment
+
+Data preparation and classical baselines use Python 3.12 with dependencies recorded in `pyproject.toml` and pinned in `uv.lock`. See the [environment setup guide](docs/20_environnement_python.md) for local installation and the prepared Kaggle/Colab workflow.
+
+Once uv is available, run the fictitious-data installation check from the repository root:
+
+```sh
+sh scripts/project_uv.sh sync --locked
+sh scripts/project_uv.sh run --locked python scripts/check_environment.py
+```
+
+This check requires no protected dataset. `requirements.txt` is a generated export of the lockfile for pip-based environments.

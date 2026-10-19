@@ -1,0 +1,71 @@
+{
+  "selection": {
+    "selected": 50,
+    "split_counts": {
+      "train": 50
+    },
+    "source_label_counts": {
+      "tsac:POS": 13,
+      "tsac:NEG": 12,
+      "madar:MSA": 25
+    },
+    "script_counts": {
+      "AR": 34,
+      "LATIN": 8,
+      "MIXED": 8
+    },
+    "marker_candidate_cases": 20,
+    "syntax_annotations_complete": 0,
+    "human_validated_cases": 0
+  },
+  "ai_documented_texts": 50,
+  "human_verified_annotations": 0,
+  "annotations_are_gold_standard": false,
+  "syntax_complete_token_tagging": false,
+  "negation_rule_evaluated": false,
+  "proposed_analysis": {
+    "tsac": {
+      "texts": 25,
+      "proposed_negation_status": {
+        "présente": 15,
+        "absente": 10
+      },
+      "cue_roles": {
+        "ADJECTIF": 10,
+        "VERBE": 6,
+        "NOM": 2,
+        "EXPRESSION": 7
+      },
+      "candidate_screen_with_ai_negation_absent": 1,
+      "no_candidate_screen_with_ai_negation_present": 4
+    },
+    "madar": {
+      "texts": 25,
+      "proposed_negation_status": {
+        "présente": 8,
+        "absente": 17
+      },
+      "cue_roles": {
+        "ADVERBE": 2,
+        "ADJECTIF": 7,
+        "VERBE": 11,
+        "NOM": 3,
+        "PARTICULE": 2
+      },
+      "candidate_screen_with_ai_negation_absent": 1,
+      "no_candidate_screen_with_ai_negation_present": 1
+    }
+  },
+  "provenance": {
+    "sample_sha256": "1f195a923aa61f201758dafbc477c7f536d0904fa07fb6f546debba6c3794fce",
+    "index_sha256": "8548707cfb01ff3246371819cec7283456d9b5b0f883bd020c43ddef13d6e805",
+    "annotations_sha256": "4dcc4bf974f374b1a8555b545ea25ec7ac1b3581e6220fb0853899dc7912c9cc",
+    "config_sha256": "476ccade66577c5f3f41925cea4f6e51f6f34c02acd338016c8478ba8b331ffc",
+    "renderer_sha256": "01aab53cace937cd5ad139288af19048a9dc0b2fc9df727fe7f6391435efc2d1",
+    "selector_sha256": "3832809bed24a4ac26f034f9872a5f7635c07a93ffdb97073b42f3a1f03e4722",
+    "manifest_sha256": {
+      "tsac": "ac8a453de6115bea6b51255fe7badc1eab72e2649e0056a1ad918aa963730fa7",
+      "madar": "3d81826b70437aa37a286d2d8fded745b01295165395b26cf868f91f90204474"
+    }
+  }
+}

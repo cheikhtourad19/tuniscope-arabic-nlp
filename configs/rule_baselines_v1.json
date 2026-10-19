@@ -1,0 +1,17 @@
+{
+  "version": "train-lexicon-rules-v1",
+  "manifest_version": "v2",
+  "seed": 42,
+  "corpora": ["tsac", "madar"],
+  "labels": {"tsac": ["NEG", "POS"], "madar": ["MSA", "TN", "EG"]},
+  "tokenization": "rule-nfc-casefold-v1",
+  "lexicon": {"min_class_document_frequency": 5, "min_log_rate_ratio": 1.0, "max_terms_per_class": 200, "smoothing": 1.0, "min_token_length": 2},
+  "negation": {
+    "window_words": 3,
+    "markers": ["لا", "لم", "لن", "ليس", "ليست", "لست", "مش", "موش", "mouch", "moch", "moush", "not", "pas"],
+    "clause_breaks": ["اما", "أما", "لكن", "لكنني", "ama", "mais", "but"],
+    "exceptions": [["لا", "بد"]]
+  },
+  "fallback": "train-majority",
+  "smoke_rows_per_partition": 100
+}

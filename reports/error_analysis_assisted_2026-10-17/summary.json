@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "tsac": {
+      "documented_cases": 30,
+      "human_label_opinions": 30,
+      "human_categories": 5,
+      "ai_categories": 25,
+      "ai_hypotheses": 30,
+      "category_counts": {
+        "Émoji / symbole": 3,
+        "Mélange de langues": 1,
+        "Autre": 7,
+        "Avis mixte / ambigu": 9,
+        "Orthographe / Arabizi": 5,
+        "Manque de contexte": 2,
+        "Incertain": 1,
+        "Négation": 2
+      }
+    },
+    "madar": {
+      "documented_cases": 30,
+      "human_label_opinions": 30,
+      "human_categories": 6,
+      "ai_categories": 24,
+      "ai_hypotheses": 30,
+      "category_counts": {
+        "Variétés proches / texte commun": 11,
+        "Orthographe / morphologie": 15,
+        "Lexique partagé": 3,
+        "Texte très court": 1
+      }
+    }
+  },
+  "all_cases_documented": true,
+  "human_validation_of_ai_additions": false,
+  "native_xml_verification": "passed",
+  "original_workbook_preserved": true,
+  "native_validation_panes_widths_preserved": true,
+  "saved_scroll_positions": {
+    "tsac": {
+      "before": "C34",
+      "after": "C9"
+    },
+    "madar": {
+      "before": "C35",
+      "after": "C9"
+    }
+  },
+  "labels_predictions_and_human_fields_preserved": true,
+  "provenance": {
+    "human_workbook_sha256": "215d8f0fdce95cc9cb77e803fce92e98ac7a636e2dc5fc2d933ed4e2412a820e",
+    "completed_workbook_sha256": "84c8c4656440fb8c663c45a844fa32c5ceac833f0dcb4ce8c0dff05b53fdbf04",
+    "human_snapshot_sha256": "67ef3159eb4b52566422eded8b44cae93cd944597b9f04e0c0c066275ca1429d",
+    "proposals_sha256": "5f298dfa6e0e9423c6704e8e5efe175611aff719c4f3f0564d77d9663c892845",
+    "payload_sha256": "127588b21b37c7ac22adda0cf9491226972e19d858a62a90d4338b9f227b2e91",
+    "script_sha256": "ef65060a5e51c2b8ffaf265b1eb3f9e76fbe04767509bcd3bc845ac57cc7f09f",
+    "source_run_results_sha256": "86965f1bb775fa89307458a0bcb804efa498f261297dec91b3f4a065b0ffcbba",
+    "ledger_sha256": "580e3e3bc7de1e9731ad804c22834d246cc1440758ad2c69fc41fcc0fe3b51a4",
+    "verifier_sha256": "767150dbe068db405bb0a32dd9c3193b15c46a328f58f284cc1fe55468280c98"
+  }
+}
