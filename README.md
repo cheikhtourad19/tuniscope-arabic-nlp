@@ -71,6 +71,7 @@ This check requires no protected dataset. `requirements.txt` is a generated expo
 ## Reproducible notebooks
 
 - [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.
-- [Initial classical baselines](notebooks/02_baselines_classiques.ipynb): majority and word/character/combined TF-IDF classification using the shared training scripts.
+- [Initial classical baselines](notebooks/02_baselines_classiques.ipynb): train majority and word/character/combined TF-IDF models, verify the selected run, display a readable score table, and automatically export/show six PNG figures from that same run. See [integrated workflow](docs/35_entrainement_complet_et_export_figures.md).
+- [Validation figures and demonstration](notebooks/03_visualisation_validation.ipynb): replay a selected saved TF-IDF v2 run without training, display six charts inline, and export PNGs with aggregate provenance. See [visualization setup](docs/34_graphiques_validation.md).
 
-Both contain French explanations and safe defaults using fictitious data. Real data access and training require explicit opt-in and authorized local sources. [Verification notes](docs/31_notebooks_reproductibles.md) distinguish completed sequential Python checks from pending native Jupyter and Kaggle validation.
+The notebooks contain French explanations and reuse the project scripts. The data notebook defaults to fictitious examples. Check the training notebook's `TRAINING_MODE` before running all cells: the current working version defaults to `full` and launches real training. The visualization notebook never trains; optional checkpoint replay requires authorized local sources and trusted local model files. [Verification notes](docs/31_notebooks_reproductibles.md) and the visualization guide distinguish local checks from pending cloud validation.

@@ -1,11 +1,12 @@
 """Small notebook bridge to existing, locked project scripts.
 
-No Jupyter dependency, data acquisition, or neural model download. Notebook
-kernels need only the standard library; data/model imports run in project uv.
+No data acquisition or neural model download. Data/model imports run in project
+uv; the optional figure export uses Matplotlib in the notebook kernel only.
 """
 
 from collections import Counter
 import json
+import os
 from pathlib import Path
 import subprocess
 import uuid
@@ -24,11 +25,20 @@ def run_project(script, *arguments, capture=False):
     path = ROOT / "scripts" / script
     if path.parent != ROOT / "scripts" or not path.is_file():
         raise ValueError("Expected an existing script directly inside scripts/")
-    completed = subprocess.run(
-        ["sh", str(ROOT / "scripts/project_uv.sh"), "run", "--locked", "--offline",
-         "python", str(path), *(str(arg) for arg in arguments)],
-        cwd=ROOT, check=True, text=True, capture_output=capture,
-    )
+    environment = os.environ.copy()
+    # Always target .venv, not the active Jupyter kernel environment.
+    environment.pop("VIRTUAL_ENV", None)
+    try:
+        completed = subprocess.run(
+            ["sh", str(ROOT / "scripts/project_uv.sh"), "run", "--locked", "--offline",
+             "python", str(path), *(str(arg) for arg in arguments)],
+            cwd=ROOT, check=True, text=True, capture_output=capture, env=environment,
+        )
+    except subprocess.CalledProcessError as error:
+        if capture:
+            print(error.stdout or "", end="")
+            print(error.stderr or "", end="")
+        raise
     return completed.stdout if capture else None
 
 
@@ -103,7 +113,7 @@ def data_overview(mode):
             "processed_text_written": False, "corpora": corpora}
 
 
-def train_baselines(family, mode):
+def train_baselines(family, mode, *, concise=False):
     """Explicit opt-in; smoke before full, new directories and verification."""
     if family not in CONFIGS or mode not in {"smoke", "full"}:
         raise ValueError("Choose an allowed TF-IDF family and smoke/full mode")
@@ -116,17 +126,62 @@ def train_baselines(family, mode):
     runs = []
     for stage in (["smoke", "full"] if mode == "full" else ["smoke"]):
         target = parent / f"{identifier}_{family}_{stage}"
+        if concise:
+            print("Contrôle préalable (smoke, 100 exemples par partition)…" if stage == "smoke"
+                  else "Entraînement complet (full, tout le train ; évaluation sur tout le dev)…", flush=True)
         run_project("run_baselines.py", "--config", config, "--mode", stage,
-                    "--output", target)
-        run_project("verify_baseline_run.py", target)
+                    "--output", target, capture=concise)
+        run_project("verify_baseline_run.py", target, capture=concise)
         result = json.loads((target / "results.json").read_text(encoding="utf-8"))
+        if result["mode"] != stage or result["test_loaded"] is not False:
+            raise ValueError("Unexpected result mode or test access")
         runs.append({"directory": str(target.relative_to(ROOT)), "mode": stage,
                      "validation": [
                          {key: row[key] for key in ("corpus", "system", "variant",
                                                    "train_rows", "validation_rows")}
-                         | {"macro_f1": row["metrics"]["macro_f1"]}
+                         | {key: row["metrics"][key] for key in ("macro_f1", "accuracy")}
                          for row in result["results"]]})
+        if concise:
+            print("Contrôle préalable réussi." if stage == "smoke" else "Entraînement complet et rechargement vérifiés.", flush=True)
     return runs
+
+
+def select_training_run(runs, requested_mode):
+    """Select the requested final stage, never silently fall back to smoke."""
+    expected = ["smoke", "full"] if requested_mode == "full" else ["smoke"]
+    if requested_mode not in {"smoke", "full"} or [r["mode"] for r in runs] != expected:
+        raise ValueError("Requested training stage is missing or unexpected; no fallback is allowed")
+    selected = runs[-1]
+    if len(selected["validation"]) != 6:
+        raise ValueError("Expected six verified results")
+    return selected
+
+
+def training_summary(run):
+    """Readable table instead of the smoke/full JSON array."""
+    lines = ["ENTRAÎNEMENT COMPLET — FULL" if run["mode"] == "full" else "SMOKE — PETIT CONTRÔLE TECHNIQUE",
+             "Scores sur validation (dev), pas sur le test officiel.",
+             f"{'Corpus':<8}{'Système':<19}{'Texte':<14}{'Train':>8}{'Dev':>8}{'Accuracy':>12}{'Macro-F1':>12}"]
+    for row in run["validation"]:
+        variant = "brut" if row["variant"] == "raw-v0" else "normalisé"
+        lines.append(f"{row['corpus'].upper():<8}{row['system']:<19}{variant:<14}"
+                     f"{row['train_rows']:>8}{row['validation_rows']:>8}"
+                     f"{row['accuracy']:>12.6f}{row['macro_f1']:>12.6f}")
+    lines += ["", f"Modèles et résultats : {ROOT / run['directory']}"]
+    return "\n".join(lines)
+
+
+def export_training_figures(run):
+    """Export this selected training run, not a historical/latest directory."""
+    from plot_validation_results import export_figures
+    source = ROOT / run["directory"]
+    saved = json.loads((source / "results.json").read_text(encoding="utf-8"))
+    if saved["mode"] != run["mode"]:
+        raise ValueError("Selected mode differs from saved training result")
+    output = source / "figures"
+    if output.exists():
+        output = source / f"figures_{uuid.uuid4().hex[:12]}"
+    return export_figures(source, output, verify=True)
 
 
 if __name__ == "__main__":

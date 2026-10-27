@@ -1,0 +1,3 @@
+# Optional notebook/PNG rendering only; NOT the locked training environment.
+# Install in .tools/notebook-kernel, not .venv (see docs/34_graphiques_validation.md).
+matplotlib==3.10.7
