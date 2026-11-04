@@ -84,6 +84,8 @@ Les distributions verrouillées comportent des roues Python 3.12 pour les deux p
 
 ## Références techniques
 
+**Actualisation du 4 novembre 2026 :** la baseline BiGRU utilise maintenant un [profil PyTorch séparé](39_environnement_bigru.md). Le verrouillage classique décrit ci-dessus n'est pas modifié. La vérification GPU/Kaggle et les profils encodeur/LLM restent distincts ; les constats historiques de ce document ne doivent pas être interprétés comme une exécution neuronale antérieure.
+
 - [uv : installation](https://docs.astral.sh/uv/getting-started/installation/).
 - [uv : installation d'un Python géré](https://docs.astral.sh/uv/guides/install-python/).
 - [uv : structure du projet et verrouillage universel](https://docs.astral.sh/uv/concepts/projects/layout/).

@@ -1,0 +1,18 @@
+{
+  "version": "camelbert-tokenizer-audit-v1",
+  "model_id": "CAMeL-Lab/bert-base-arabic-camelbert-mix",
+  "revision": "9be352797bdf28a9ae21e2ae582aaaca7abdb22d",
+  "model_license_declared": "apache-2.0",
+  "manifest_version": "v2",
+  "variant": "raw-v0",
+  "corpora": ["tsac", "madar"],
+  "splits": ["train", "validation"],
+  "candidate_max_lengths": [64, 128, 256, 512],
+  "train_coverage_target": 0.99,
+  "max_train_truncated_row_rate": 0.01,
+  "minimum_rows_per_writing_group": 100,
+  "length_selection": "smallest-candidate-covering-99pct-of-each-train-writing-group-with-at-least-100-rows",
+  "word_denominator": "unicode-whitespace-fields",
+  "tokenizer": "BertTokenizerFast",
+  "download_allowlist": ["README.md", "config.json", "tokenizer_config.json", "special_tokens_map.json", "vocab.txt"]
+}

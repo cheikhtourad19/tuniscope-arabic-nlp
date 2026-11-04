@@ -1,0 +1,18 @@
+[project]
+name = "tuniscope-bigru"
+version = "0.1.0"
+description = "Isolated environment for the train-from-scratch BiGRU baseline"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch>=2.10,<3",
+  "numpy==2.5.4",
+  "scikit-learn==1.9.1",
+  "matplotlib==3.10.7",
+]
+
+[tool.uv]
+package = false
+environments = [
+  "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]

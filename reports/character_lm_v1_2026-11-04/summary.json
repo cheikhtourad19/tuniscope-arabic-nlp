@@ -1,0 +1,204 @@
+{
+  "run": "2026-11-04_char_lm_v1_full",
+  "mode": "full",
+  "source_results_sha256": "4aba0cb57f1942b5689229ca8602ce9795971fb63315e293f159b56d775ad2b0",
+  "manifests_sha256": {
+    "madar": "3d81826b70437aa37a286d2d8fded745b01295165395b26cf868f91f90204474",
+    "tsac": "ac8a453de6115bea6b51255fe7badc1eab72e2649e0056a1ad918aa963730fa7"
+  },
+  "test_loaded": false,
+  "results": [
+    {
+      "checkpoint_bytes": 22622,
+      "checkpoint_sha256": "7d385cc02aa7e88b5f69c2274d711239427bf7b650c2b7e76204c0b162fd54e2",
+      "contexts": 1,
+      "corpus": "tsac",
+      "evaluation_seconds": 0.03873262502020225,
+      "fit_seconds": 0.20676962501602247,
+      "metrics": {
+        "bits_per_target": 5.385115570950719,
+        "characters": 70150,
+        "cross_entropy_nats": 3.7326776749939503,
+        "documents": 1774,
+        "nll": 268469.1090962649,
+        "perplexity": 41.79086082160694,
+        "targets": 71924,
+        "unknown_character_rate": 0.0003848895224518888,
+        "unknown_characters": 27
+      },
+      "observed_ngrams": 380,
+      "order": 1,
+      "process_peak_rss_bytes_cumulative": 44482560,
+      "scores_sha256": "fbd8d0c1f37128f3c1f3de85042766081a580c928d6ec3e46ecf636a1209e563",
+      "train": {
+        "characters": 400987,
+        "groups": 9720,
+        "ids_sha256": "50216556f8d7784830f697425aa3f3096374d76abee6fa269163eb77ad5f5467",
+        "labels": {
+          "NEG": 4798,
+          "POS": 5255
+        },
+        "rows": 10053
+      },
+      "train_targets": 411040,
+      "validation": {
+        "characters": 70150,
+        "groups": 1721,
+        "ids_sha256": "29df115c1217e7171bbb3f93c8be9f7b7492aad7eb7d460cbc0a4382cc5e2c43",
+        "labels": {
+          "NEG": 847,
+          "POS": 927
+        },
+        "rows": 1774
+      },
+      "variant": "raw-v0",
+      "vocabulary_sha256": "c373c009f129c274ec5a5b3b03d887ccdb21cc68d1a53cff0dae571b6c5920e3",
+      "vocabulary_size": 381
+    },
+    {
+      "checkpoint_bytes": 1572565,
+      "checkpoint_sha256": "34d68f597d424fb41b69f907fdecfc8759190e2a6f53734e72473cd630aa0745",
+      "contexts": 4452,
+      "corpus": "tsac",
+      "evaluation_seconds": 0.05041962501127273,
+      "fit_seconds": 0.23757262498838827,
+      "metrics": {
+        "bits_per_target": 3.4761988979527723,
+        "characters": 70150,
+        "cross_entropy_nats": 2.409517465181553,
+        "documents": 1774,
+        "nll": 173302.13416571802,
+        "perplexity": 11.128589917152038,
+        "targets": 71924,
+        "unknown_character_rate": 0.0003848895224518888,
+        "unknown_characters": 27
+      },
+      "observed_ngrams": 26516,
+      "order": 3,
+      "process_peak_rss_bytes_cumulative": 62275584,
+      "scores_sha256": "b00793749192c2ff92ae86b6f60592a3d4db721cf1f7b4f7bd7ce763ee4c61a3",
+      "train": {
+        "characters": 400987,
+        "groups": 9720,
+        "ids_sha256": "50216556f8d7784830f697425aa3f3096374d76abee6fa269163eb77ad5f5467",
+        "labels": {
+          "NEG": 4798,
+          "POS": 5255
+        },
+        "rows": 10053
+      },
+      "train_targets": 411040,
+      "validation": {
+        "characters": 70150,
+        "groups": 1721,
+        "ids_sha256": "29df115c1217e7171bbb3f93c8be9f7b7492aad7eb7d460cbc0a4382cc5e2c43",
+        "labels": {
+          "NEG": 847,
+          "POS": 927
+        },
+        "rows": 1774
+      },
+      "variant": "raw-v0",
+      "vocabulary_sha256": "c373c009f129c274ec5a5b3b03d887ccdb21cc68d1a53cff0dae571b6c5920e3",
+      "vocabulary_size": 381
+    },
+    {
+      "checkpoint_bytes": 3662,
+      "checkpoint_sha256": "037490dd6e48b12fa12efd45a7981945bd3bab639bb96bc99d3977df8f460911",
+      "contexts": 1,
+      "corpus": "madar",
+      "evaluation_seconds": 0.014197707991115749,
+      "fit_seconds": 0.09852645901264623,
+      "metrics": {
+        "bits_per_target": 4.573023970876815,
+        "characters": 25497,
+        "cross_entropy_nats": 3.1697786720463093,
+        "documents": 800,
+        "nll": 83355.6697388018,
+        "perplexity": 23.802215677707984,
+        "targets": 26297,
+        "unknown_character_rate": 7.844060085500255e-05,
+        "unknown_characters": 2
+      },
+      "observed_ngrams": 60,
+      "order": 1,
+      "process_peak_rss_bytes_cumulative": 71319552,
+      "scores_sha256": "0a7129c211d5e2ff30d7e5a49982738f5bbb7b6a0e396cf610aa5952f27084da",
+      "train": {
+        "characters": 198937,
+        "groups": 1597,
+        "ids_sha256": "36998e5a4cba3e3e3ff6a0f16443a0a9716263eff71f701b93e88101c0810cb5",
+        "labels": {
+          "EG": 1597,
+          "MSA": 1597,
+          "TN": 3194
+        },
+        "rows": 6388
+      },
+      "train_targets": 205325,
+      "validation": {
+        "characters": 25497,
+        "groups": 200,
+        "ids_sha256": "6230626a686545438f4018357b38c1feda2cea0b096085b82d3990ba79c51a91",
+        "labels": {
+          "EG": 200,
+          "MSA": 200,
+          "TN": 400
+        },
+        "rows": 800
+      },
+      "variant": "raw-v0",
+      "vocabulary_sha256": "e3360b5717e317b1c1adaf2c7ec0acea06a175e54a2ffed33f745ee274aae293",
+      "vocabulary_size": 61
+    },
+    {
+      "checkpoint_bytes": 565956,
+      "checkpoint_sha256": "a731e39dd34b21b66c4189d3e27b7451eb5b07aaf8f7b73442faff29ada2b6a9",
+      "contexts": 1189,
+      "corpus": "madar",
+      "evaluation_seconds": 0.018503792001865804,
+      "fit_seconds": 0.12476983398664743,
+      "metrics": {
+        "bits_per_target": 3.205194560453378,
+        "characters": 25497,
+        "cross_entropy_nats": 2.221671572724332,
+        "documents": 800,
+        "nll": 58423.29734793176,
+        "perplexity": 9.222734459548406,
+        "targets": 26297,
+        "unknown_character_rate": 7.844060085500255e-05,
+        "unknown_characters": 2
+      },
+      "observed_ngrams": 10254,
+      "order": 3,
+      "process_peak_rss_bytes_cumulative": 71319552,
+      "scores_sha256": "b2971723d02e006c0d7d947beb08a346cb781bda4ca8e98b442a147de1ffdf29",
+      "train": {
+        "characters": 198937,
+        "groups": 1597,
+        "ids_sha256": "36998e5a4cba3e3e3ff6a0f16443a0a9716263eff71f701b93e88101c0810cb5",
+        "labels": {
+          "EG": 1597,
+          "MSA": 1597,
+          "TN": 3194
+        },
+        "rows": 6388
+      },
+      "train_targets": 205325,
+      "validation": {
+        "characters": 25497,
+        "groups": 200,
+        "ids_sha256": "6230626a686545438f4018357b38c1feda2cea0b096085b82d3990ba79c51a91",
+        "labels": {
+          "EG": 200,
+          "MSA": 200,
+          "TN": 400
+        },
+        "rows": 800
+      },
+      "variant": "raw-v0",
+      "vocabulary_sha256": "e3360b5717e317b1c1adaf2c7ec0acea06a175e54a2ffed33f745ee274aae293",
+      "vocabulary_size": 61
+    }
+  ]
+}

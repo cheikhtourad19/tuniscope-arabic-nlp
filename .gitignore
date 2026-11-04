@@ -47,6 +47,14 @@ outputs/
 wandb/
 mlruns/
 
+# Application model bundle (local, copied into private Docker images only)
+/App/models/current/*
+!/App/models/current/.gitkeep
+/App/models/.staging-*/
+/App/frontend/dist/
+/App/backend/.venv/
+/App/test-results/
+
 # Keep data documentation and reproducibility artifacts tracked
 !data/README.md
 !data/manifests/

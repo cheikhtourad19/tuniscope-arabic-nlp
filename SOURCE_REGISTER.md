@@ -6,6 +6,7 @@ Ce registre consigne l'accès aux corpus, leurs conditions d'utilisation et les 
 | --- | --- | --- | --- | --- | --- | --- |
 | MADAR Corpus-26 | Variété : MSA / TN / EG | https://camel.abudhabi.nyu.edu/madar-parallel-corpus/ | Oui — nous avons confirmé l'inscription et l'acceptation des conditions le 02/10/2026. | Usage interne de recherche et d'évaluation ; pas de droit de sous-licence, redistribution, cession ou modification du corpus. Archive brute privée et exclue de Git. | Oui — archive contrôlée ; les fichiers TSV MSA, Tunis, Sfax et Le Caire comportent `sentID.BTEC`, `split`, `lang` et `sent`. | Acquisition privée et audit autorisés. |
 | TSAC | Sentiment tunisien : POS / NEG | https://github.com/fbougares/TSAC | Oui — dépôt public et archive locale vérifiés le 02/10/2026. | Le dépôt affiche LGPL-3.0. Citer l'article source et confirmer les obligations avant toute publication de données dérivées ; corpus brut exclu de Git. | Oui — `train_pos.txt`, `train_neg.txt`, `test_pos.txt` et `test_neg.txt` sont présents ; archive ZIP intègre. | Acquisition privée et audit autorisés. |
+| CAMeLBERT Mix général | Préparation de l'encodeur et audit WordPiece | https://huggingface.co/CAMeL-Lab/bert-base-arabic-camelbert-mix | Oui — fiche, configuration et tokenizer vérifiés le 04/11/2026. | Apache-2.0 déclaré dans la fiche du modèle ; code des auteurs sous MIT distinctement. Aucun poids redistribué. | Révision `9be352797bdf28a9ae21e2ae582aaaca7abdb22d`, cinq fichiers texte/configuration, vocabulaire 30 000 ; architecture BERT MLM générale, non adaptée à nos labels. | Audit local vérifié, longueur initiale 128 sous-mots. Aucun poids chargé ni entraînement de l'encodeur à ce stade. |
 
 ## Acquisition et vérification de MADAR
 
@@ -33,3 +34,11 @@ Ce registre consigne l'accès aux corpus, leurs conditions d'utilisation et les 
 - Intégrité vérifiée le 02/10/2026 ; fichiers présents : `LICENSE`, `README.md`, `train_pos.txt`, `train_neg.txt`, `test_pos.txt` et `test_neg.txt`.
 - Nombre de lignes : entraînement POS 7 154, NEG 6 515 ; test POS 1 700, NEG 1 700.
 - Les fichiers de test officiels seront conservés sans modification ; la validation sera dérivée uniquement des fichiers d'entraînement.
+
+## Inspection de CAMeLBERT Mix — 4 novembre 2026
+
+- Source officielle et révision : [dépôt modèle figé](https://huggingface.co/CAMeL-Lab/bert-base-arabic-camelbert-mix/tree/9be352797bdf28a9ae21e2ae582aaaca7abdb22d).
+- Nous avons acquis uniquement `README.md`, `config.json`, `tokenizer_config.json`, `special_tokens_map.json` et `vocab.txt`, soit 316 515 octets. Les URL publiques et empreintes sont conservées dans le manifeste de cache local ; aucun lien privé de corpus n'est ajouté.
+- La fiche déclare Apache-2.0 pour le modèle. Le [dépôt de code CAMeLBERT](https://github.com/CAMeL-Lab/CAMeLBERT) affiche MIT séparément. Ces déclarations sont enregistrées à la source, sans annoncer une redistribution des poids.
+- Le nombre de paramètres est calculé depuis la configuration : backbone avec pooler 109 081 344 ; variantes de classification 109 082 882/109 083 651 pour deux/trois labels. Ce sont des comptes théoriques ; la vérification d'un checkpoint chargé reste à réaliser.
+- L'audit vérifié utilise uniquement train/validation v2 et les fichiers locaux, sans poids, entraînement ou consultation du test pour sélectionner la longueur. Voir `docs/42_protocole_audit_tokenizer_encodeur.md`, `docs/43_resultats_audit_tokenizer_encodeur.md` et le rapport agrégé généré.

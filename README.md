@@ -24,6 +24,8 @@ Arabic NLP systems often perform differently across Modern Standard Arabic, regi
 ## Methodology
 
 - **Classical baselines:** majority class, linguistic rules, TF-IDF word n-grams, and TF-IDF character n-grams.
+- **Language-model reference:** smoothed character unigram/trigram models, evaluated by validation perplexity on a fixed representation and vocabulary within each corpus. See the [protocol and results](docs/37_modele_langage_caracteres.md).
+- **Lightweight neural baseline:** train-from-scratch word embeddings and a bidirectional GRU, evaluated on the same v2 validation examples with three seeds. See the [BiGRU results](docs/40_resultats_bigru.md) and [isolated PyTorch environment](docs/39_environnement_bigru.md).
 - **Encoder model:** an Arabic Transformer fine-tuned separately for dialect and sentiment classification.
 - **Generative model:** Qwen3-0.6B evaluated before and after one shared multitask LoRA adapter.
 - **RAG:** a small cited knowledge base for questions about methodology and system limitations, not for deciding text labels.
@@ -55,6 +57,10 @@ Dataset use follows the respective licences and attribution requirements. Raw da
 
 TuniScope produces an experimental NLP application together with comparative results, error analysis, reproducible training/evaluation workflows, model and data documentation, and a scientific report on the behaviour of the approaches across the two tasks.
 
+## Local application
+
+The React/FastAPI application is in [App/](App/README.md). It serves explicitly selected saved classical models, supports text/CSV prediction and comparison, and displays saved validation results. Model files stay Git-ignored and are copied into the backend image during the Docker build. See the application README to prepare a bundle and run Docker Compose. Encoder, LLM and RAG integration remain pending.
+
 ## Development environment
 
 Data preparation and classical baselines use Python 3.12 with dependencies recorded in `pyproject.toml` and pinned in `uv.lock`. See the [environment setup guide](docs/20_environnement_python.md) for local installation and the prepared Kaggle/Colab workflow.
@@ -72,6 +78,7 @@ This check requires no protected dataset. `requirements.txt` is a generated expo
 
 - [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.
 - [Initial classical baselines](notebooks/02_baselines_classiques.ipynb): train majority and word/character/combined TF-IDF models, verify the selected run, display a readable score table, and automatically export/show six PNG figures from that same run. See [integrated workflow](docs/35_entrainement_complet_et_export_figures.md).
-- [Validation figures and demonstration](notebooks/03_visualisation_validation.ipynb): replay a selected saved TF-IDF v2 run without training, display six charts inline, and export PNGs with aggregate provenance. See [visualization setup](docs/34_graphiques_validation.md).
+- [BiGRU training and explanation](notebooks/03_bigru.ipynb): explain the neural layers and their place in the comparison, run smoke then full training with three seeds per task, verify checkpoints, show readable tables and six epoch/confusion PNGs. An explicit replay mode reloads an existing full run without training. See the [notebook guide](docs/41_notebook_bigru.md).
+- [Encoder tokenizer audit](notebooks/04_tokenizer_encodeur.ipynb): inspect the pinned CAMeLBERT tokenizer on v2 train/validation, measure fragmentation/unknowns/truncation and reproduce the initial length decision. This uses tokenizer files only; it does not download weights or train the encoder. See the [audit results](docs/43_resultats_audit_tokenizer_encodeur.md).
 
-The notebooks contain French explanations and reuse the project scripts. The data notebook defaults to fictitious examples. Check the training notebook's `TRAINING_MODE` before running all cells: the current working version defaults to `full` and launches real training. The visualization notebook never trains; optional checkpoint replay requires authorized local sources and trusted local model files. [Verification notes](docs/31_notebooks_reproductibles.md) and the visualization guide distinguish local checks from pending cloud validation.
+The notebooks contain French explanations and reuse the project scripts. The data notebook defaults to fictitious examples. Check `TRAINING_MODE` before running all cells: notebooks 02 and 03 default to `full` and launch real training. Notebook 03 delegates PyTorch work to its isolated environment, so the existing notebook kernel can remain selected. Replay requires authorized local sources and trusted local model files. Local checks do not establish cloud or independent reproducibility.

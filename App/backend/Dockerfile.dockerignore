@@ -1,0 +1,13 @@
+# Allowlist: raw data, outputs, secrets, notebooks and Git never enter the build context.
+**
+!App/
+!App/backend/
+!App/backend/requirements.lock
+!App/backend/service/
+!App/backend/service/*.py
+!App/models/
+!App/models/current/
+!App/models/current/*.joblib
+!App/models/current/results.json
+!scripts/
+!scripts/normalize_text.py
