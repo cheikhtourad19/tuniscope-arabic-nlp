@@ -13,6 +13,8 @@ from frozen_encoder import state_digest
 from run_encoder_finetuning import run,validate_config
 from run_frozen_encoder import save
 from encoder_finetuning_inference import load_checkpoint
+from verify_encoder_finetuning import verify_epoch_metrics
+from baseline_metrics import classification_metrics
 
 
 class EncoderFineTuningTests(unittest.TestCase):
@@ -84,6 +86,24 @@ class EncoderFineTuningTests(unittest.TestCase):
     def test_wrong_config_and_regime_rejected(self):
         with self.assertRaises(ValueError):validate_config({**self.config,'manifest_version':'v1'})
         with self.assertRaises(ValueError):set_regime(self.model,'anything')
+
+    def test_epoch_class_metrics_recalculated_and_corruption_rejected(self):
+        rows=[{'id':str(i),'group_id':str(i),'label':label} for i,label in enumerate(['NEG','NEG','POS','POS'])]
+        probabilities=[[.8,.2],[.4,.6],[.2,.8],[.1,.9]]
+        predicted=['NEG','POS','POS','POS'];labels=['NEG','POS']
+        records=[{'id':r['id'],'group_id':r['group_id'],'truth':r['label'],'predicted':p,'probabilities':scores}
+                 for r,p,scores in zip(rows,predicted,probabilities)]
+        metrics=classification_metrics([r['label'] for r in rows],predicted,labels)
+        self.assertAlmostEqual(metrics['macro_f1'],11/15)
+        save(self.directory/'epoch_predictions.json',records)
+        epoch={'validation_metrics':metrics,'validation_predictions':'epoch_predictions.json','validation_macro_f1':metrics['macro_f1']}
+        self.assertTrue(verify_epoch_metrics(self.directory,epoch,rows,labels))
+        epoch['validation_metrics']['per_class']['NEG']['f1-score']=0.
+        with self.assertRaises(ValueError):verify_epoch_metrics(self.directory,epoch,rows,labels)
+
+    def test_missing_legacy_epoch_metrics_not_fabricated(self):
+        self.assertFalse(verify_epoch_metrics(self.directory,{'epoch':1},[],['NEG','POS']))
+        with self.assertRaises(ValueError):verify_epoch_metrics(self.directory,{'validation_metrics':{}},[],['NEG','POS'])
 
 
 if __name__=='__main__':unittest.main()

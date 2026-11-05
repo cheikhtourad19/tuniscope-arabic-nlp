@@ -34,6 +34,9 @@ def report(directory,target,classical_run,mean_run,bigru_run):
               'manifests_sha256','seconds','peak_process_rss_bytes','aggregates')}
     payload.update(test_loaded=False,comparison=comparison,verification=proof,source_results_sha256=sha256(directory/'results.json'),
                    reference_results_sha256={str(p.relative_to(ROOT)):sha256(p/'results.json') for p in (classical_run,mean_run,bigru_run)})
+    payload['training_code_sha256']=d['code_sha256']
+    payload['protocol_sha256']=d['protocol_sha256']
+    payload['config_sha256']=d['config_sha256']
     payload['results']=[{k:r[k] for k in ('corpus','seed','regime','metrics','best_epoch','epochs_completed','parameters','trainable_parameters',
                                          'epoch_train_seconds','epoch_validation_seconds','backbone_changed_during_training')} for r in d['results']]
     payload['report_generator_sha256']=sha256(Path(__file__))
@@ -67,6 +70,8 @@ def report(directory,target,classical_run,mean_run,bigru_run):
             'MPS utilise un avertissement pour les kernels sans déterminisme strict ; pas de répétabilité bit à bit promise.',
             'Aucun bootstrap/test final, essai CUDA, remplacement applicatif ou expérience LoRA n’est établi par ce run.',
             '',f'Run : `{directory.relative_to(ROOT)}`. Poids, exemples et prédictions individuelles restent privés.','']
+    if not proof.get('epoch_class_metrics_complete',False):
+        lines += ['**Limite du journal initial :** scores par classe et prédictions conservés pour chaque checkpoint retenu ; les autres époques conservent pertes et macro-F1, sans détail par classe archivé. Le producteur corrigé ajoute désormais métriques et prédictions à chaque époque. Aucun détail manquant du run initial n’est inventé, aucun poids/résultat initial n’est remplacé. Les sources initiales sont archivées par empreinte dans le dossier privé source_snapshots.','']
     target.mkdir(parents=True);save(target/'summary.json',payload);(target/'README.md').write_text('\n'.join(lines))
     for corpus,c in comparison.items():
         for arm,a in c['native_cls'].items():

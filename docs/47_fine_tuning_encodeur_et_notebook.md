@@ -1,10 +1,10 @@
-# Fine-tuning CAMeLBERT : dispositif, preuves et notebook06
+# Fine-tuning CAMeLBERT : dispositif, preuves et notebook 06
 
-**5 novembre2026 — contributions partielles à L05, L07, L08 et L12.** Le [protocole46](46_protocole_fine_tuning_encodeur.md) fixe les choix avant les scores. La phase a commencé sur continuation explicite après la référence gelée.
+**5 novembre 2026 — contributions partielles à L05, L07, L08 et L12.** Le [protocole 46](46_protocole_fine_tuning_encodeur.md) fixe les choix avant les scores. La phase a commencé sur continuation explicite après la référence gelée.
 
 ## Différence avec la référence précédente
 
-Le notebook05 évaluait BERT gelé, moyenne masquée et tête linéaire apprise. Le notebook06 emploie la classe native `AutoModelForSequenceClassification` demandée au cahier : CLS/pooler et tête linéaire. Pour contrôler le changement de représentation, nous ajoutons un témoin **CLS gelé** à la même architecture. La comparaison directe avec l'ancien mean-pooling reste une comparaison de systèmes distincts.
+Le notebook05 évaluait BERT gelé, moyenne masquée et tête linéaire apprise. Le notebook 06 emploie la classe native `AutoModelForSequenceClassification` demandée au cahier : CLS/pooler et tête linéaire. Pour contrôler le changement de représentation, nous ajoutons un témoin **CLS gelé** à la même architecture. La comparaison directe avec l'ancien mean-pooling reste une comparaison de systèmes distincts.
 
 Les deux nouvelles branches partagent base épinglée, initialisation de tête par graine, labels, textes bruts, longueur128, ordre des lots et optimiseur. Le dropout du backbone est désactivé dans les deux. `eval()` n'interdit pas les gradients ; le gel utilise séparément `requires_grad`. Le dropout0,1 de la tête est actif pendant l'apprentissage. Le témoin gelé utilise le même petit learning rate et budget que l'adapté ; il ne représente pas la meilleure tête gelée recherchée indépendamment.
 
@@ -28,17 +28,46 @@ L'extrapolation initiale à partir de la dernière époque du petit essai est61,
 
 ## Tests et vérifications
 
-Sept tests inventés avec un petit BERT aléatoire couvrent gradients/poids dans les deux régimes, indépendance du gel et d'eval, accumulation y compris dernière fenêtre partielle, validation sans mise à jour, rechargement natifsafetensors avec prédictions identiques, rejet d'empreinte falsifiée et garde avantFULL.
+Sept tests avec un petit BERT aléatoire et deux contrôles ciblés du journal couvrent gradients/poids dans les deux régimes, indépendance du gel et d'eval, accumulation y compris dernière fenêtre partielle, validation sans mise à jour, rechargement natifsafetensors avec prédictions identiques, rejet d'empreinte falsifiée et garde avantFULL.
 
-Cinq tests du notebook couvrent structure etmodeoff sans chargement, smokeapparié obligatoire avantfull, replayexplicitementtypé, erreurs visibles, environnement séparé horsligne et suppression duVIRTUAL_ENVhérité. Le notebook06 a été exécuté dans le vrai noyau **en replay du smoke** : quatrecellulesdecode, quatremodèlesvérifiés etquatrePNGaffichés. Preuve privée `outputs/notebook_checks/2026-11-05/finetuning_native_smoke_replay.json`. Ce replay n'est pas revendiqué comme entraînementFULLnatifJupyter.
+Cinq tests du notebook couvrent structure etmodeoff sans chargement, smokeapparié obligatoire avantfull, replayexplicitementtypé, erreurs visibles, environnement séparé horsligne et suppression duVIRTUAL_ENVhérité. Le notebook 06 a été exécuté dans le vrai noyau **en replay du smoke** : quatrecellulesdecode, quatremodèlesvérifiés etquatrePNGaffichés. Preuve privée `outputs/notebook_checks/2026-11-05/finetuning_native_smoke_replay.json`. Ce replay n'est pas revendiqué comme entraînementFULLnatifJupyter.
 
 ## Run complet
 
-**En cours :** `outputs/encoder_finetuning/2026-11-05_cls_paired_mps_full/`. Deux tâches × trois graines × deux régimes : douze entraînements sur toutes les donnéestrain/validation. Les résultats complets et la conclusion comparative seront ajoutés seulement après sauvegarde, rechargement et recalcul de toutes les sorties.
+Le run **FULL apparié est terminé et vérifié** : `outputs/encoder_finetuning/2026-11-05_cls_paired_mps_full/`. Douze modèles couvrent les deux tâches, les deux régimes et les trois graines. Le [rapport généré et ses quatre cartes initiales](../reports/camelbert_finetuning_v1_2026-11-05/README.md) fournit tous les scores individuels, métriques par classe/écriture et empreintes.
+
+| Corpus | Méthode | Macro-F1 de validation |
+| --- | --- | ---: |
+| TSAC | TF-IDF caractères brut, référence fixée | 0.928898 |
+| TSAC | Gelé mean-pooling, protocole antérieur | 0.844608 ± 0.003337 |
+| TSAC | Témoin CLS gelé à budget identique | 0.605756 ± 0.003936 |
+| TSAC | CLS adapté | 0.935802 ± 0.004449 |
+| MADAR | TF-IDF caractères brut, référence fixée | 0.949244 |
+| MADAR | Gelé mean-pooling, protocole antérieur | 0.921926 ± 0.003579 |
+| MADAR | Témoin CLS gelé à budget identique | 0.482670 ± 0.034343 |
+| MADAR | CLS adapté | 0.950815 ± 0.002911 |
+
+Les écarts-types sont échantillonnaux, sur trois graines. Les moyennes adaptées dépassent numériquement TF-IDF de **0,006904** sur TSAC et **0,001571** sur MADAR ; ces faibles écarts de validation ne prouvent pas un gain sur le test ni une différence significative. Le témoin CLS court/faible learning rate est nettement inférieur à la référence gelée antérieure ; il ne doit pas être présenté comme le meilleur encodeur gelé possible.
+
+La durée réelle totale est **3757.42 secondes (62.62 minutes)**  chargements  douze apprentissages  validations et sauvegardes compris ; installation  smoke  rejeu et export ultérieurs sont exclus. Le pic RSS du processus est **1 685 798 912 octets**.
+Le maximum échantillonné MPS atteint **1 781 848 576 octets** de tenseurs et **6 090 227 712 octets** côté pilote. Ce sont des maxima observés après backward/step  pas un pic absolu garanti ; ils ne s’additionnent pas au RSS sur mémoire unifiée Apple.
+Les sous-dossiers adaptés occupent environ **438 Mo chacun**, tokenizer et journaux compris ; un témoin ne sauvegarde que sa tête avec les métadonnées et le tokenizer, en réutilisant la base exacte.
+
+Les douze checkpoints ont été rechargés et leurs **15 444 prédictions de validation** rejouées (1 774 × 6 pour TSAC et 800 × 6 pour MADAR). Tous les labels et probabilités correspondent, différence absolue maximale observée **0** ; la tolérance annoncée reste 1e-4. Les dix premières sorties de chaque modèle sont aussi explicitement contrôlées. Le rapport vérifie l’alignement des identifiants/groupes/labels avec la référence TF-IDF et celui des partitions avec BiGRU/mean-pooling.
+
+Le notebook a été exécuté dans le noyau réel en **replay FULL** : quatre cellules, douze modèles vérifiés et douze PNG affichés. L’entraînement lui-même a été lancé par le script ; ce replay n’est pas un second entraînement natif. Preuve privée : `outputs/notebook_checks/2026-11-05/finetuning_native_full_replay.json`. Les douze figures sont liées au même results.json par empreinte ; quatre figures représentatives ont été inspectées visuellement.
+
+### Limite du journal initial et correction
+
+Ce premier run conserve pertes et macro-F1 à chaque époque, mais les scores par classe et les prédictions ne sont archivés que pour le checkpoint retenu. Les détails des autres époques n’ont pas été conservés et **ne sont pas inventés rétroactivement**. C’est une limite à lever pour les runs finaux exigés au cahier.
+
+Le producteur a été corrigé **après** ce run : il enregistre désormais métriques par classe et prédictions à chaque époque. Le vérificateur recalcule ces métriques lorsqu’elles existent et signale leur absence pour les anciens runs. Deux tests ciblés couvrent ce contrôle et le rejet de données incohérentes. Un nouveau smoke intégré (`2026-11-05_cls_epochlogs_mps_smoke`, 22,1 s) conserve et fait recalculer les métriques/prédictions de ses huit époques, avec quatre modèles rechargés ; il ne remplace pas le run complet historique.
+
+Les sources exactes du run initial, sa configuration et son protocole sont archivés sous `outputs/encoder_finetuning/source_snapshots/2026-11-05_initial/` ; leurs empreintes correspondent à celles enregistrées au lancement. Le vérificateur actuel possède sa propre empreinte. Aucun poids ou score initial n’est écrasé.
 
 ## Utilisation du notebook et des scripts
 
-Le [notebook06](../notebooks/06_fine_tuning_encodeur.ipynb) garde le noyau **TuniScope (notebooks)**. Son bridge délègue les calculs au profilencodeur : il n'est pas nécessaire d'ajouterTorch au noyau existant.
+Le [notebook 06](../notebooks/06_fine_tuning_encodeur.ipynb) garde le noyau **TuniScope (notebooks)**. Son bridge délègue les calculs au profilencodeur : il n'est pas nécessaire d'ajouterTorch au noyau existant.
 
 - `TRAINING_MODE='full'`, valeur par défaut : nouveau contrôle100lignes, puis tout le train/validation, graines13/42/2026, contrôle de rechargement et figures. `REGIME='paired'` produit douze modèles ; `finetuned` produit les six adaptés seulement.
 - `smoke` : petit contrôle uniquement, identifié comme tel dans les tableaux/figures.
@@ -59,7 +88,7 @@ sh scripts/encoder_uv.sh run --locked --offline python scripts/verify_encoder_fi
 sh scripts/encoder_uv.sh run --locked --offline python scripts/encoder_finetuning_inference.py --checkpoint outputs/encoder_finetuning/2026-11-05_cls_paired_mps_full/tsac_finetuned_seed_42 --text 'الخدمة باهية برشا'
 ```
 
-Ce texte d'inférence est inventé ; ce n'est pas un score de benchmark. Les commandes sur leFULL nécessitent qu'il soit terminé.
+Ce texte d'inférence est inventé ; ce n'est pas un score de benchmark. Le run complet indiqué est désormais terminé et vérifié.
 
 Pour suivre un entraînement long avant l'apparition de `results.json` :
 

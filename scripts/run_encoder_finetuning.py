@@ -61,6 +61,7 @@ def run(mode,regime,output,device_request=None,smoke_run=None):
     output.mkdir(parents=True);tick=time.perf_counter()
     tokenizer,_,_=load_tokenizer()
     result={'mode':mode,'regime':regime,'device':str(device),'config':config,'test_loaded':False,'directory':str(output),
+            'history_schema':'per-epoch-class-metrics-and-predictions-v2',
             'created_at_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),'python':platform.python_version(),
             'packages':{p:importlib.metadata.version(p) for p in ('torch','transformers','tokenizers','numpy','scikit-learn')},
             'environment_lock_sha256':sha256(ROOT/'environments/encoder/uv.lock'),
@@ -91,6 +92,12 @@ def run(mode,regime,output,device_request=None,smoke_run=None):
                     val=evaluate(model,val_x,val_y,tokenizer,labels,config,device)
                     score=val['metrics']['macro_f1'];history.append({'epoch':epoch,'train':trained,'validation_loss':val['loss'],
                                                                  'validation_macro_f1':score,'validation_seconds':val['seconds']})
+                    epoch_predictions=f'epoch_{epoch}_predictions.json'
+                    save(target/epoch_predictions,[{'id':row['id'],'group_id':row['group_id'],'truth':row['label'],
+                        'predicted':predicted,'probabilities':probabilities}
+                        for row,predicted,probabilities in zip(validation,val['predicted'],val['probabilities'])])
+                    history[-1]['validation_metrics']=val['metrics']
+                    history[-1]['validation_predictions']=epoch_predictions
                     print(f'  époque{epoch} | perte train{trained["loss"]:.4f} | val{val["loss"]:.4f}'
                           f' | macro-F1{score:.6f} | train{trained["seconds"]:.1f}s | val{val["seconds"]:.1f}s',flush=True)
                     if score>best:
