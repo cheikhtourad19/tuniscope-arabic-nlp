@@ -1,0 +1,15 @@
+{
+  "version": "camelbert-learning-rate-screening-v1",
+  "base_config": "configs/camelbert_finetuning_v1.json",
+  "base_config_sha256": "0dbad1109829b2ce3ca1c9f7634ebfb2c7751e9a8374a4e35a914ab04305249e",
+  "learning_rates": [0.00001, 0.00002, 0.00005],
+  "screening_seed": 42,
+  "corpora": ["tsac", "madar"],
+  "full_regime": "finetuned",
+  "smoke_regime": "paired",
+  "selection_metric": "validation_macro_f1",
+  "selection_per_corpus": true,
+  "tie_break": "smaller_learning_rate",
+  "confirmation_seeds": [13, 42, 2026],
+  "protocol": "docs/52_protocole_selection_encodeur.md"
+}

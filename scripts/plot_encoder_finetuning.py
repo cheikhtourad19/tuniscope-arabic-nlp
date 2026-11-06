@@ -35,7 +35,8 @@ def export(directory):
         for i in range(len(labels)):
             for j in range(len(labels)):
                 axes[2].text(j,i,str(matrix[i][j]),ha='center',va='center',color='white' if matrix[i][j]>maximum/2 else 'black')
-        fig.suptitle(f'CAMeLBERT CLS — {r["corpus"].upper()} — {r["regime"]} — graine{r["seed"]} — {d["mode"]}\n'
+        scope=d.get('experiment_scope','initial')
+        fig.suptitle(f'CAMeLBERT CLS — {r["corpus"].upper()} — {r["regime"]} — graine{r["seed"]} — {d["mode"]} / {scope} — LR{d["config"]["learning_rate"]:g}\n'
                      +('Essai technique100 lignes/partition ; aucun résultat FULL' if d['mode']=='smoke' else 'Validation v2 ; test officiel non évalué'))
         name=f'{r["checkpoint"]}.png';fig.savefig(target/name,dpi=160);plt.close(fig);provenance['files'][name]=sha256(target/name)
     save(target/'provenance.json',provenance);print(f'Images enregistrées : {target}');return target

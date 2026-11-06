@@ -366,3 +366,74 @@ Créer une entrée pour chaque expérience significative.
 - Résumé des résultats : 324 formes identiques train–test après NFKC/espaces regroupés (467 lignes test) ; 124 paires supplémentaires candidates, concernant 98 lignes test. Deux paires candidates peuvent rapprocher des labels opposés.
 - Erreurs et observations : dépistage conservateur et non exhaustif ; 139 formes test très courtes exclues de la recherche de quasi-doublons, mais non des contrôles exacts. Aucune paire candidate n'a été validée humainement.
 - Décision ou prochaine action : revue privée des cas et politique de décontamination avant les manifestes. Voir `docs/05_data_audit_near_duplicate_screen.md`.
+
+
+## 2026-11-05 — Précontrôles Kaggle T4 et chargement v2 (sorties transmises par nous)
+
+- Provenance : cellules exécutées manuellement sur notre compte Kaggle ; sorties copiées dans la conversation, pas de réexécution locale ni de JSON cloud rapatrié à ce stade. Commit distant utilisé : `5e7768e25d6804953efcbf9851ed3230081a523e`.
+- Environnement isolé encodeur installé depuis le verrou : Python3.12.15, PyTorch2.15.0+cu132. DeuxTeslaT4 détectés ; un seul utilisé par le contrôle, pilote580.178.04. Le noyau Kaggle Python3.13.16/PyTorch2.11.0+cu130 reste distinct.
+- Modèle : CAMeLBERT Mix, révision9be352797bdf28a9ae21e2ae582aaaca7abdb22d, poids438873130octets et SHA-256d234e4fe0193e74036b1db72ba9b41a2e4921d8cf0c3c421d1f6a6d8816af729 contrôlés par le script.
+- Probe : une étape forward/backward/AdamW FP32, lot8×128 sur entrées inventées, sans corpus ; réussite en0.40389209s. Pics CUDA alloués2208727040octets, réservés2353004544octets aprèsstep. Ce probe unique ne mesure pas un débit représentatif et ne prouve pas un gain de vitesse face au Mac. Première tentative : calcul terminé, sauvegarde échouée faute de dossier ; nouvelle exécution après création du dossier réussie.
+- Données : liens vers les sources Kaggle privées, contrôle des empreintes des fichiers utilisés par le chargeur et manifestesv2. Effectifs confirmés TSAC10053train/1774validation, MADAR6388/800 ; zéro groupe commun train/validation pour chaque corpus, aucune ligne de test sélectionnée. Aucun changement des sources, labels ou partitions.
+- Suite : smoke apparié100lignes/partition/tâche avec rechargement ; non exécuté à la rédaction de cette entrée. Aucun score de classification cloud, entraînement complet CUDA, comparaison de débit ou usage du deuxièmeGPU revendiqué. L12 demeure partiel.
+
+
+## 2026-11-05 — Smoke CAMeLBERT CLS apparié sur Kaggle T4
+
+- Preuve : sortie console transmise depuis Kaggle, conservée en pièce jointe à la conversation ; results.json et verification.json non rapatriés à ce stade. Environnement, commit et révision du modèle : précontrôles ci-dessus.
+- Commandes : run_encoder_finetuning.py --mode smoke --regime paired --device cuda, puis verify_encoder_finetuning.py --device cuda. Dossier distant outputs/encoder_finetuning/kaggle_t4_paired_smoke.
+- Plan : TSAC/MADAR, 100exemples par partition et tâche, graine42, deux époques, témoinCLSgelé et adaptationcomplète ; quatre modèles. Aucun test officiel évalué ; un seulT4 utilisé.
+- Macro-F1/accuracy/époque retenue : TSACgelé0.328859/0.490000/1, TSACadapté0.612403/0.620000/2, MADARgelé0.168543/0.230000/2, MADARadapté0.825919/0.830000/2. Scores techniques de petit échantillon, pas de résultats FULL.
+- Rechargement : console « Verified smoke: 4 modèles, validation entière, gradients, poids et rechargement ». Vérification effectuée sur Kaggle, pas de replay indépendant local revendiqué.
+- Durée du run43.7s, hors vérification ultérieure. Dernière époque adaptée : TSACtrain1.1s/val0.3s, MADARtrain0.9s/val0.2s (console arrondie). Référence MPS locale avec journal corrigé22.061s total, dernière époque adaptée TSAC2.116272s/MADAR1.607703s ; environ1.9×/1.8× plus rapide sur la seule boucle train de cet échantillon, pas une mesure du facteur sur FULL. Le total CUDA plus long ne constitue pas une mesure du débit GPU, car il inclut chargements/empreintes/sauvegardes.
+- Limites : sorties exactes et métadonnées cloud à récupérer ; aucune équivalence bit à bit entre appareils attendue ni extrapolation garantie. Messages de tête nouvellement initialisée et suggestion tokenizer sans échec. Contrôle initial CUDA réussi ; L12 reste partiel, runs finaux/cloud complets et reproductibilité indépendante restent ouverts.
+
+
+## 2026-11-05 — Import et contrôle local des preuves Kaggle
+
+- Archive reçue : tuniscope_kaggle_preuves.zip, SHA-256 `fcfee3bceb63cd38c81910440acb9cc226e1d33a2642d766e01e59d03a8568bc`. Résultats SHA-256 `2c3a599d16c2c52b5b9b46c26ea0fdbac46910fad7e0b253fe27e0bab07b07a8`. Trois membres : results.json, verification.json, summary.txt ; copies exactes sous outputs/cloud_checks/2026-11-05/kaggle_t4_paired_smoke.
+- Vérifications locales : intégrité ZIP et empreinte résultats/preuve, quatre modèles attendus, configuration identique au smoke MPS corrigé, code identique au commit enregistré et aux sources locales, empreintes protocole/verrous/manifestes, mêmes résumés et identifiants de partitions. Accuracy, balanced accuracy, macro-F1 et métriques de chaque classe recalculées depuis les quatre matrices. Relevé privé received_evidence_checks.json.
+- Preuve distante : quatre checkpoints rechargés, 400prédictions identiques (écartprobabilitémax0), huit époques vérifiées. Les poids/prédictions/journaux ne sont pas dans cette archive ; aucun rejeu local indépendant ni recalcul des huit époques revendiqué.
+- Mesures exactes : CUDA43.743976749s total, référence MPS22.061001792s. Dernière époque adaptée TSACCUDA1.143186680s/MPS2.116272042s (ratio1.851204), MADARCUDA0.894860299s/MPS1.607703250s (ratio1.796597). Les temps totaux incluent les opérations hors boucle, non détaillées ; pas de facteur garanti sur FULL ni de benchmark répété.
+- Documentation : docs/49_controle_kaggle_cuda.md, tableau généré depuis les JSON contrôlés. Aucun nouvel entraînement ; L05/L12 partiels. Compatibilité CUDA initiale établie ; prochaine étape proposée : analyse des erreurs du FULL existant, sans répéter les douze modèles.
+
+
+## 2026-11-05 — Comparaison quantitative des erreurs encodeur / TF-IDF
+
+- Objectif : comprendre les recouvrements d’erreurs entre les prédictions FULL raw-v0 de CAMeLBERT adapté et TF-IDF caractères, sur les mêmes validationsv2 ; aucune nouvelle inférence ni aucun entraînement.
+- Script : scripts/compare_encoder_errors.py ; commande par le profil classique verrouillé, paramètres par défaut vers les deux runs historiques complets, sortie reports/encoder_vs_tfidf_2026-11-05.
+- Contrôles : empreintes des prédictions et manifestes, preuve antérieure de rejeu encodeur reliée à results.json, alignement strict des identifiants/groupes/labels avec les sources de validation, métriques recalculées ; troisgraines13/42/2026 conservées. Quatre tests ciblés passent (quatre issues disjointes, désalignement, identifiants répétés, effectifs manquants).
+- Résultats générés, erreursTF-IDF/encodeur/corrigées/introduites/communes : TSAC13=126/109/87/70/39 ; TSAC42=126/122/85/81/41 ; TSAC2026=126/109/81/64/45. MADAR13=39/35/26/22/13 ; MADAR42=39/38/23/22/16 ; MADAR2026=39/40/27/28/12. Les quatre catégories (avec correctes pourlesdeux) couvrent1774/800exemples respectivement.
+- Limites : conformité aux labels du corpus, sans réannotation humaine ; les nombres désignent des exemples et non des catégories linguistiques. Aucun choix de meilleure graine, hypothèse sémantique ou test officiel. L07/L10 restent partiels : préparer puis examiner au moins30erreurs distinctes par tâche reste à faire.
+
+
+## 2026-11-06 — Préparation de la revue qualitative des erreurs encodeur
+
+- Objectif : préparer30erreurs distinctes par tâche pour revue humaine, avec graine42 fixe et contexteTF-IDF/13/2026 ; aucune nouvelle inférence ni entraînement. Sources : runs FULL v2 précédemment vérifiés, raw-v0, validation uniquement.
+- Export : scripts/export_encoder_error_review.py, profil classique verrouillé. Hashes des prédictions/manifestes et preuve antérieure de rechargement contrôlés, identifiants/groupes/labels alignés, métriques des trois graines recalculées. Sélection technique SHA256(42|id), strates comparaison/confusion/écriture, rotation avec groupes et textes NFC/espaces distincts.
+- Sélection : TSAC30sur122erreurs (15communes/15introduites,15AR/15LATIN) ; MADAR30sur38 (11communes/19introduites,30AR). Ces quotas qualitatifs ne représentent pas une prévalence de catégories linguistiques.
+- Classeur privé : outputs/01a0fda5-3c22-72f3-99cd-53dca78016f4/encoder_error_review_2026-11-06/TuniScope_revue_erreurs_encodeur.xlsx. SHA-256initial683e0b3ff5b58be7634f491cc9a8a8f0e4d31a2a2d775c9d856de9d4971a255e. Créé avec le runtime artifact-tool fourni, code scripts/build_encoder_error_review_workbook.mjs.
+- Vérification : trois tests ciblés passent ; 60cas,180celluleshumaines vides ; sources relues identiques après export/import, aucune formule dans les lignes de cas, listes déroulantes, volets figés, compteur partiel/complet contrôlés puis saisies fictives effacées. Deux aperçus et deux textes les plus longs inspectés. Scan0erreur, XMLcontrôlé indépendamment, preuves privées workbook_verification.json et independent_ooxml_checks.json.
+- Documentation : docs/50_preparation_revue_erreurs_encodeur.md ; guide privé explanation NLP/24_revue_erreurs_encodeur.md. Aucune catégorie/hypothèse humaine préremplie, aucune source/partition/test/modèle applicatif modifié. L05/L07/L10partiels ; saisie humaine puis import contrôlé restent à faire.
+
+
+## 2026-11-06 — Analyse assistée des 60 erreurs encodeur
+
+- Déclencheur : délégation explicite de la saisie des avis/catégories/hypothèses. Aucun nouvel entraînement, aucune nouvelle inférence, aucune nouvelle sélection ; mêmes60cas de validationFULLv2 et graine42.
+- État source vérifié : zéro champ humain rempli ; classeur original SHA256683e0b3ff5b58be7634f491cc9a8a8f0e4d31a2a2d775c9d856de9d4971a255e conservé avec instantané. Copie assistée TuniScope_analyse_erreurs_encodeur_assistee.xlsx SHA256ef4ec8f770db759c5d281c76d8f8959ef6f1a2ead0be830d9e2452706940bdc0 dans le même dossier privé.
+- Origine des champs :60avis,60catégories,60hypothèses ajoutés par IA, zéro validation humaine indépendante. Propositions par cas et registre privés, toutes hypothèses préfixées IA ; mentions visibles et compteur « Cas documentés ».
+- Avis proposés : TSAC24plausibles/3discutables/3incertains ; MADAR18plausibles/0discutable/12incertains. Les trois réserves TSAC ne sont pas des erreurs d’annotation établies. Aucune modification de label ou recalcul avec labels corrigés.
+- Contrôles : tests synthétiques de conservation/saisie partielle/validation des champs ; source et180champs relus après export/import. XMLindépendant :480cellulessources identiques, largeurs/listes/volets/formules préservés, deuxcompteurs30, scan0erreur. Quatre visuels inspectés, hauteurs adaptées aux explications. Original inchangé à la fin.
+- Sorties publiques agrégées générées : reports/encoder_errors_assisted_2026-11-06/ ; protocole et limites doc51, guideprivé24 actualisé. Les pourcentages de catégories ne représentent pas leur prévalence dans le corpus. L07/L10partiels ; pas d’accord humain/IA, de cause neuronale établie, d’évaluationtest ni de changementdesmodèlesapplicatifs.
+
+
+## 2026-11-06 — Préparation et smoke du criblage des taux encodeur
+
+- Décision avant nouveaux scores : protocole52 et configs/camelbert_screening_v1.json, candidats1e-5/2e-5/5e-5, seule modification du taux ; raw-v0/v2, même source/base/classes/longueur128/lot8accum2/AdamW/plafond3époques. CriblageFULLsur42, sélectionmacroF1par tâche, égalitéexacte départagée par pluspetittaux. Confirmation13/42/2026distincte.
+- Implémentation : nouveau périmètre screening explicite, execution_seeds=[42], ancien périmètreinitialFULLconserve3graines. Smokeapparié vérifié avec journaux parépoque requis avantchaqueFULLadapté. Nouveau workflow run_encoder_screening.py contrôle les3candidats, les sources/prédictions/métriques/empreintes/appareil/initialisations et refuse sélection sursmoke. Profil et dépendances inchangés.
+- Exécution réelle CLI MPS --mode smoke : outputs/encoder_finetuning/screening/2026-11-06_lr_screen_mps_smoke. Trois petits essais100lignes/partition/tâche, chacun4modèles,2époques,42. Durées desruns26.992807917s/25.431034000s/24.947803708s ; excluentrejeu/exportultérieurs. Douze modèles rechargés et24époques contrôlées,12figureshashées. Aucune sélection ni résultatFULLdecriblage.
+- Notebook07 : FULLpar défaut (sixadaptations +contrôles), smoke/replay/off explicites, mêmebridgeprofil séparé, tableauxMarkdownetPNG. Exécution dans vraikernelJupyter en replay de la campagneSMOKE :4codecells/12images. Preuve outputs/notebook_checks/2026-11-06/screening_native_smoke_replay.json. Ce n’est pas un entraînementFULLnatif.
+- Vérification :13nouveaux tests ciblés (5plan/2séquencement-échec/4notebook/2lienssources) et14régressions (9moteur/5anciennotebook) passent. Deux défauts initiaux des fixtures corrigés (protocole absent dans racine temporaire, aliasmacOS/private/var) ; aucun score ou entraînement modifié par ces corrections. Injectionsenmémoire rejetées :smoke présentéfull, sélectionsmoke et métriqueincohérente ; fichiersoriginauxinchangés. Douze figures vérifiées et3représentatives inspectées.
+- Sources exactes testées archivées sous outputs/encoder_finetuning/source_snapshots/2026-11-06_screening/. InitialFULLresultsSHA803302b9b55d9164c3a2a90b262fc6d88ffd3096a7b63ec8dc67934b6800f1d2/config0dbad1109829b2ce3ca1c9f7634ebfb2c7751e9a8374a4e35a914ab04305249e/verrouCPU/encodeur inchangés.
+- PréparationKaggle : prepare_kaggle_sources.py raccorde seulement lesdonnées déposées manuellement et vérifieempreintes/effectifs/groupes ; tests synthétiques seulement pour ce nouveau helper, exécution réellesourcesKaggle encoreàfaire. Notebook07/workflow complet nouveau nonexécutés surCUDA àcestade, malgré compatibilitéinitiale doc49.
+- Choix utilisateur : « Kaggle — je lancerai le notebook sur T4 ». AucunFULLlancé surMac. Prochaine action : enregistrer/pousser lecode, actualiserlecloneKaggle, puis exécuter07full ; sixmodèlescomplets sur42, sélectionexploratoire puis confirmationtroisgraines séparée. L05/L07/L12restentpartiels. Docs52/53 et guideprivé25.

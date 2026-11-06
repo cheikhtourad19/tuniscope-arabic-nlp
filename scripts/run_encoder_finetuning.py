@@ -20,13 +20,14 @@ from fetch_camelbert_encoder import sha256
 from frozen_encoder import state_digest
 from encoder_finetuning import build_model,set_regime,tokens,evaluate,train_epoch,transformer_probe,device_memory
 from run_frozen_encoder import save
+from encoder_screening_plan import (PLAN, effective_config, execution_seeds,
+                                    study_plan, validate_effective_config)
 CONFIG=ROOT/'configs/camelbert_finetuning_v1.json'
-CODE=('encoder_finetuning.py','run_encoder_finetuning.py','verify_encoder_finetuning.py','encoder_finetuning_inference.py')
+CODE=('encoder_finetuning.py','run_encoder_finetuning.py','verify_encoder_finetuning.py','encoder_finetuning_inference.py','encoder_screening_plan.py')
 
 
-def validate_config(c):
-    if c!=json.loads(CONFIG.read_text()) or c['manifest_version']!='v2' or c['variant']!='raw-v0':
-        raise ValueError('Expected fixed native CLS fine-tuning protocol')
+def validate_config(c,experiment_scope='initial'):
+    validate_effective_config(c,experiment_scope)
 
 
 def artifacts(directory):
@@ -34,9 +35,11 @@ def artifacts(directory):
 
 
 def describe(d):
-    lines=[f'CAMeLBERT CLS — {d["mode"].upper()} — {d["regime"]} — {d["device"]}',
+    scope=d.get('experiment_scope','initial')
+    lines=[f'CAMeLBERT CLS — {d["mode"].upper()} — {scope} — {d["regime"]} — {d["device"]}',
            'Train/validation v2 ; test officiel non évalué.',
            'Corpus  Régime      Graine  Macro-F1  Accuracy  Époque  Paramètres entraînables']
+    if scope=='screening':lines.insert(2,f'Criblage exploratoire : graine42 seulement ; learning rate={d["config"]["learning_rate"]:g}.')
     for r in d['results']:
         lines.append(f'{r["corpus"].upper():<8}{r["regime"]:<12}{r["seed"]:<8}{r["metrics"]["macro_f1"]:<10.6f}'
                      f'{r["metrics"]["accuracy"]:<10.6f}{r["best_epoch"]:<8}{r["trainable_parameters"]}')
@@ -45,9 +48,11 @@ def describe(d):
     return '\n'.join(lines)
 
 
-def run(mode,regime,output,device_request=None,smoke_run=None):
-    config=json.loads(CONFIG.read_text());validate_config(config)
+def run(mode,regime,output,device_request=None,smoke_run=None,*,experiment_scope='initial',learning_rate=None):
+    config=effective_config(experiment_scope,learning_rate);validate_config(config,experiment_scope)
     if mode not in {'smoke','full'} or regime not in {'paired','frozen','finetuned'}:raise ValueError('Invalid mode/regime')
+    if experiment_scope=='screening' and regime!=('paired' if mode=='smoke' else 'finetuned'):
+        raise ValueError('Screening requires paired smoke and finetuned FULL')
     output=output.resolve()
     if (ROOT/'outputs/encoder_finetuning').resolve() not in output.parents or output.exists():raise ValueError('Choose a new private run directory')
     set_seed(config['smoke_seed'],config['cpu_threads']);device=resolve_device(device_request or config['device'])
@@ -56,11 +61,16 @@ def run(mode,regime,output,device_request=None,smoke_run=None):
         pre=json.loads((smoke_run/'results.json').read_text());proof=json.loads((smoke_run/'verification.json').read_text())
         if (pre['mode']!='smoke' or pre['config']!=config or pre['regime']!='paired' or pre['device']!=str(device)
                 or proof['results_sha256']!=sha256(smoke_run/'results.json')):raise ValueError('Smoke configuration/device/verification mismatch')
+        if experiment_scope=='screening' and (pre.get('experiment_scope')!='screening'
+                or proof.get('epoch_class_metrics_complete') is not True or proof['models_replayed']!=4
+                or proof['device']!=str(device)):
+            raise ValueError('Screening requires a verified paired smoke with complete epoch logs')
     regimes=['frozen','finetuned'] if regime=='paired' else [regime]
-    seeds=[config['smoke_seed']] if mode=='smoke' else config['seeds']
+    seeds=execution_seeds(mode,experiment_scope,config)
     output.mkdir(parents=True);tick=time.perf_counter()
     tokenizer,_,_=load_tokenizer()
     result={'mode':mode,'regime':regime,'device':str(device),'config':config,'test_loaded':False,'directory':str(output),
+            'experiment_scope':experiment_scope,'execution_seeds':seeds,
             'history_schema':'per-epoch-class-metrics-and-predictions-v2',
             'created_at_utc':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),'python':platform.python_version(),
             'packages':{p:importlib.metadata.version(p) for p in ('torch','transformers','tokenizers','numpy','scikit-learn')},
@@ -72,6 +82,14 @@ def run(mode,regime,output,device_request=None,smoke_run=None):
             'git_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
             'git_dirty':bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True)),
             'results':[],'smoke_run':str(smoke_run) if smoke_run else None}
+    result['hardware']={'machine':platform.machine(),'device':str(device)}
+    if device.type=='cuda':
+        properties=torch.cuda.get_device_properties(device)
+        result['hardware'].update(gpu_name=properties.name,total_memory_bytes=properties.total_memory,
+                                  logical_device_index=torch.cuda.current_device(),visible_gpus=torch.cuda.device_count())
+    if experiment_scope=='screening':
+        plan=study_plan();result['study_plan_sha256']=sha256(PLAN)
+        result['protocol_sha256']=sha256(ROOT/plan['protocol'])
     for corpus in config['corpora']:
         train,validation=partitions(corpus,mode,config);labels=config['labels'][corpus]
         train_x=tokens(train,tokenizer,config);val_x=tokens(validation,tokenizer,config)
@@ -155,4 +173,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--mode',choices=['smoke','full'],required=True)
     p.add_argument('--regime',choices=['paired','frozen','finetuned'],default='paired');p.add_argument('--output',type=Path,required=True)
     p.add_argument('--device',choices=['auto','cpu','mps','cuda']);p.add_argument('--smoke-run',type=Path)
-    a=p.parse_args();run(a.mode,a.regime,a.output,a.device,a.smoke_run)
+    p.add_argument('--experiment-scope',choices=['initial','screening'],default='initial')
+    p.add_argument('--learning-rate',type=float)
+    a=p.parse_args();run(a.mode,a.regime,a.output,a.device,a.smoke_run,
+                        experiment_scope=a.experiment_scope,learning_rate=a.learning_rate)

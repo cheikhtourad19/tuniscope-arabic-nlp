@@ -1,0 +1,80 @@
+{
+  "schema": "encoder-error-assisted-review-v1",
+  "human_validation_of_ai_additions": false,
+  "causal_explanations_established": false,
+  "official_test_rows_selected": 0,
+  "reference_seed": 42,
+  "source_workbook_sha256": "683e0b3ff5b58be7634f491cc9a8a8f0e4d31a2a2d775c9d856de9d4971a255e",
+  "assisted_workbook_sha256": "ef4ec8f770db759c5d281c76d8f8959ef6f1a2ead0be830d9e2452706940bdc0",
+  "payload_sha256": "2bba16ff8b867f347e69de0325d4b1699e0acd548c524f98f07b80e2cc87e1a9",
+  "proposals_sha256": "cbd23343cb36bed7aa88df44dc57f1b14fc0a2d6a57a5e0f536a88e5e719621e",
+  "script_sha256": "3ed0265a1ea3a8efad3e915b71dbf3b700c7e6977a857f9a4b66715dbd6376e7",
+  "tasks": {
+    "tsac": {
+      "cases": 30,
+      "label_opinions": {
+        "Incertain": 3,
+        "Label plausible": 24,
+        "Label discutable": 3
+      },
+      "categories": {
+        "Expression inconnue": 6,
+        "Avis mixte / ambigu": 7,
+        "Orthographe / Arabizi": 7,
+        "Manque de contexte": 3,
+        "Négation": 5,
+        "Autre": 1,
+        "Ironie / sarcasme": 1
+      },
+      "priority_reservations": [
+        "ENC-TSAC-03",
+        "ENC-TSAC-09",
+        "ENC-TSAC-23"
+      ],
+      "authorship": {
+        "label_opinion": {
+          "human": 0,
+          "ai": 30
+        },
+        "category": {
+          "human": 0,
+          "ai": 30
+        },
+        "hypothesis": {
+          "human": 0,
+          "ai": 30
+        }
+      }
+    },
+    "madar": {
+      "cases": 30,
+      "label_opinions": {
+        "Label plausible": 18,
+        "Incertain": 12
+      },
+      "categories": {
+        "Orthographe / morphologie": 11,
+        "Variétés proches / texte commun": 11,
+        "Texte très court": 3,
+        "Lexique partagé": 3,
+        "Manque de contexte": 1,
+        "Autre": 1
+      },
+      "priority_reservations": [],
+      "authorship": {
+        "label_opinion": {
+          "human": 0,
+          "ai": 30
+        },
+        "category": {
+          "human": 0,
+          "ai": 30
+        },
+        "hypothesis": {
+          "human": 0,
+          "ai": 30
+        }
+      }
+    }
+  }
+}

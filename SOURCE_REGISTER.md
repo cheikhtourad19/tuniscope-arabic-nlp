@@ -21,6 +21,12 @@ Ce registre consigne l'accès aux corpus, leurs conditions d'utilisation et les 
 
 ## Décision à l'issue de S1
 
+### Conditionnement privé pour Kaggle — 5 novembre 2026
+
+Kaggle a refusé l'archive MADAR à cause de deux membres `Icon\r` dont le nom contient un retour chariot. Nous conservons l'archive officielle intacte et créons une copie privée sous `data/raw/madar/kaggle/MADAR.Parallel-Corpora-Public-Version1.1-25MAR2021.zip`, sans ces deux fichiers ni le fichier AppleDouble sous `__MACOSX/`. Ce changement concerne uniquement les métadonnées macOS : les 33 membres conservés, dont les textes et la licence, sont vérifiés identiques octet par octet. L'intégrité ZIP est vérifiée.
+
+SHA-256 de la copie pour dépôt : `4659df047bf7d68da08cf75625a5182c354599fc3092370c0b3ddc5c85fb0666`. L'empreinte officielle ci-dessus reste celle de l'original ; elle ne doit pas être appliquée à cette copie. Les vérifications des fichiers sources restent inchangées. Preuve privée : `data/raw/madar/kaggle/packaging_verification.json`. TSAC ne contient aucun membre de ce type et conserve son archive originale. Cette préparation contribue à L12 ; le dépôt Kaggle et le chargement des corpus restent à vérifier.
+
 - Variété : MADAR Corpus-26 ; accès, conditions d'usage, intégrité et fichiers requis vérifiés.
 - Sentiment : TSAC ; accès, licence affichée par le dépôt, intégrité et fichiers étiquetés vérifiés.
 - Les corpus bruts restent hors de Git ; les manifestes sans texte protégé, empreintes, scripts et documents peuvent être versionnés.

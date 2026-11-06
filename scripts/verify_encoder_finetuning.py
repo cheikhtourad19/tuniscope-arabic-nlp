@@ -15,6 +15,7 @@ from encoder_finetuning import evaluate,tokens,transformer_probe
 from encoder_finetuning_inference import load_checkpoint
 from fetch_camelbert_encoder import sha256
 from run_encoder_finetuning import validate_config,describe
+from encoder_screening_plan import PLAN, execution_seeds, study_plan
 from run_frozen_encoder import save
 from verify_bigru import compare_nested
 
@@ -46,8 +47,14 @@ def verify_epoch_metrics(checkpoint,epoch,rows,labels):
 
 
 def verify(directory,device_request=None):
-    directory=directory.resolve();d=json.loads((directory/'results.json').read_text());config=d['config'];validate_config(config)
+    directory=directory.resolve();d=json.loads((directory/'results.json').read_text());config=d['config']
+    scope=d.get('experiment_scope','initial');validate_config(config,scope)
     if d['test_loaded'] is not False or d['mode'] not in {'smoke','full'}:raise ValueError('Invalid mode/test boundary')
+    if scope=='screening':
+        if d['study_plan_sha256']!=sha256(PLAN) or d['protocol_sha256']!=sha256(ROOT/study_plan()['protocol']):
+            raise ValueError('Screening plan/protocol changed')
+        if d['regime']!=('paired' if d['mode']=='smoke' else 'finetuned'):
+            raise ValueError('Wrong screening regime')
     if sha256(ROOT/'environments/encoder/uv.lock')!=d['environment_lock_sha256']:raise ValueError('Encoder lock changed')
     for name,expected in d['other_locks_sha256'].items():
         if sha256(ROOT/name)!=expected:raise ValueError('Existing environment lock changed')
@@ -55,7 +62,8 @@ def verify(directory,device_request=None):
         if importlib.metadata.version(p)!=v:raise ValueError('Package changed')
     for n,h in d['artifacts'].items():
         if sha256(artifact(directory,n))!=h:raise ValueError(f'Artifact changed: {n}')
-    seeds=[42] if d['mode']=='smoke' else [13,42,2026]
+    seeds=execution_seeds(d['mode'],scope,config)
+    if 'execution_seeds' in d and d['execution_seeds']!=seeds:raise ValueError('Wrong declared execution seeds')
     regimes=['frozen','finetuned'] if d['regime']=='paired' else [d['regime']]
     expected={(c,s,r) for c in ('tsac','madar') for s in seeds for r in regimes}
     if len(d['results'])!=len(expected) or {(r['corpus'],r['seed'],r['regime']) for r in d['results']}!=expected:raise ValueError('Incomplete/duplicate results')
@@ -104,6 +112,7 @@ def verify(directory,device_request=None):
         for arm in regimes:
             values=[r['metrics']['macro_f1'] for r in d['results'] if r['corpus']==c and r['regime']==arm]
             compare_nested(d['aggregates'][f'{c}:{arm}'],{'mean_macro_f1':statistics.mean(values),'sample_std_macro_f1':statistics.stdev(values) if len(values)>1 else None})
+    if scope=='screening' and not all(epoch_evidence):raise ValueError('Screening requires complete epoch metrics')
     save(directory/'verification.json',{'results_sha256':sha256(directory/'results.json'),'models_replayed':len(probes),
          'device':str(device),'test_loaded':False,'probes':probes,'verifier_sha256':sha256(Path(__file__)),
          'epoch_class_metrics_complete':all(epoch_evidence),
