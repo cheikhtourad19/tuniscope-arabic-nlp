@@ -16,6 +16,7 @@ from encoder_finetuning_inference import load_checkpoint
 from fetch_camelbert_encoder import sha256
 from run_encoder_finetuning import validate_config,describe
 from encoder_screening_plan import PLAN, execution_seeds, study_plan
+from encoder_confirmation_plan import PLAN as CONFIRMATION_PLAN, confirmation_plan
 from run_frozen_encoder import save
 from verify_bigru import compare_nested
 
@@ -55,6 +56,14 @@ def verify(directory,device_request=None):
             raise ValueError('Screening plan/protocol changed')
         if d['regime']!=('paired' if d['mode']=='smoke' else 'finetuned'):
             raise ValueError('Wrong screening regime')
+    if scope=='confirmation':
+        plan=confirmation_plan()
+        if (d['confirmation_plan_sha256']!=sha256(CONFIRMATION_PLAN)
+                or d['selection_report_sha256']!=plan['selection_report_sha256']
+                or d['protocol_sha256']!=sha256(ROOT/plan['protocol'])):
+            raise ValueError('Confirmation plan/source/protocol changed')
+        if d['regime']!=('paired' if d['mode']=='smoke' else 'finetuned'):
+            raise ValueError('Wrong confirmation regime')
     if sha256(ROOT/'environments/encoder/uv.lock')!=d['environment_lock_sha256']:raise ValueError('Encoder lock changed')
     for name,expected in d['other_locks_sha256'].items():
         if sha256(ROOT/name)!=expected:raise ValueError('Existing environment lock changed')
@@ -65,7 +74,7 @@ def verify(directory,device_request=None):
     seeds=execution_seeds(d['mode'],scope,config)
     if 'execution_seeds' in d and d['execution_seeds']!=seeds:raise ValueError('Wrong declared execution seeds')
     regimes=['frozen','finetuned'] if d['regime']=='paired' else [d['regime']]
-    expected={(c,s,r) for c in ('tsac','madar') for s in seeds for r in regimes}
+    expected={(c,s,r) for c in config['corpora'] for s in seeds for r in regimes}
     if len(d['results'])!=len(expected) or {(r['corpus'],r['seed'],r['regime']) for r in d['results']}!=expected:raise ValueError('Incomplete/duplicate results')
     set_seed(42,config['cpu_threads']);device=resolve_device(device_request or d['device']);probes=[]
     initials={};epoch_evidence=[]
@@ -108,11 +117,11 @@ def verify(directory,device_request=None):
                        'all_probability_max_abs_difference':difference})
         del model
         if device.type=='mps':torch.mps.empty_cache()
-    for c in ('tsac','madar'):
+    for c in config['corpora']:
         for arm in regimes:
             values=[r['metrics']['macro_f1'] for r in d['results'] if r['corpus']==c and r['regime']==arm]
             compare_nested(d['aggregates'][f'{c}:{arm}'],{'mean_macro_f1':statistics.mean(values),'sample_std_macro_f1':statistics.stdev(values) if len(values)>1 else None})
-    if scope=='screening' and not all(epoch_evidence):raise ValueError('Screening requires complete epoch metrics')
+    if scope in {'screening','confirmation'} and not all(epoch_evidence):raise ValueError('This scope requires complete epoch metrics')
     save(directory/'verification.json',{'results_sha256':sha256(directory/'results.json'),'models_replayed':len(probes),
          'device':str(device),'test_loaded':False,'probes':probes,'verifier_sha256':sha256(Path(__file__)),
          'epoch_class_metrics_complete':all(epoch_evidence),

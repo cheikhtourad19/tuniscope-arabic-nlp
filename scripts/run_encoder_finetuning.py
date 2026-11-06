@@ -22,8 +22,9 @@ from encoder_finetuning import build_model,set_regime,tokens,evaluate,train_epoc
 from run_frozen_encoder import save
 from encoder_screening_plan import (PLAN, effective_config, execution_seeds,
                                     study_plan, validate_effective_config)
+from encoder_confirmation_plan import PLAN as CONFIRMATION_PLAN, confirmation_plan
 CONFIG=ROOT/'configs/camelbert_finetuning_v1.json'
-CODE=('encoder_finetuning.py','run_encoder_finetuning.py','verify_encoder_finetuning.py','encoder_finetuning_inference.py','encoder_screening_plan.py')
+CODE=('encoder_finetuning.py','run_encoder_finetuning.py','verify_encoder_finetuning.py','encoder_finetuning_inference.py','encoder_screening_plan.py','encoder_confirmation_plan.py')
 
 
 def validate_config(c,experiment_scope='initial'):
@@ -40,6 +41,7 @@ def describe(d):
            'Train/validation v2 ; test officiel non évalué.',
            'Corpus  Régime      Graine  Macro-F1  Accuracy  Époque  Paramètres entraînables']
     if scope=='screening':lines.insert(2,f'Criblage exploratoire : graine42 seulement ; learning rate={d["config"]["learning_rate"]:g}.')
+    if scope=='confirmation':lines.insert(2,f'Confirmation : taux fixé {d["config"]["learning_rate"]:g} ; graines exécutées {d["execution_seeds"]}.')
     for r in d['results']:
         lines.append(f'{r["corpus"].upper():<8}{r["regime"]:<12}{r["seed"]:<8}{r["metrics"]["macro_f1"]:<10.6f}'
                      f'{r["metrics"]["accuracy"]:<10.6f}{r["best_epoch"]:<8}{r["trainable_parameters"]}')
@@ -48,11 +50,11 @@ def describe(d):
     return '\n'.join(lines)
 
 
-def run(mode,regime,output,device_request=None,smoke_run=None,*,experiment_scope='initial',learning_rate=None):
-    config=effective_config(experiment_scope,learning_rate);validate_config(config,experiment_scope)
+def run(mode,regime,output,device_request=None,smoke_run=None,*,experiment_scope='initial',learning_rate=None,corpus=None):
+    config=effective_config(experiment_scope,learning_rate,corpus);validate_config(config,experiment_scope)
     if mode not in {'smoke','full'} or regime not in {'paired','frozen','finetuned'}:raise ValueError('Invalid mode/regime')
-    if experiment_scope=='screening' and regime!=('paired' if mode=='smoke' else 'finetuned'):
-        raise ValueError('Screening requires paired smoke and finetuned FULL')
+    if experiment_scope in {'screening','confirmation'} and regime!=('paired' if mode=='smoke' else 'finetuned'):
+        raise ValueError('Screening/confirmation requires paired smoke and finetuned FULL')
     output=output.resolve()
     if (ROOT/'outputs/encoder_finetuning').resolve() not in output.parents or output.exists():raise ValueError('Choose a new private run directory')
     set_seed(config['smoke_seed'],config['cpu_threads']);device=resolve_device(device_request or config['device'])
@@ -61,10 +63,10 @@ def run(mode,regime,output,device_request=None,smoke_run=None,*,experiment_scope
         pre=json.loads((smoke_run/'results.json').read_text());proof=json.loads((smoke_run/'verification.json').read_text())
         if (pre['mode']!='smoke' or pre['config']!=config or pre['regime']!='paired' or pre['device']!=str(device)
                 or proof['results_sha256']!=sha256(smoke_run/'results.json')):raise ValueError('Smoke configuration/device/verification mismatch')
-        if experiment_scope=='screening' and (pre.get('experiment_scope')!='screening'
-                or proof.get('epoch_class_metrics_complete') is not True or proof['models_replayed']!=4
+        if experiment_scope in {'screening','confirmation'} and (pre.get('experiment_scope')!=experiment_scope
+                or proof.get('epoch_class_metrics_complete') is not True or proof['models_replayed']!=2*len(config['corpora'])
                 or proof['device']!=str(device)):
-            raise ValueError('Screening requires a verified paired smoke with complete epoch logs')
+            raise ValueError('This scope requires a verified paired smoke with complete epoch logs')
     regimes=['frozen','finetuned'] if regime=='paired' else [regime]
     seeds=execution_seeds(mode,experiment_scope,config)
     output.mkdir(parents=True);tick=time.perf_counter()
@@ -89,6 +91,10 @@ def run(mode,regime,output,device_request=None,smoke_run=None,*,experiment_scope
                                   logical_device_index=torch.cuda.current_device(),visible_gpus=torch.cuda.device_count())
     if experiment_scope=='screening':
         plan=study_plan();result['study_plan_sha256']=sha256(PLAN)
+        result['protocol_sha256']=sha256(ROOT/plan['protocol'])
+    if experiment_scope=='confirmation':
+        plan=confirmation_plan();result['confirmation_plan_sha256']=sha256(CONFIRMATION_PLAN)
+        result['selection_report_sha256']=plan['selection_report_sha256']
         result['protocol_sha256']=sha256(ROOT/plan['protocol'])
     for corpus in config['corpora']:
         train,validation=partitions(corpus,mode,config);labels=config['labels'][corpus]
@@ -173,7 +179,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--mode',choices=['smoke','full'],required=True)
     p.add_argument('--regime',choices=['paired','frozen','finetuned'],default='paired');p.add_argument('--output',type=Path,required=True)
     p.add_argument('--device',choices=['auto','cpu','mps','cuda']);p.add_argument('--smoke-run',type=Path)
-    p.add_argument('--experiment-scope',choices=['initial','screening'],default='initial')
+    p.add_argument('--experiment-scope',choices=['initial','screening','confirmation'],default='initial')
     p.add_argument('--learning-rate',type=float)
+    p.add_argument('--corpus',choices=['tsac','madar'])
     a=p.parse_args();run(a.mode,a.regime,a.output,a.device,a.smoke_run,
-                        experiment_scope=a.experiment_scope,learning_rate=a.learning_rate)
+                        experiment_scope=a.experiment_scope,learning_rate=a.learning_rate,corpus=a.corpus)

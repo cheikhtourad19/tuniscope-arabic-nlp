@@ -1,0 +1,15 @@
+{
+  "version": "camelbert-selected-rates-confirmation-v1",
+  "base_config_sha256": "0dbad1109829b2ce3ca1c9f7634ebfb2c7751e9a8374a4e35a914ab04305249e",
+  "selection_report": "reports/camelbert_screening_mps_2026-11-06/summary.json",
+  "selection_report_sha256": "330c5f3056c7e9ae9076889b72a86a5dd2f9b48ea2201dea7aaee1c78fe5815f",
+  "selected_learning_rates": {"tsac": 0.00005, "madar": 0.00002},
+  "corpora": ["tsac", "madar"],
+  "seeds": [13, 42, 2026],
+  "smoke_seed": 42,
+  "full_regime": "finetuned",
+  "smoke_regime": "paired",
+  "reuse_screening_checkpoints": false,
+  "reporting": "all-seeds-mean-and-sample-standard-deviation",
+  "protocol": "docs/55_protocole_confirmation_encodeur.md"
+}

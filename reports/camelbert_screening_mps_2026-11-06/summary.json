@@ -1,0 +1,116 @@
+{
+  "evidence_type": "retained-local-full-artifacts-and-replay-proofs",
+  "campaign": "outputs/encoder_finetuning/screening/notebooks/708fce3a508b4bb6b1a7d2fbce54739c_full",
+  "campaign_sha256": "a3ef18b747842e023411fb3c2a4737f4fee1ccbf66a4793f02290d4f9d20bfb8",
+  "device": "mps",
+  "scope": "screening",
+  "seed": 42,
+  "selected_learning_rates": {
+    "tsac": 5e-05,
+    "madar": 2e-05
+  },
+  "three_seed_confirmation_performed": false,
+  "test_loaded": false,
+  "agent_check": "artifact hashes, source alignment and recomputed metrics; checkpoint replays performed by the user-started pipeline",
+  "models_verified": 6,
+  "full_epochs_with_metrics_checked": 18,
+  "figure_hashes_checked": 6,
+  "comparisons": [
+    {
+      "learning_rate": 1e-05,
+      "corpus": "tsac",
+      "seed": 42,
+      "macro_f1": 0.9331019583780744,
+      "accuracy": 0.9334836527621195,
+      "selected_epoch": 2,
+      "train_rows": 10053,
+      "validation_rows": 1774,
+      "results_sha256": "154ec0715841d4a18d2bbd35a71c53ef9be0d0459f5dbaf93ea475b2d1926e84",
+      "verification_sha256": "633547a8c6d32b5ac4ca54719083da950936b1125330007ca8c3041925930a53"
+    },
+    {
+      "learning_rate": 1e-05,
+      "corpus": "madar",
+      "seed": 42,
+      "macro_f1": 0.950400598386573,
+      "accuracy": 0.95375,
+      "selected_epoch": 1,
+      "train_rows": 6388,
+      "validation_rows": 800,
+      "results_sha256": "154ec0715841d4a18d2bbd35a71c53ef9be0d0459f5dbaf93ea475b2d1926e84",
+      "verification_sha256": "633547a8c6d32b5ac4ca54719083da950936b1125330007ca8c3041925930a53"
+    },
+    {
+      "learning_rate": 2e-05,
+      "corpus": "tsac",
+      "seed": 42,
+      "macro_f1": 0.9288980669985036,
+      "accuracy": 0.9289740698985344,
+      "selected_epoch": 1,
+      "train_rows": 10053,
+      "validation_rows": 1774,
+      "results_sha256": "df29cba159d50fc02e3e10e2a2974ce48e63fefdfe6639a62bb871cc4be80bae",
+      "verification_sha256": "026d750805f5ae73804961ef3a3b2b7574ea6dfa6daee579963735a2b383f9f1"
+    },
+    {
+      "learning_rate": 2e-05,
+      "corpus": "madar",
+      "seed": 42,
+      "macro_f1": 0.9560132634718111,
+      "accuracy": 0.95875,
+      "selected_epoch": 3,
+      "train_rows": 6388,
+      "validation_rows": 800,
+      "results_sha256": "df29cba159d50fc02e3e10e2a2974ce48e63fefdfe6639a62bb871cc4be80bae",
+      "verification_sha256": "026d750805f5ae73804961ef3a3b2b7574ea6dfa6daee579963735a2b383f9f1"
+    },
+    {
+      "learning_rate": 5e-05,
+      "corpus": "tsac",
+      "seed": 42,
+      "macro_f1": 0.9365852662111509,
+      "accuracy": 0.9368658399098083,
+      "selected_epoch": 3,
+      "train_rows": 10053,
+      "validation_rows": 1774,
+      "results_sha256": "b312aa2802d68106330e730fe939fea6b674d2497c30441c3d9b746bd6b5dcf4",
+      "verification_sha256": "1281a64828c0cad5fab33c3132cfc7e922fc4d235a3adccc978d721be39364da"
+    },
+    {
+      "learning_rate": 5e-05,
+      "corpus": "madar",
+      "seed": 42,
+      "macro_f1": 0.9482758580376681,
+      "accuracy": 0.94875,
+      "selected_epoch": 2,
+      "train_rows": 6388,
+      "validation_rows": 800,
+      "results_sha256": "b312aa2802d68106330e730fe939fea6b674d2497c30441c3d9b746bd6b5dcf4",
+      "verification_sha256": "1281a64828c0cad5fab33c3132cfc7e922fc4d235a3adccc978d721be39364da"
+    }
+  ],
+  "timings": [
+    {
+      "learning_rate": 1e-05,
+      "full_seconds": 937.8771847919998,
+      "smoke_seconds": 23.529823875000147
+    },
+    {
+      "learning_rate": 2e-05,
+      "full_seconds": 925.9031395420025,
+      "smoke_seconds": 21.58195729200088
+    },
+    {
+      "learning_rate": 5e-05,
+      "full_seconds": 934.4678714580004,
+      "smoke_seconds": 21.169209791998583
+    }
+  ],
+  "mac_full_seconds_sum": 2798.2481957920027,
+  "mac_smoke_seconds_sum": 66.28099095899961,
+  "kaggle_full_printed_seconds_sum": 1610.0,
+  "mac_over_kaggle_ratio": 1.7380423576347843,
+  "kaggle_duration_reduction_fraction": 0.4246400292793494,
+  "timing_scope": "Sum of FULL runs including training/validation/loading/saving; excludes separate smoke, replay and plot export. CUDA values from rounded console only; not a repeated benchmark.",
+  "kaggle_console_report_sha256": "01d18995fb7d464321603ed476cc8eaa926d80bfcaec3b397f61f9c7ae6f954b"
+}

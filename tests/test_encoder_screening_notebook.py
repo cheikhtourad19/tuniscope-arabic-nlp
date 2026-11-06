@@ -8,12 +8,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import encoder_screening_notebook_support as support
 from check_notebooks import execute, validate
+from check_bigru_notebook import validate_bigru
 
 
 class ScreeningNotebookTests(unittest.TestCase):
     def test_default_full_and_off_execution_does_not_start_children(self):
         doc = json.loads((ROOT / 'notebooks/07_selection_encodeur.ipynb').read_text())
-        validate(doc)
+        validate_bigru(doc, allow_saved_outputs=True)
         with patch.dict('os.environ', {'TUNISCOPE_SCREENING_MODE': 'off'}), patch.object(support, 'run_tool', side_effect=AssertionError('child')):
             result = execute(doc, '07_selection_encodeur.ipynb')
         self.assertIsNone(result['run_result'])

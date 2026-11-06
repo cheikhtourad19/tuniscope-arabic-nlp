@@ -26,8 +26,10 @@ def study_plan():
     return p
 
 
-def effective_config(scope='initial', learning_rate=None):
+def effective_config(scope='initial', learning_rate=None, corpus=None):
     c = json.loads(CONFIG.read_text())
+    if scope != 'confirmation' and corpus is not None:
+        raise ValueError('A task override is allowed only for fixed confirmation')
     if scope == 'initial':
         if learning_rate is not None:
             raise ValueError('Initial protocol does not accept learning-rate overrides')
@@ -35,13 +37,23 @@ def effective_config(scope='initial', learning_rate=None):
         if learning_rate not in study_plan()['learning_rates']:
             raise ValueError('Choose one of the three preregistered learning rates')
         c['learning_rate'] = learning_rate
+    elif scope == 'confirmation':
+        if learning_rate is not None:
+            raise ValueError('Confirmation rates are fixed by the selection report')
+        from encoder_confirmation_plan import confirmation_config
+        return confirmation_config(corpus)
     else:
         raise ValueError('Unknown experiment scope')
     return c
 
 
 def validate_effective_config(c, scope='initial'):
-    expected = effective_config(scope, c.get('learning_rate') if scope == 'screening' else None)
+    corpus = None
+    if scope == 'confirmation':
+        if len(c.get('corpora', [])) != 1:
+            raise ValueError('Each confirmation stage must contain exactly one task')
+        corpus = c['corpora'][0]
+    expected = effective_config(scope, c.get('learning_rate') if scope == 'screening' else None, corpus)
     if c != expected or c['manifest_version'] != 'v2' or c['variant'] != 'raw-v0':
         raise ValueError('Expected fixed native CLS fine-tuning protocol')
 

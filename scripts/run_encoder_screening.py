@@ -10,6 +10,7 @@ from encoder_screening_plan import ROOT, PLAN, digest, effective_config, select_
 from baseline_metrics import classification_metrics
 from bigru_data import partitions as load_partitions
 from character_lm_experiment import partition_summary
+from encoder_source_provenance import verify_recorded_sources
 
 
 def read(path):
@@ -56,9 +57,7 @@ def checked_stage(campaign, stage, rate, mode):
     for name, h in d['artifacts'].items():
         if digest(inside(directory, name)) != h:
             raise ValueError('Stage artifact changed')
-    for name, h in d['code_sha256'].items():
-        if digest(ROOT / 'scripts' / name) != h:
-            raise ValueError('Stage training/verifier code changed; preserve matching sources')
+    verify_recorded_sources(d['code_sha256'])
     partitions = {corpus: load_partitions(corpus, mode, d['config']) for corpus in ('tsac', 'madar')}
     for r in d['results']:
         train, val = partitions[r['corpus']]
@@ -80,6 +79,7 @@ def verify_campaign(directory, expected_mode):
         raise ValueError('Explicit campaign replay mode mismatch')
     if d['plan_sha256'] != digest(PLAN) or d['protocol_sha256'] != digest(ROOT / plan['protocol']):
         raise ValueError('Campaign plan/protocol changed')
+    verify_recorded_sources({'run_encoder_screening.py':d['workflow_sha256']})
     if [e['learning_rate'] for e in d['entries']] != plan['learning_rates']:
         raise ValueError('Missing, reordered or duplicate candidate rates')
     candidates, hardware, partitions, code, initializations = [], None, None, None, None

@@ -8,7 +8,7 @@ def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
 def run_tool(script,*args):
-    if script not in {'run_encoder_finetuning.py','verify_encoder_finetuning.py','plot_encoder_finetuning.py','encoder_finetuning_feasibility.py','run_encoder_screening.py'}:raise ValueError('Unexpected fine-tuning tool')
+    if script not in {'run_encoder_finetuning.py','verify_encoder_finetuning.py','plot_encoder_finetuning.py','encoder_finetuning_feasibility.py','run_encoder_screening.py','run_encoder_confirmation.py'}:raise ValueError('Unexpected fine-tuning tool')
     env=os.environ.copy();env.pop('VIRTUAL_ENV',None);env['MPLBACKEND']='Agg'
     command=['sh',str(ROOT/'scripts/encoder_uv.sh'),'run','--locked','--offline','python','-u',str(ROOT/'scripts'/script),*map(str,args)]
     child=subprocess.Popen(command,cwd=ROOT,env=env,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,bufsize=1,start_new_session=True)
