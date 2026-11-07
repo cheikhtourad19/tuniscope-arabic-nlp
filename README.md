@@ -85,6 +85,8 @@ The Qwen SFT dataset contains 4,000 train-only examples. The separate LoRA profi
 
 Notebook 09 runs the same short LoRA trial on a prepared Mac or CUDA checkout and exports aggregate timing and memory evidence. [Portable benchmark notebook](notebooks/09_essai_lora_qwen.ipynb) · [Run guide](docs/63_essai_lora_mac_kaggle.md)
 
+Notebook 10 runs the fixed three-seed LoRA campaign. Each seed adapts one shared model for both tasks and evaluates the saved adapter on the same v2 validation prompts as the base. A two-GPU setup can run two independent seeds concurrently. The notebook defaults to a short technical check. [Campaign notebook](notebooks/10_campagne_lora_qwen.ipynb) · [Protocol](docs/64_protocole_campagne_lora.md)
+
 ## Reproducible notebooks
 
 - [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.

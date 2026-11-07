@@ -33,4 +33,20 @@ Les corpus, caches et poids de travail restent dans le dépôt temporaire de la 
 
 Les cinq cellules ont été exécutées dans un noyau Jupyter natif isolé sur Mac. Le corpus a été reproduit, l’adaptateur rechargé, le lot long a réussi et le ZIP a été relu. L’exécution a mesuré 4,374 secondes par mise à jour après chauffe. La référence CLI précédente de 4,761 secondes reste le point de comparaison affiché. La preuve locale se trouve dans `outputs/notebook_checks/2026-11-07/lora_notebook_native_mps.json`.
 
-Cette préparation contribue à L06 et L12. L’exécution CUDA, la comparaison des deux plateformes et la campagne LoRA complète restent à effectuer.
+## Résultats CUDA reçus
+
+Le ZIP transmis le 7 novembre 2026 contient les quatre synthèses attendues. Le corpus SFT agrégé correspond octet pour octet à celui du Mac. Les empreintes du modèle, du script, du verrou, de la configuration et de l’adaptateur initial concordent. Le commit `6c74ce20dcf2e66313a6d5a5bf7895f19f0a84b3` correspond aux fichiers exécutés. Les deux essais utilisent 64 exemples, FP32 et un lot effectif de 16, avec trois mises à jour chronométrées après chauffe.
+
+| Plateforme | Secondes par mise à jour | Deux époques estimées |
+| --- | ---: | ---: |
+| Mac MPS, référence CLI | 4,761 | 39 min 40 s |
+| Mac MPS, exécution notebook | 4,374 | 36 min 27 s |
+| Kaggle, une Tesla T4 | 1,390 | 11 min 35 s |
+
+Sur les mises à jour chronométrées, la Tesla T4 est **3,42 fois plus rapide** que la référence CLI Mac et **3,15 fois plus rapide** que son rejeu notebook. La projection suppose 250 mises à jour par époque. Le temps total du petit essai inclut aussi les chargements, les empreintes et le rechargement. Il est de 35,30 secondes sur CUDA et de 29,00 secondes pour la référence CLI Mac. Les durées projetées concernent l’apprentissage et la validation constitue un coût séparé.
+
+Le lot de 370 et 348 tokens a terminé son forward et son backward sur la Tesla T4. Le processus a atteint **6,16 Go alloués** et **6,43 Go réservés** sur **15,64 Go** visibles par ce GPU. Deux GPU sont visibles et l’essai utilise le GPU d’index 0. La synthèse CUDA rapporte une perte finie, des gradients LoRA non nuls, l’empreinte de base préservée et un rechargement avec écart de logits nul. Le ZIP contient les résultats de ces contrôles exécutés à distance.
+
+La plateforme retenue pour la prochaine campagne LoRA est **Kaggle CUDA**, avec le lot physique de 2 et huit accumulations vérifiés. Les trois graines à deux époques représentent environ 35 minutes d’apprentissage d’après l’extrapolation. La preuve de L06 et L12 couvre l’essai CUDA, la conservation et la vérification des mesures. L’entraînement complet et la validation de l’adaptateur constituent les étapes suivantes.
+
+L’archive originale et sa vérification sont conservées dans `outputs/qwen/2026-11-07_cuda_lora_f552ba423f36439ea2d671ed124ede02/`. SHA-256 du ZIP `d2dc5f2076de5e237d8f06a132ffd50e0b12eafd2dbd002a558d7e96b3d3b5f4`.
