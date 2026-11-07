@@ -4,7 +4,7 @@ import json
 
 from fetch_qwen3 import MODEL_DIR, ROOT, load_plan, verify_file
 
-PROMPT_CONFIG = ROOT / 'configs/qwen_prompting_v1.json'
+PROMPT_CONFIG = ROOT / 'configs/qwen_prompting_v2.json'
 TOKENIZER_FILES = ('config.json', 'tokenizer.json', 'tokenizer_config.json', 'vocab.json', 'merges.txt')
 
 

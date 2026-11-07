@@ -77,6 +77,8 @@ This check requires no protected dataset. `requirements.txt` is a generated expo
 
 Qwen3 preparation uses a separate locked profile in `environments/llm/`, accessed through `scripts/llm_uv.sh`. The pinned official base and tokenizer are downloaded explicitly into an ignored cache. A local MPS check loaded 596,049,920 unique parameters in FP32 without 4/8-bit quantization and generated from invented inputs; corpus baselines and LoRA remain pending. See the [acquisition and loading evidence](docs/58_acquisition_et_chargement_qwen.md). The same base files are used for Mac and CUDA; Qwen execution on CUDA still requires its own check.
 
+The Qwen tokenizer audit covers 19,015 v2 training and validation rows. The selected 512-token budget leaves 480 tokens for the complete prompt and 32 for the response. The project uses one fixed training demonstration per class in few-shot prompts and an exact-label parser for the upcoming evaluation. [Tokenizer audit and prompt protocol](docs/60_resultats_tokenizer_qwen.md)
+
 ## Reproducible notebooks
 
 - [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.

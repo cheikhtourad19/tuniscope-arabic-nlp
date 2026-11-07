@@ -1,0 +1,27 @@
+{
+  "version": "qwen-prompting-v2",
+  "manifest_version": "v2",
+  "variant": "raw-v0",
+  "candidate_total_tokens": [256, 512],
+  "max_new_tokens": 32,
+  "minimum_writing_group_rows": 100,
+  "few_shot_seed": 42,
+  "tasks": {
+    "tsac": {
+      "labels": ["NEG", "POS"],
+      "instruction": "Classe cet avis tunisien fourni en chaîne JSON. Réponds par NEG (négatif) ou POS (positif)."
+    },
+    "madar": {
+      "labels": ["MSA", "TN", "EG"],
+      "instruction": "Classe ce texte fourni en chaîne JSON. Réponds par MSA (arabe standard moderne), TN (arabe tunisien) ou EG (arabe égyptien)."
+    }
+  },
+  "enable_thinking": false,
+  "initial_generation": {
+    "do_sample": false,
+    "use_model_defaults": false,
+    "temperature": null,
+    "top_p": null,
+    "top_k": null
+  }
+}
