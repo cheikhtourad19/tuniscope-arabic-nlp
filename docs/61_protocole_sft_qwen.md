@@ -1,0 +1,11 @@
+# Corpus supervisé et essai LoRA de Qwen
+
+**7 novembre 2026.** Le corpus SFT rassemble 2 000 lignes TSAC et 2 000 lignes MADAR, toutes issues du train v2. Chaque exemple associe la consigne v2 et le texte brut à son label source. Les quotas sont équilibrés par label dans chaque tâche. TSAC fournit 1 000 `NEG` et 1 000 `POS`. MADAR fournit 667 `MSA`, 667 `TN` et 666 `EG`. Un classement stable par empreinte SHA-256 avec la graine 42 sélectionne les lignes dans chaque classe. Une seconde empreinte mélange les tâches. [Configuration versionnée](../configs/qwen_sft_v1.json)
+
+Le format de conversation officiel utilise `enable_thinking=False`. La séquence supervisée se termine par le label puis le token de fin de réponse `<|im_end|>`. Nous excluons le retour à la ligne de présentation situé après ce token dans le format de conversation. La tokenisation vérifie que le préfixe de la séquence supervisée correspond exactement au prompt zero-shot. La perte porte sur les tokens du label et de la fin de réponse. Les positions de la consigne, du texte, des séparateurs du préfixe et du padding portent la valeur `-100`. Les positions sont définies par leurs longueurs, ce qui conserve la supervision du token de fin de réponse.
+
+Les séquences d’apprentissage ont un plafond de 512 tokens. Le programme vérifie chaque longueur et chaque cible. Les données tokenisées restent dans un dossier local ignoré par Git. Les comptes, les empreintes et deux inspections sur des textes inventés permettent de vérifier la construction.
+
+L’essai local utilise un seul adaptateur PEFT pour les deux tâches. Il fixe `r=8`, `alpha=16`, dropout `0,05` et cibles `q_proj` et `v_proj`. Le profil isolé `environments/lora` épingle PEFT 0.18.0. [Version PEFT](https://github.com/huggingface/peft/releases/tag/v0.18.0)
+
+Le lot physique contient 4 exemples. Quatre lots accumulent les gradients pour une mise à jour sur 16 exemples. L’essai prend 64 séquences, 32 de chaque tâche, réparties par longueur avant un mélange déterministe. La première des quatre mises à jour sert à la chauffe. L’essai FP32 mesure la durée des autres mises à jour et relève les allocations mémoire. Les résultats guideront le choix de plateforme pour les entraînements complets. L06 recevra les vérifications de la perte, des gradients et du rechargement de l’adaptateur.

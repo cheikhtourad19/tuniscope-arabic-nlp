@@ -75,9 +75,15 @@ sh scripts/project_uv.sh run --locked python scripts/check_environment.py
 
 This check requires no protected dataset. `requirements.txt` is a generated export of the lockfile for pip-based environments.
 
-Qwen3 preparation uses a separate locked profile in `environments/llm/`, accessed through `scripts/llm_uv.sh`. The pinned official base and tokenizer are downloaded explicitly into an ignored cache. A local MPS check loaded 596,049,920 unique parameters in FP32 without 4/8-bit quantization and generated from invented inputs; corpus baselines and LoRA remain pending. See the [acquisition and loading evidence](docs/58_acquisition_et_chargement_qwen.md). The same base files are used for Mac and CUDA; Qwen execution on CUDA still requires its own check.
+Qwen3 uses a separate locked profile in `environments/llm/`, accessed through `scripts/llm_uv.sh`. The pinned base and tokenizer are downloaded explicitly into an ignored cache. The model loaded 596,049,920 unique parameters in FP32 on MPS. The same base files serve both Mac and CUDA. [Acquisition and loading evidence](docs/58_acquisition_et_chargement_qwen.md)
 
-The Qwen tokenizer audit covers 19,015 v2 training and validation rows. The selected 512-token budget leaves 480 tokens for the complete prompt and 32 for the response. The project uses one fixed training demonstration per class in few-shot prompts and an exact-label parser for the upcoming evaluation. [Tokenizer audit and prompt protocol](docs/60_resultats_tokenizer_qwen.md)
+The Qwen tokenizer audit covers 19,015 v2 training and validation rows. The selected 512-token budget leaves 480 tokens for the complete prompt and 32 for the response. The few-shot protocol uses one fixed training demonstration per class and the scoring applies an exact-label parser. [Tokenizer audit and prompt protocol](docs/60_resultats_tokenizer_qwen.md)
+
+The Qwen reference before LoRA covers 5,148 predictions across zero-shot and few-shot validation. The aggregate report includes accuracy, macro-F1, invalid responses and writing-system slices. [Qwen validation reference](reports/qwen_validation_v2_2026-11-07/README.md)
+
+The Qwen SFT dataset contains 4,000 train-only examples. The separate LoRA profile verifies answer-only loss, adapter updates, frozen base weights and adapter reload. The Mac trial tested batch size 2 with eight accumulation steps for an effective batch of 16. [SFT and LoRA trial results](docs/62_resultats_sft_et_essai_lora.md)
+
+Notebook 09 runs the same short LoRA trial on a prepared Mac or CUDA checkout and exports aggregate timing and memory evidence. [Portable benchmark notebook](notebooks/09_essai_lora_qwen.ipynb) · [Run guide](docs/63_essai_lora_mac_kaggle.md)
 
 ## Reproducible notebooks
 

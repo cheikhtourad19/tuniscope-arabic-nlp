@@ -1,0 +1,11 @@
+{
+  "version": "qwen-sft-v1",
+  "selection_seed": 42,
+  "label_counts": {
+    "tsac": {"NEG": 1000, "POS": 1000},
+    "madar": {"MSA": 667, "TN": 667, "EG": 666}
+  },
+  "max_sequence_tokens": 512,
+  "lora": {"r": 8, "alpha": 16, "dropout": 0.05, "target_modules": ["q_proj", "v_proj"]},
+  "smoke": {"seed": 42, "examples_per_task": 32, "batch_size": 4, "accumulation_steps": 4, "learning_rate": 0.0001, "dtype": "float32"}
+}
