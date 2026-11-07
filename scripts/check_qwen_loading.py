@@ -51,6 +51,10 @@ def check(output, device_request='auto'):
     gen = GenerationConfig.from_pretrained(MODEL_DIR, local_files_only=True)
     gen.do_sample = False; gen.temperature = None; gen.top_p = None; gen.top_k = None
     gen.max_new_tokens = 16
+    # Explicit kwargs prevent Transformers from replacing False/default-valued fields
+    # with the pretrained model's sampling defaults during configuration merging.
+    decoding = {'do_sample': False, 'max_new_tokens': 16, 'temperature': None,
+                'top_p': None, 'top_k': None}
     probes = []
     with torch.inference_mode():
         for prompt in ('Réponds uniquement par le mot OK.', 'أجب فقط بكلمة مرحبا.'):
@@ -64,7 +68,7 @@ def check(output, device_request='auto'):
             logits = model(**inputs).logits[:, -1, :]
             if not torch.isfinite(logits).all().item():
                 raise ValueError('Non-finite forward output')
-            generated = model.generate(**inputs, generation_config=gen)
+            generated = model.generate(**inputs, generation_config=gen, use_model_defaults=False, **decoding)
             response = generated[0, inputs['input_ids'].shape[1]:]
             if not 0 < len(response) <= 16:
                 raise ValueError('Generation budget violated')
@@ -95,6 +99,7 @@ def check(output, device_request='auto'):
               'loaded_in_8bit': bool(getattr(model, 'is_loaded_in_8bit', False)),
               'quantization_config_present': getattr(model.config, 'quantization_config', None) is not None,
               'enable_thinking': False, 'max_new_tokens': 16, 'do_sample': False,
+              'explicit_generation_kwargs': decoding, 'use_model_defaults': False,
               'decoding_scope': 'technical-probe-not-final-task-protocol', 'probes': probes,
               'possible_lora_target_counts_inspected_only': target_counts,
               'lora_created': False, 'training_started': False, 'corpus_read': False, 'test_loaded': False,

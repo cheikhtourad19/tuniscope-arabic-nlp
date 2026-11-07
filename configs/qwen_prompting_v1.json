@@ -1,0 +1,27 @@
+{
+  "version": "qwen-prompting-v1",
+  "manifest_version": "v2",
+  "variant": "raw-v0",
+  "candidate_total_tokens": [256, 512],
+  "max_new_tokens": 32,
+  "minimum_writing_group_rows": 100,
+  "few_shot_seed": 42,
+  "tasks": {
+    "tsac": {
+      "labels": ["NEG", "POS"],
+      "instruction": "Détermine le sentiment exprimé dans cet avis tunisien. Les labels possibles sont NEG (négatif) et POS (positif). Le message utilisateur contient le texte à classer sous forme de chaîne JSON. Réponds avec un seul label de la liste."
+    },
+    "madar": {
+      "labels": ["MSA", "TN", "EG"],
+      "instruction": "Identifie la variété d’arabe de ce texte. Les labels possibles sont MSA (arabe standard moderne), TN (arabe tunisien) et EG (arabe égyptien). Le message utilisateur contient le texte à classer sous forme de chaîne JSON. Réponds avec un seul label de la liste."
+    }
+  },
+  "enable_thinking": false,
+  "initial_generation": {
+    "do_sample": false,
+    "use_model_defaults": false,
+    "temperature": null,
+    "top_p": null,
+    "top_k": null
+  }
+}

@@ -1,6 +1,6 @@
 # Acquisition et premier chargement de Qwen3
 
-**6 novembre 2026 — préparation de L06, L08 et L12.** Périmètre : acquisition explicite de la base officielle et contrôle technique sur entrées inventées, sans lecture des corpus ni apprentissage. À la rédaction initiale, le téléchargement des poids est en cours ; les preuves d’achèvement et de chargement seront ajoutées après vérification.
+**6 novembre 2026 — préparation de L06, L08 et L12.** Acquisition explicite et contrôle de chargement **terminés et vérifiés sur MPS**, sur entrées inventées, sans lecture des corpus ni apprentissage. Le modèle est standard et non quantifié en 4/8 bits. Les références de classification et l’adaptation LoRA ne sont pas encore exécutées.
 
 ## Source et version fixées
 
@@ -16,7 +16,7 @@ Stockage privé : `.tools/llms/qwen3_0_6b_c1899de289a04d12100db370d81485cdf75e47
 
 Le profil `environments/llm/` est distinct des profils classique, BiGRU, tokenizer, encodeur et application. Il conserve Python 3.12, PyTorch **2.15.0**, Transformers **4.57.6**, Tokenizers **0.22.2** et NumPy **2.5.4**. Les dépendances transitives sont figées par `uv.lock`, exportées dans `requirements.txt`. Les anciens verrous ne sont pas modifiés.
 
-La [documentation officielle Qwen](https://qwen.readthedocs.io/en/latest/inference/transformers.html) et la fiche du modèle indiquent la prise en charge de l’architecture `qwen3` à partir de Transformers 4.51.0. Notre version est compatible en principe ; un chargement réel reste la preuve à obtenir pour ce profil et ce matériel.
+La [documentation officielle Qwen](https://qwen.readthedocs.io/en/latest/inference/transformers.html) et la fiche du modèle indiquent la prise en charge de l’architecture `qwen3` à partir de Transformers 4.51.0. Notre chargement réel avec Transformers 4.57.6 confirme cette compatibilité locale. Le SHA-256 du verrou LLM est `587d49f0395fb7bc494511b89fd7bda3de6606ddad50b9eb65677aef8f36a393`.
 
 Commande d’installation reproductible :
 
@@ -48,7 +48,7 @@ sh scripts/project_uv.sh run --locked --offline python scripts/fetch_qwen3.py
 
 Le `--offline` de uv concerne ici la résolution/installation des paquets ; l’option explicite `--download` autorise le script à demander les fichiers officiels par HTTPS. Sans cette option, le script ne fait que vérifier les fichiers déjà présents.
 
-## Contrôle technique prévu
+## Contrôle technique et preuves obtenues
 
 ```sh
 sh scripts/llm_uv.sh run --locked --offline python scripts/check_qwen_loading.py \
@@ -62,6 +62,28 @@ Tous les paramètres sont gelés pour l’inférence. Deux consignes inventées,
 Le décodage glouton utilisé pour ce contrôle n’est pas le protocole final des tâches. La fiche Qwen propose d’autres réglages de génération ; le choix scientifique sera fixé avant les mesures zero-shot/few-shot, puis conservé pour la comparaison avant/après adaptation. Aucune conclusion de qualité linguistique ou de classification n’est tirée de deux entrées inventées.
 
 Le contrôle vérifie aussi l’absence de chargement 4/8 bits et relève les modules `q_proj` et `v_proj` pour préparer leur inspection ultérieure, sans créer LoRA. Il conserve versions, empreintes, compte de paramètres, sorties inventées, durée et mémoire observée. Les relevés MPS de fin sont des instantanés, pas un pic absolu ; les allocations CPU/GPU de mémoire unifiée ne s’additionnent pas.
+
+Le téléchargement réel a acquis et vérifié les neuf fichiers, pour le total exact annoncé. Les deux tests synthétiques d’intégrité passent : vérification des formats SHA-256/blob Git, détection de contenus altérés de même taille et de tailles incorrectes. Aucun téléchargement implicite n’est effectué lors du chargement.
+
+Le contrôle accepté est archivé dans `outputs/qwen/2026-11-06_mps_loading_explicit_decoding.json` :
+
+| Contrôle | Résultat observé |
+| --- | --- |
+| Modèle chargé | `Qwen3ForCausalLM`, sans clé absente, inattendue ou de taille incompatible |
+| Paramètres uniques réellement chargés | **596 049 920**, sous le plafond de 1 milliard |
+| Éléments de tenseurs stockés dans Safetensors | 751 632 384 en BF16 ; embeddings d’entrée/sortie liés dans le modèle chargé |
+| Précision de calcul du contrôle | FP32, attention eager, MPS |
+| Quantification 4/8 bits et configuration de quantification | Absentes |
+| Paramètres entraînables pendant le contrôle | 0 ; aucune création d’adaptateur |
+| Template et sorties numériques | Préfixe non-thinking officiel et logits finits vérifiés sur les deux entrées |
+| Génération | Deux consignes inventées, plafond 16 nouveaux tokens ; aucune ligne TSAC/MADAR |
+| Modules inspectés | 28 `q_proj`, 28 `v_proj`, sans LoRA appliqué |
+| Allocation MPS en fin de contrôle | 2 412 250 112 octets ; driver 2 871 754 752 octets, instantanés non pics |
+| Durée du contrôle accepté | 2,744031 s, hors vérification initiale des empreintes ; un seul contrôle, sans prétention de benchmark |
+
+Les sorties inventées sont « OK. » pour la consigne française et « مرحبا! » pour la consigne arabe. Elles prouvent une génération fonctionnelle, sans établir le respect exact d’un format de label ni la compétence en tunisien. Les empreintes des sources, du modèle, du script et du verrou sont enregistrées avec le contrôle.
+
+**Correction du réglage de génération :** le premier contrôle a chargé et généré correctement, mais Transformers a rétabli `do_sample=True` depuis les valeurs du modèle lors de la fusion de configuration. Son rapport initial ne constitue donc pas une preuve de décodage glouton, malgré le champ déclaratif `do_sample=False` qu’il contenait. Nous conservons ce premier rapport sous `2026-11-06_initial_mps_loading.json`, avec cette réserve explicitement enregistrée. Le script corrigé transmet les paramètres de décodage directement à `generate` et fixe `use_model_defaults=False`. Le second contrôle accepté a été exécuté sans l’avertissement et conserve les arguments explicites. Aucun fichier de poids ni corpus n’a changé entre ces contrôles.
 
 ## Suite du travail et limites
 

@@ -75,6 +75,8 @@ sh scripts/project_uv.sh run --locked python scripts/check_environment.py
 
 This check requires no protected dataset. `requirements.txt` is a generated export of the lockfile for pip-based environments.
 
+Qwen3 preparation uses a separate locked profile in `environments/llm/`, accessed through `scripts/llm_uv.sh`. The pinned official base and tokenizer are downloaded explicitly into an ignored cache. A local MPS check loaded 596,049,920 unique parameters in FP32 without 4/8-bit quantization and generated from invented inputs; corpus baselines and LoRA remain pending. See the [acquisition and loading evidence](docs/58_acquisition_et_chargement_qwen.md). The same base files are used for Mac and CUDA; Qwen execution on CUDA still requires its own check.
+
 ## Reproducible notebooks
 
 - [Data loading and checks](notebooks/01_donnees_v2.ipynb): v2 manifests, in-memory tables, conservative normalization and aggregate statistics.
