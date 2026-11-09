@@ -29,7 +29,7 @@ Arabic NLP systems often perform differently across Modern Standard Arabic, regi
 - **Encoder model:** an Arabic Transformer fine-tuned separately for dialect and sentiment classification.
 - **Frozen encoder reference:** pinned CAMeLBERT Mix mean-pooled representations with learned linear heads, measured locally on Apple MPS before fine-tuning. See the [verified results and resource measurements](docs/45_resultats_encodeur_gele.md).
 - **Generative model:** Qwen3-0.6B evaluated before and after one shared multitask LoRA adapter.
-- **RAG:** a small cited knowledge base for questions about methodology and system limitations, not for deciding text labels.
+- **RAG:** 44 French and Arabic source cards, with a lexical and dense retrieval comparison and an extractive prototype. [Documentary validation](docs/67_resultats_validation_rag.md)
 - **Interface:** a local application for text/CSV input, model comparison, documented sources, and prediction export.
 
 ## Evaluation
@@ -85,7 +85,7 @@ The Qwen SFT dataset contains 4,000 train-only examples. The separate LoRA profi
 
 Notebook 09 runs the same short LoRA trial on a prepared Mac or CUDA checkout and exports aggregate timing and memory evidence. [Portable benchmark notebook](notebooks/09_essai_lora_qwen.ipynb) · [Run guide](docs/63_essai_lora_mac_kaggle.md)
 
-Notebook 10 runs the fixed three-seed LoRA campaign. Each seed adapts one shared model for both tasks and evaluates the saved adapter on the same v2 validation prompts as the base. A two-GPU setup can run two independent seeds concurrently. The notebook defaults to a short technical check. [Campaign notebook](notebooks/10_campagne_lora_qwen.ipynb) · [Protocol](docs/64_protocole_campagne_lora.md)
+Notebook 10 runs the fixed three-seed LoRA campaign. Each seed adapts one shared model for both tasks and evaluates the saved adapter on the same v2 validation prompts as the base. A two-GPU setup can run two independent seeds concurrently. The notebook defaults to a short technical check. [Campaign notebook](notebooks/10_campagne_lora_qwen.ipynb) · [Protocol](docs/64_protocole_campagne_lora.md) · [Verified CUDA validation results](docs/65_resultats_campagne_lora.md)
 
 ## Reproducible notebooks
 

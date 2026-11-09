@@ -1,0 +1,518 @@
+[
+  {
+    "id": "Q001",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Quels labels peut produire le système de sentiment et de quel genre de textes proviennent-ils ?",
+    "relevant_ids": [
+      "tsac.fr"
+    ]
+  },
+  {
+    "id": "Q002",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما التصنيفات الممكنة في تحليل المشاعر ومن أي نوع من النصوص جاءت؟",
+    "relevant_ids": [
+      "tsac.ar"
+    ]
+  },
+  {
+    "id": "Q003",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Dans MADAR, quelles villes se cachent derrière TN et EG, et que désigne MSA ?",
+    "relevant_ids": [
+      "madar.fr"
+    ]
+  },
+  {
+    "id": "Q004",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما المدن التي يمثلها الرمزان TN وEG في MADAR، وما المقصود بالرمز MSA؟",
+    "relevant_ids": [
+      "madar.ar"
+    ]
+  },
+  {
+    "id": "Q005",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Combien de lignes ont servi à apprendre et à comparer les réglages pour chacun des deux corpus ?",
+    "relevant_ids": [
+      "partitions.fr"
+    ]
+  },
+  {
+    "id": "Q006",
+    "lang": "ar",
+    "split": "validation",
+    "question": "كم سطرا خصص للتعلم ولمقارنة الإعدادات في كل مجموعة بيانات؟",
+    "relevant_ids": [
+      "partitions.ar"
+    ]
+  },
+  {
+    "id": "Q007",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Pourquoi les traductions d’une phrase ne sont-elles pas distribuées entre entraînement et validation ?",
+    "relevant_ids": [
+      "groupes.fr"
+    ]
+  },
+  {
+    "id": "Q008",
+    "lang": "ar",
+    "split": "validation",
+    "question": "لماذا توضع ترجمات الجملة الأصلية في تقسيم واحد بدل توزيعها بين التدريب والتحقق؟",
+    "relevant_ids": [
+      "groupes.ar"
+    ]
+  },
+  {
+    "id": "Q009",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Que transforme exactement la variante norm-nfc-space-v1 ?",
+    "relevant_ids": [
+      "normalisation.fr"
+    ]
+  },
+  {
+    "id": "Q010",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما التغييرات التي تطبقها الصيغة norm-nfc-space-v1 على النص؟",
+    "relevant_ids": [
+      "normalisation.ar"
+    ]
+  },
+  {
+    "id": "Q011",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Un avis classé LATIN est-il nécessairement rédigé dans une langue étrangère ?",
+    "relevant_ids": [
+      "ecriture.fr"
+    ]
+  },
+  {
+    "id": "Q012",
+    "lang": "ar",
+    "split": "validation",
+    "question": "هل يعني التصنيف LATIN أن التعليق مكتوب بالضرورة بلغة أجنبية؟",
+    "relevant_ids": [
+      "ecriture.ar"
+    ]
+  },
+  {
+    "id": "Q013",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Quel indicateur donne le même poids à une classe rare et à une classe fréquente ?",
+    "relevant_ids": [
+      "macro-f1.fr"
+    ]
+  },
+  {
+    "id": "Q014",
+    "lang": "ar",
+    "split": "validation",
+    "question": "أي مقياس يعطي الفئة النادرة والفئة الشائعة الوزن نفسه؟",
+    "relevant_ids": [
+      "macro-f1.ar"
+    ]
+  },
+  {
+    "id": "Q015",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Pendant LoRA, quelles parties apprennent et le même adaptateur traite-t-il les deux tâches ?",
+    "relevant_ids": [
+      "lora.fr"
+    ]
+  },
+  {
+    "id": "Q016",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما الأجزاء التي تتغير أثناء تدريب LoRA وهل يخدم المهايئ نفسه المهمتين؟",
+    "relevant_ids": [
+      "lora.ar"
+    ]
+  },
+  {
+    "id": "Q017",
+    "lang": "fr",
+    "split": "test",
+    "question": "Pourquoi faut-il être prudent avant d’appliquer le modèle de sentiment à des avis d’une autre plateforme ?",
+    "relevant_ids": [
+      "limites-tsac.fr"
+    ]
+  },
+  {
+    "id": "Q018",
+    "lang": "ar",
+    "split": "test",
+    "question": "لماذا يجب الحذر عند تطبيق نموذج المشاعر على تعليقات من منصة أخرى؟",
+    "relevant_ids": [
+      "limites-tsac.ar"
+    ]
+  },
+  {
+    "id": "Q019",
+    "lang": "fr",
+    "split": "test",
+    "question": "Peut-on déduire de MADAR que le système reconnaît tous les parlers de Tunisie et d’Égypte ?",
+    "relevant_ids": [
+      "limites-madar.fr"
+    ]
+  },
+  {
+    "id": "Q020",
+    "lang": "ar",
+    "split": "test",
+    "question": "هل تكفي نتائج MADAR لإثبات التعرف على جميع اللهجات في تونس ومصر؟",
+    "relevant_ids": [
+      "limites-madar.ar"
+    ]
+  },
+  {
+    "id": "Q021",
+    "lang": "fr",
+    "split": "test",
+    "question": "Où vérifier les conditions d’accès à MADAR et que partage le dépôt à la place des données brutes ?",
+    "relevant_ids": [
+      "droits.fr"
+    ]
+  },
+  {
+    "id": "Q022",
+    "lang": "ar",
+    "split": "test",
+    "question": "أين توثق شروط الوصول إلى MADAR وما الذي ينشره المستودع بدلا من البيانات الخام؟",
+    "relevant_ids": [
+      "droits.ar"
+    ]
+  },
+  {
+    "id": "Q023",
+    "lang": "fr",
+    "split": "test",
+    "question": "Comment a-t-on traité les commentaires identiques dont les annotations de sentiment se contredisaient ?",
+    "relevant_ids": [
+      "annotations.fr"
+    ]
+  },
+  {
+    "id": "Q024",
+    "lang": "ar",
+    "split": "test",
+    "question": "كيف عولجت التعليقات المتطابقة التي تحمل تسميات متعارضة للمشاعر؟",
+    "relevant_ids": [
+      "annotations.ar"
+    ]
+  },
+  {
+    "id": "Q025",
+    "lang": "fr",
+    "split": "test",
+    "question": "Comment la référence majoritaire choisit-elle sa prédiction ?",
+    "relevant_ids": [
+      "majorite.fr"
+    ]
+  },
+  {
+    "id": "Q026",
+    "lang": "ar",
+    "split": "test",
+    "question": "كيف يختار مرجع الأغلبية التسمية التي يتوقعها؟",
+    "relevant_ids": [
+      "majorite.ar"
+    ]
+  },
+  {
+    "id": "Q027",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quels scores de validation a obtenus la référence classique fondée sur les fragments de caractères ?",
+    "relevant_ids": [
+      "tfidf.fr"
+    ]
+  },
+  {
+    "id": "Q028",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما نتائج التحقق للطريقة التقليدية المبنية على مقاطع المحارف؟",
+    "relevant_ids": [
+      "tfidf.ar"
+    ]
+  },
+  {
+    "id": "Q029",
+    "lang": "fr",
+    "split": "test",
+    "question": "Dans la référence CAMeLBERT gelée, quel composant apprend à produire les classes ?",
+    "relevant_ids": [
+      "encodeur-gele.fr"
+    ]
+  },
+  {
+    "id": "Q030",
+    "lang": "ar",
+    "split": "test",
+    "question": "أي جزء يتعلم توقع الفئات عند تجميد CAMeLBERT؟",
+    "relevant_ids": [
+      "encodeur-gele.ar"
+    ]
+  },
+  {
+    "id": "Q031",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quels sont les macro-F1 moyens de CAMeLBERT après le fine-tuning confirmé ?",
+    "relevant_ids": [
+      "encodeur-adapte.fr"
+    ]
+  },
+  {
+    "id": "Q032",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما متوسطا F1 الكلي بعد تأكيد الضبط الدقيق لنموذج CAMeLBERT؟",
+    "relevant_ids": [
+      "encodeur-adapte.ar"
+    ]
+  },
+  {
+    "id": "Q033",
+    "lang": "fr",
+    "split": "test",
+    "question": "Combien d’exemples a vus Qwen en SFT et quels tokens comptent dans la perte ?",
+    "relevant_ids": [
+      "sft.fr"
+    ]
+  },
+  {
+    "id": "Q034",
+    "lang": "ar",
+    "split": "test",
+    "question": "كم مثالا استخدم في التدريب الموجه لنموذج Qwen وما الوحدات التي تدخل في حساب الخسارة؟",
+    "relevant_ids": [
+      "sft.ar"
+    ]
+  },
+  {
+    "id": "Q035",
+    "lang": "fr",
+    "split": "test",
+    "question": "Dans le protocole Qwen, que rajoute le mode few-shot et d’où viennent ces démonstrations ?",
+    "relevant_ids": [
+      "qwen-consignes.fr"
+    ]
+  },
+  {
+    "id": "Q036",
+    "lang": "ar",
+    "split": "test",
+    "question": "ماذا يضيف وضع few-shot في بروتوكول Qwen ومن أين تؤخذ أمثلة العرض؟",
+    "relevant_ids": [
+      "qwen-consignes.ar"
+    ]
+  },
+  {
+    "id": "Q037",
+    "lang": "fr",
+    "split": "test",
+    "question": "Que montrent les résultats LoRA sur l’utilité des exemples ajoutés à la consigne MADAR ?",
+    "relevant_ids": [
+      "qwen-resultats.fr"
+    ]
+  },
+  {
+    "id": "Q038",
+    "lang": "ar",
+    "split": "test",
+    "question": "ماذا تظهر نتائج LoRA بشأن إضافة أمثلة إلى التعليمة في MADAR؟",
+    "relevant_ids": [
+      "qwen-resultats.ar"
+    ]
+  },
+  {
+    "id": "Q039",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quel traitement réserve-t-on à une réponse Qwen qui ne correspond à aucun label autorisé ?",
+    "relevant_ids": [
+      "sorties-invalides.fr"
+    ]
+  },
+  {
+    "id": "Q040",
+    "lang": "ar",
+    "split": "test",
+    "question": "كيف تعامل إجابة Qwen عندما لا تطابق أي تسمية مسموحة؟",
+    "relevant_ids": [
+      "sorties-invalides.ar"
+    ]
+  },
+  {
+    "id": "Q041",
+    "lang": "fr",
+    "split": "test",
+    "question": "À quoi servent les trois graines quand les données d’apprentissage sont les mêmes ?",
+    "relevant_ids": [
+      "graines.fr"
+    ]
+  },
+  {
+    "id": "Q042",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما فائدة استخدام ثلاث بذور إذا بقيت بيانات التدريب نفسها؟",
+    "relevant_ids": [
+      "graines.ar"
+    ]
+  },
+  {
+    "id": "Q043",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quels éléments faut-il pour réutiliser un adaptateur sauvegardé de la campagne LoRA ?",
+    "relevant_ids": [
+      "rechargement.fr"
+    ]
+  },
+  {
+    "id": "Q044",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما العناصر اللازمة لإعادة استخدام مهايئ محفوظ من تجربة LoRA؟",
+    "relevant_ids": [
+      "rechargement.ar"
+    ]
+  },
+  {
+    "id": "Q045",
+    "lang": "fr",
+    "split": "test",
+    "question": "Pourquoi 100 % de réponses valides ne veut-il pas dire 100 % de bonnes prédictions ?",
+    "relevant_ids": [
+      "sorties-invalides.fr"
+    ]
+  },
+  {
+    "id": "Q046",
+    "lang": "ar",
+    "split": "test",
+    "question": "لماذا لا تعني صلاحية جميع الإجابات أن جميع التصنيفات صحيحة؟",
+    "relevant_ids": [
+      "sorties-invalides.ar"
+    ]
+  },
+  {
+    "id": "Q047",
+    "lang": "fr",
+    "split": "test",
+    "question": "Comment a-t-on résumé la dispersion des performances des répétitions LoRA ?",
+    "relevant_ids": [
+      "graines.fr"
+    ]
+  },
+  {
+    "id": "Q048",
+    "lang": "ar",
+    "split": "test",
+    "question": "كيف لخص التقرير تشتت أداء التكرارات في تجربة LoRA؟",
+    "relevant_ids": [
+      "graines.ar"
+    ]
+  },
+  {
+    "id": "Q049",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Quels sont les identifiants des auteurs de chacun des commentaires TSAC ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q050",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما معرفات مؤلفي كل تعليق في مجموعة TSAC؟",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q051",
+    "lang": "fr",
+    "split": "validation",
+    "question": "Quel est le macro-F1 de TuniScope sur un corpus marocain indépendant ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q052",
+    "lang": "ar",
+    "split": "validation",
+    "question": "ما متوسط F1 لنظام TuniScope على مجموعة مغربية مستقلة؟",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q053",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quel prix en euros a été facturé pour l’entraînement sur les deux cartes Kaggle ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q054",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما المبلغ باليورو الذي دفع مقابل التدريب على البطاقتين في Kaggle؟",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q055",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quel score de test officiel CAMeLBERT a-t-il obtenu sur TSAC ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q056",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما النتيجة التي حققها CAMeLBERT في الاختبار الرسمي لمجموعة TSAC؟",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q057",
+    "lang": "fr",
+    "split": "test",
+    "question": "Quelle performance obtient Qwen sur des enregistrements audio tunisiens ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q058",
+    "lang": "ar",
+    "split": "test",
+    "question": "ما أداء Qwen على التسجيلات الصوتية التونسية؟",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q059",
+    "lang": "fr",
+    "split": "test",
+    "question": "Peux-tu me donner le label du texte « le service était formidable » ?",
+    "relevant_ids": []
+  },
+  {
+    "id": "Q060",
+    "lang": "ar",
+    "split": "test",
+    "question": "هل يمكنك تصنيف مشاعر هذا النص: « كانت الخدمة ممتازة »؟",
+    "relevant_ids": []
+  }
+]

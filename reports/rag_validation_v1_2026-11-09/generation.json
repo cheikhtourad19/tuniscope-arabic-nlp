@@ -1,0 +1,687 @@
+{
+  "split": "validation",
+  "classification_test_loaded": false,
+  "factual_human_review": "pending",
+  "retrieval_system": "e5",
+  "retrieval_sha256": "adceee7a11c742ae68e8f09a062e1fde0137fb58c67f7af6d92c103c3086717c",
+  "base_model": "Qwen/Qwen3-0.6B",
+  "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "model_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "code_sha256": "ca92a98ca7f13a3505ab099dc7c1c1db18a20bec25becc8c57c3122a44f3f16a",
+  "lock_sha256": "587d49f0395fb7bc494511b89fd7bda3de6606ddad50b9eb65677aef8f36a393",
+  "device": "mps",
+  "max_new_tokens": 128,
+  "conditions": {
+    "with_context": {
+      "seconds": 38.87392187499972,
+      "questions": 20,
+      "answers": 20,
+      "answerable_abstained": 0,
+      "unanswerable_abstained": 0,
+      "answers_with_supplied_citations": 1,
+      "answers_with_relevant_citations": 0,
+      "rows": [
+        {
+          "id": "Q001",
+          "lang": "fr",
+          "answer": "Le système de sentiment TuniScope produit des labels positif et négatif, et les textes proviennent principalement de réseaux sociaux annotés. [id]tsac.fr[/id]",
+          "retrieved_ids": [
+            "tsac.fr",
+            "ecriture.fr",
+            "sft.fr"
+          ],
+          "relevant_ids": [
+            "tsac.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id",
+            "/id"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q002",
+          "lang": "ar",
+          "answer": "التصنيفات الممكنة في تحليل المشاعر هي: POS (إيجابي) وNEG (سلبي) وMIXED.",
+          "retrieved_ids": [
+            "tsac.ar",
+            "annotations.ar",
+            "ecriture.ar"
+          ],
+          "relevant_ids": [
+            "tsac.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q003",
+          "lang": "fr",
+          "answer": "Dans MADAR, les villes se cachent derrière TN et EG sont Tunis et Le Caire. MSA désigne l’arabe standard moderne.",
+          "retrieved_ids": [
+            "madar.fr",
+            "limites-madar.fr",
+            "qwen-resultats.fr"
+          ],
+          "relevant_ids": [
+            "madar.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q004",
+          "lang": "ar",
+          "answer": "الرمزان TN وEG يمثلان المدن تونس وصفاقس، والرمز MSA يُستخدم لتعريف اللغة العربية الفصحى الحديثة.",
+          "retrieved_ids": [
+            "madar.ar",
+            "limites-madar.ar",
+            "partitions.ar"
+          ],
+          "relevant_ids": [
+            "madar.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q005",
+          "lang": "fr",
+          "answer": "- Le train sert à apprendre et à comparer les réglages, contenant 10 053 lignes train et 1 774 lignes de validation [partitions.fr].  \n- Le jeu supervisé de Qwen contient 4 000 exemples du train v2, avec 2 000 par tâche [sft.fr].",
+          "retrieved_ids": [
+            "partitions.fr",
+            "sft.fr",
+            "encodeur-adapte.fr"
+          ],
+          "relevant_ids": [
+            "partitions.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "partitions.fr",
+            "sft.fr"
+          ],
+          "all_citations_supplied": true,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q006",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "partitions.ar",
+            "encodeur-adapte.ar",
+            "majorite.ar"
+          ],
+          "relevant_ids": [
+            "partitions.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q007",
+          "lang": "fr",
+          "answer": "Les traductions d’une phrase ne sont pas distribuées entre entraînement et validation dans MADAR car elles sont liées à la même partition pour éviter que le modèle voie à l’entraînement une autre version d’une phrase réservée à la validation [id:groupes.fr]. La validation sert à comparer des réglages avant l’évaluation finale, tandis que le train sert à apprendre les paramètres [id:partitions.fr].",
+          "retrieved_ids": [
+            "groupes.fr",
+            "partitions.fr",
+            "sorties-invalides.fr"
+          ],
+          "relevant_ids": [
+            "groupes.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id:groupes.fr",
+            "id:partitions.fr"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q008",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "groupes.ar",
+            "sft.ar",
+            "partitions.ar"
+          ],
+          "relevant_ids": [
+            "groupes.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q009",
+          "lang": "fr",
+          "answer": "La variante norm-nfc-space-v1 conserve les emojis et les indices d’écriture comme les lettres arabes ou latines, réduit les suites d’espaces à un seul espace et retire les espaces en bordure. [id=normalisation.fr]",
+          "retrieved_ids": [
+            "normalisation.fr",
+            "partitions.fr",
+            "qwen-resultats.fr"
+          ],
+          "relevant_ids": [
+            "normalisation.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id=normalisation.fr"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q010",
+          "lang": "ar",
+          "answer": "الصيغة norm-nfc-space-v1 تُستخدم لتطبيقات النصوص بتنظيم المسافات المتتابعة وتحذف المسافات الطرفية، وتحافظ على الرموز والحروف العربية واللاتينية.",
+          "retrieved_ids": [
+            "normalisation.ar",
+            "tfidf.ar",
+            "rechargement.ar"
+          ],
+          "relevant_ids": [
+            "normalisation.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q011",
+          "lang": "fr",
+          "answer": "- Un avis classé LATIN est nécessairement rédigé dans une langue étrangère [id=ecriture.fr].  \n- TuniScope utilise des indicateurs comme le sentiment (positif ou négatif) pour identifier les avis, mais il ne classe pas nécessairement le texte en langue étrangère [id=tsac.fr].",
+          "retrieved_ids": [
+            "ecriture.fr",
+            "tsac.fr",
+            "limites-tsac.fr"
+          ],
+          "relevant_ids": [
+            "ecriture.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id=ecriture.fr",
+            "id=tsac.fr"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q012",
+          "lang": "ar",
+          "answer": "لا، التصنيف LATIN لا يعني أن التعليق مكتوب بالضرورة بلغة أجنبية.",
+          "retrieved_ids": [
+            "ecriture.ar",
+            "limites-tsac.ar",
+            "sorties-invalides.ar"
+          ],
+          "relevant_ids": [
+            "ecriture.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q013",
+          "lang": "fr",
+          "answer": "Le macro-F1 calcule d’abord le F1 de chaque classe, à partir de sa précision et de son rappel, et fait ensuite la moyenne des F1 en donnant le même poids à chaque classe, même si leurs effectifs sont différents. [id: macro-f1.fr]",
+          "retrieved_ids": [
+            "macro-f1.fr",
+            "majorite.fr",
+            "rechargement.fr"
+          ],
+          "relevant_ids": [
+            "macro-f1.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id: macro-f1.fr"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q014",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "macro-f1.ar",
+            "majorite.ar",
+            "qwen-resultats.ar"
+          ],
+          "relevant_ids": [
+            "macro-f1.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q015",
+          "lang": "fr",
+          "answer": "Dans la campagne Qwen3-0.6B, l’apprentissage LoRA partagé utilise un adaptateur qui traite à la fois TSAC et MADAR. Ce adaptateur ajuste 1 146 880 paramètres ajoutés aux projections q et v. [id: lora.fr]",
+          "retrieved_ids": [
+            "lora.fr",
+            "rechargement.fr",
+            "qwen-resultats.fr"
+          ],
+          "relevant_ids": [
+            "lora.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id: lora.fr"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q016",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "lora.ar",
+            "rechargement.ar",
+            "sorties-invalides.ar"
+          ],
+          "relevant_ids": [
+            "lora.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q049",
+          "lang": "fr",
+          "answer": "Les identifiants des auteurs des commentaires TSAC sont [id]limites-tsac.fr, [id]tsac.fr et [id]partitions.fr.",
+          "retrieved_ids": [
+            "limites-tsac.fr",
+            "tsac.fr",
+            "partitions.fr"
+          ],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q050",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "tsac.ar",
+            "limites-tsac.ar",
+            "partitions.ar"
+          ],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q051",
+          "lang": "fr",
+          "answer": "Le macro-F1 de TuniScope sur un corpus marocain indépendant est [id]madar.fr. Il utilise MSA pour l’arabe standard moderne, TN pour Tunis et Sfax, et EG pour Le Caire. [id]droits.fr[/id] mentionne l’accès et la redistribution des corpus, et [id]tsac.fr[/id] indique que le corpus TSAC contient des commentaires annotés pour le sentiment.",
+          "retrieved_ids": [
+            "madar.fr",
+            "droits.fr",
+            "tsac.fr"
+          ],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id",
+            "/id"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q052",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [
+            "tfidf.ar",
+            "qwen-resultats.ar",
+            "macro-f1.ar"
+          ],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        }
+      ]
+    },
+    "without_context": {
+      "seconds": 4.304362875000152,
+      "questions": 20,
+      "answers": 20,
+      "answerable_abstained": 0,
+      "unanswerable_abstained": 0,
+      "answers_with_supplied_citations": 0,
+      "answers_with_relevant_citations": 0,
+      "rows": [
+        {
+          "id": "Q001",
+          "lang": "fr",
+          "answer": "Le système de sentiment et de quel genre de textes provient [id=1] des données fournies.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "tsac.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [
+            "id=1"
+          ],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q002",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "tsac.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q003",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "madar.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q004",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "madar.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q005",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "partitions.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q006",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "partitions.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q007",
+          "lang": "fr",
+          "answer": "Insuffisant.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "groupes.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q008",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "groupes.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q009",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "normalisation.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q010",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "normalisation.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q011",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "ecriture.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q012",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "ecriture.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q013",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "macro-f1.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q014",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "macro-f1.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q015",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "lora.fr"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q016",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [
+            "lora.ar"
+          ],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q049",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q050",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q051",
+          "lang": "fr",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        },
+        {
+          "id": "Q052",
+          "lang": "ar",
+          "answer": "INSUFFISANT.",
+          "retrieved_ids": [],
+          "relevant_ids": [],
+          "ended_with_eos": true,
+          "abstained": false,
+          "cited_ids": [],
+          "all_citations_supplied": false,
+          "all_citations_relevant": false
+        }
+      ]
+    }
+  }
+}

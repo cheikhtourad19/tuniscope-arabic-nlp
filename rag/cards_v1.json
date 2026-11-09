@@ -1,0 +1,490 @@
+[
+  {
+    "id": "tsac.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Sentiment tunisien dans TSAC",
+    "text": "Le corpus TSAC contient des commentaires de réseaux sociaux annotés pour le sentiment. TuniScope utilise POS pour un avis positif et NEG pour un avis négatif. Le corpus de travail ne prévoit pas de classe neutre.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md"
+    ]
+  },
+  {
+    "id": "tsac.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "تحليل المشاعر التونسية في مجموعة TSAC",
+    "text": "تتكون مجموعة TSAC من تعليقات على شبكات التواصل الاجتماعي مصنفة بحسب المشاعر. يستخدم المشروع POS للرأي الإيجابي وNEG للرأي السلبي. لا تتضمن مجموعة العمل فئة محايدة.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md"
+    ]
+  },
+  {
+    "id": "madar.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Variétés retenues dans MADAR",
+    "text": "Pour identifier la variété dans MADAR, TuniScope utilise MSA pour l’arabe standard moderne, TN pour Tunis et Sfax et EG pour Le Caire. Les phrases relèvent du domaine du voyage.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "madar.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "التنوعات اللغوية المعتمدة في MADAR",
+    "text": "يستخدم المشروع MSA للعربية الفصحى الحديثة، وTN للهجتي تونس وصفاقس، وEG للهجة القاهرة. تنتمي جمل MADAR إلى مجال السفر.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "partitions.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Rôles et tailles des partitions de travail v2",
+    "text": "Le train sert à apprendre les paramètres. La validation sert à comparer des réglages avant l’évaluation finale. TSAC v2 compte 10 053 lignes train et 1 774 lignes de validation, MADAR compte 6 388 et 800 lignes respectivement. Les scores décrits dans ce rapport sont des scores de validation.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/57_resultats_confirmation_encodeur.md"
+    ]
+  },
+  {
+    "id": "partitions.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "أدوار وأحجام تقسيمات البيانات في النسخة الثانية",
+    "text": "تستخدم مجموعة التدريب لتعلم المعاملات، وتستخدم مجموعة التحقق لمقارنة الإعدادات قبل التقييم النهائي. تضم TSAC عدد 10 053 سطرا للتدريب و1 774 للتحقق، وتضم MADAR عدد 6 388 و800 على الترتيب. نتائج التقرير تخص التحقق.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/57_resultats_confirmation_encodeur.md"
+    ]
+  },
+  {
+    "id": "groupes.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Regroupement des traductions MADAR",
+    "text": "Dans MADAR, sentID.BTEC relie les traductions parallèles d’une même phrase source. Les traductions d’un groupe sont affectées à la même partition pour éviter que le modèle voie à l’entraînement une autre version d’une phrase réservée à la validation.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "groupes.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "تجميع ترجمات MADAR المتوازية",
+    "text": "يربط المعرف sentID.BTEC ترجمات الجملة الأصلية الواحدة. توضع جميع ترجمات المجموعة في التقسيم نفسه لتجنب اطلاع النموذج أثناء التدريب على صيغة أخرى من جملة مخصصة للتحقق.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "normalisation.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Normalisation minimale du texte",
+    "text": "La variante norm-nfc-space-v1 applique Unicode NFC puis réduit les suites d’espaces à un seul espace et retire les espaces en bordure. Elle conserve les emojis et les indices d’écriture comme les lettres arabes ou latines.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/16_normalisation_minimale_v1.md"
+    ]
+  },
+  {
+    "id": "normalisation.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "التطبيع الأدنى للنص",
+    "text": "تطبق الصيغة norm-nfc-space-v1 تطبيع يونيكود NFC ثم تختزل المسافات المتتابعة إلى مسافة واحدة وتحذف المسافات الطرفية. وتحتفظ بالرموز التعبيرية والحروف العربية واللاتينية.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/16_normalisation_minimale_v1.md"
+    ]
+  },
+  {
+    "id": "ecriture.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Catégories d’écriture et Arabizi",
+    "text": "AR, LATIN, MIXED et UNKNOWN décrivent les caractères observés. Un texte tunisien peut être écrit en alphabet latin, notamment en Arabizi. Cette information sert à analyser les résultats par écriture. Elle ne suffit pas à identifier la langue d’un texte.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/15_audit_ecriture_longueur.md"
+    ]
+  },
+  {
+    "id": "ecriture.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "فئات الكتابة والعربيزي",
+    "text": "تصف الفئات AR وLATIN وMIXED وUNKNOWN الحروف الظاهرة في النص. يمكن كتابة اللهجة التونسية بحروف لاتينية كما في العربيزي. تفيد هذه الفئات في تحليل النتائج بحسب الكتابة ولا تكفي لتحديد لغة النص.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/15_audit_ecriture_longueur.md"
+    ]
+  },
+  {
+    "id": "macro-f1.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Macro-F1 et poids des classes",
+    "text": "Le macro-F1 calcule d’abord le F1 de chaque classe, à partir de sa précision et de son rappel. Il fait ensuite la moyenne des F1 en donnant le même poids à chaque classe, même si leurs effectifs sont différents.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/19_protocole_ablation_normalisation.md",
+      "docs/32_relecture_metriques_validation.md"
+    ]
+  },
+  {
+    "id": "macro-f1.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "متوسط F1 الكلي ووزن الفئات",
+    "text": "تحسب قيمة F1 لكل فئة انطلاقا من الدقة والاسترجاع. ثم يحسب متوسط القيم بحيث يكون لكل فئة الوزن نفسه ولو اختلف عدد أمثلتها.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/19_protocole_ablation_normalisation.md",
+      "docs/32_relecture_metriques_validation.md"
+    ]
+  },
+  {
+    "id": "lora.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Adaptateur LoRA partagé",
+    "text": "Dans la campagne Qwen3-0.6B, un adaptateur LoRA par graine traite à la fois TSAC et MADAR. L’apprentissage ajuste 1 146 880 paramètres ajoutés aux projections q et v. Les paramètres du modèle Qwen de base sont gelés.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/64_protocole_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "lora.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "مهايئ LoRA المشترك",
+    "text": "تستخدم كل بذرة في تجربة Qwen3-0.6B مهايئ LoRA مشتركا بين مهمتي TSAC وMADAR. يحدث التدريب 1 146 880 معاملا مضافا إلى إسقاطي q وv وتبقى معاملات النموذج الأساسي مجمدة.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/64_protocole_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "limites-tsac.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Limites des avis TSAC",
+    "text": "Les commentaires TSAC proviennent d’un contexte de réseaux sociaux. Les scores obtenus dans ce cadre ne garantissent pas les mêmes performances sur d’autres plateformes ou domaines. L’ironie et les avis mêlant des signaux positifs et négatifs peuvent compliquer l’interprétation.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md",
+      "docs/28_etude_linguistique_train.md"
+    ]
+  },
+  {
+    "id": "limites-tsac.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "حدود تعليقات TSAC",
+    "text": "جاءت تعليقات TSAC من سياق شبكات التواصل الاجتماعي. لا تضمن النتائج في هذا السياق الأداء نفسه في منصات أو مجالات أخرى. قد تصعب السخرية والآراء التي تجمع إشارات إيجابية وسلبية تفسير التصنيف.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md",
+      "docs/28_etude_linguistique_train.md"
+    ]
+  },
+  {
+    "id": "limites-madar.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Portée géographique et domaine MADAR",
+    "text": "Tunis et Sfax représentent les deux variétés tunisiennes retenues, et Le Caire représente la classe égyptienne. MADAR utilise des phrases parallèles du domaine du voyage. Les performances observées ne démontrent pas une couverture de tous les parlers tunisiens ou égyptiens.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "limites-madar.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "النطاق الجغرافي ومجال MADAR",
+    "text": "تمثل تونس وصفاقس التنوعين التونسيين المعتمدين، وتمثل القاهرة الفئة المصرية. تستخدم MADAR جملا متوازية من مجال السفر. لا تثبت النتائج تغطية جميع اللهجات التونسية أو المصرية.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/13_carte_donnees_madar.md"
+    ]
+  },
+  {
+    "id": "droits.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Accès et redistribution des corpus",
+    "text": "L’accès à MADAR passe par les modalités officielles du fournisseur. Le dépôt TuniScope partage des éléments de méthode, des manifestes et des résultats agrégés. Les fichiers bruts des corpus sont conservés à part, conformément aux restrictions consignées dans le registre.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "SOURCE_REGISTER.md"
+    ]
+  },
+  {
+    "id": "droits.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "الوصول إلى البيانات وإعادة توزيعها",
+    "text": "يتم الحصول على MADAR وفق إجراءات الجهة الموفرة. ينشر مستودع TuniScope عناصر المنهج وقوائم التتبع والنتائج المجمعة. تحفظ ملفات البيانات الخام بصورة منفصلة وفقا للقيود الموثقة في سجل المصادر.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "SOURCE_REGISTER.md"
+    ]
+  },
+  {
+    "id": "annotations.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Traitement des étiquettes contradictoires",
+    "text": "La préparation TSAC comprend une revue ciblée des textes identiques portant des polarités contradictoires. Des décisions de revue sont conservées pour rendre le traitement traçable. Le texte source reste intact.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md"
+    ]
+  },
+  {
+    "id": "annotations.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "معالجة تسميات المشاعر المتناقضة",
+    "text": "يشمل إعداد TSAC مراجعة موجهة للنصوص المتطابقة التي تحمل تسميات مشاعر متعارضة. تحفظ قرارات المراجعة لكي يمكن تتبع المعالجة، ويظل النص الأصلي محفوظا.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/12_carte_donnees_tsac.md"
+    ]
+  },
+  {
+    "id": "majorite.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Référence par classe majoritaire",
+    "text": "La référence majoritaire apprend la classe la plus fréquente dans la partition d’entraînement. Elle prédit ensuite cette classe pour chaque entrée. Elle fournit un point de comparaison qui ne dépend pas du contenu du texte.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/21_premieres_baselines.md"
+    ]
+  },
+  {
+    "id": "majorite.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "مرجع الفئة الأكثر شيوعا",
+    "text": "يحدد مرجع الأغلبية الفئة الأكثر تكرارا في بيانات التدريب ثم يتوقع الفئة نفسها لكل مدخل. يوفر هذا مرجعا للمقارنة لا يعتمد على محتوى النص.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/21_premieres_baselines.md"
+    ]
+  },
+  {
+    "id": "tfidf.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Référence TF-IDF de caractères",
+    "text": "TF-IDF de caractères représente les textes par des fragments de caractères pondérés selon leur fréquence. La référence brute v2 obtient un macro-F1 de 0,928898 sur TSAC et de 0,949244 sur MADAR en validation.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/23_manifestes_v2_et_baselines.md"
+    ]
+  },
+  {
+    "id": "tfidf.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "مرجع TF-IDF على مستوى المحارف",
+    "text": "تمثل طريقة TF-IDF النصوص بمقاطع من المحارف موزونة بحسب تكرارها. حقق المرجع بالنص الخام في النسخة الثانية متوسط F1 قدره 0.928898 على TSAC و0.949244 على MADAR في مجموعة التحقق.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/23_manifestes_v2_et_baselines.md"
+    ]
+  },
+  {
+    "id": "encodeur-gele.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "CAMeLBERT gelé et tête linéaire",
+    "text": "Dans la référence gelée, CAMeLBERT fournit des représentations fixes des textes. Une tête linéaire apprend à prédire les classes à partir de ces vecteurs. L’encodeur conserve ses paramètres préentraînés.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/45_resultats_encodeur_gele.md"
+    ]
+  },
+  {
+    "id": "encodeur-gele.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "نموذج CAMeLBERT المجمد ورأس التصنيف الخطي",
+    "text": "ينتج CAMeLBERT تمثيلات ثابتة للنصوص في التجربة المجمدة. يتعلم رأس تصنيف خطي توقع الفئات انطلاقا من هذه المتجهات. يحتفظ المشفر بمعاملاته المدربة مسبقا.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/45_resultats_encodeur_gele.md"
+    ]
+  },
+  {
+    "id": "encodeur-adapte.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "CAMeLBERT adapté sur trois graines",
+    "text": "La confirmation de CAMeLBERT adapté utilise trois graines par tâche. La moyenne de macro-F1 sur validation est de 0,930834 pour TSAC et de 0,953482 pour MADAR. Les six modèles ont été rechargés et leurs prédictions vérifiées.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/57_resultats_confirmation_encodeur.md"
+    ]
+  },
+  {
+    "id": "encodeur-adapte.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "تأكيد CAMeLBERT بعد الضبط الدقيق",
+    "text": "تستخدم تجربة تأكيد CAMeLBERT ثلاث بذور لكل مهمة. بلغ متوسط F1 الكلي على بيانات التحقق 0.930834 لمجموعة TSAC و0.953482 لمجموعة MADAR. أعيد تحميل النماذج الستة والتحقق من تنبؤاتها.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/57_resultats_confirmation_encodeur.md"
+    ]
+  },
+  {
+    "id": "sft.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Exemples supervisés pour Qwen",
+    "text": "Le jeu supervisé de Qwen contient 4 000 exemples du train v2, avec 2 000 par tâche. La cible est le label suivi du marqueur de fin de réponse. Le calcul de la perte masque la consigne, le texte d’entrée et le remplissage.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/61_protocole_sft_qwen.md"
+    ]
+  },
+  {
+    "id": "sft.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "أمثلة التدريب الموجه لنموذج Qwen",
+    "text": "تضم مجموعة التدريب الموجه لنموذج Qwen عدد 4 000 مثال من تدريب النسخة الثانية، بواقع 2 000 لكل مهمة. الهدف هو التسمية متبوعة بعلامة نهاية الإجابة. يستبعد حساب الخسارة التعليمة والنص المدخل والحشو.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/61_protocole_sft_qwen.md"
+    ]
+  },
+  {
+    "id": "qwen-consignes.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Consigne directe et exemples dans la consigne",
+    "text": "En zero-shot, Qwen reçoit la consigne et le texte à classer. En few-shot, la consigne inclut aussi des exemples déjà étiquetés, avec un exemple par classe tiré du train. Les démonstrations restent fixes pendant la comparaison.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/59_protocole_tokenizer_et_consignes_qwen.md"
+    ]
+  },
+  {
+    "id": "qwen-consignes.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "التعليمة المباشرة والتعليمة ذات الأمثلة",
+    "text": "في وضع zero-shot يتلقى Qwen التعليمة والنص المراد تصنيفه. وفي وضع few-shot تضاف أمثلة موسومة، بواقع مثال تدريبي لكل فئة. تبقى هذه الأمثلة ثابتة أثناء المقارنة.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/59_protocole_tokenizer_et_consignes_qwen.md"
+    ]
+  },
+  {
+    "id": "qwen-resultats.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Résultats Qwen LoRA sur validation",
+    "text": "En zero-shot après LoRA, le macro-F1 moyen atteint 0,7065 sur TSAC et 0,7321 sur MADAR. Cette consigne directe dépasse le few-shot dans les deux tâches pour chaque graine. En few-shot MADAR, la classe EG est prédite sur 760 à 787 des 800 exemples.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "qwen-resultats.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "نتائج Qwen LoRA في التحقق",
+    "text": "بعد LoRA بلغ متوسط F1 الكلي في وضع zero-shot قيمة 0.7065 على TSAC و0.7321 على MADAR. تفوقت التعليمة المباشرة على وضع few-shot في المهمتين ولكل بذرة. في وضع few-shot على MADAR توقع النموذج EG في 760 إلى 787 من 800 مثال.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "sorties-invalides.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Validité du format de sortie",
+    "text": "Une réponse Qwen est valide quand elle correspond à un label autorisé pour la tâche. Les sorties invalides restent dans la matrice de confusion et comptent comme erreurs. Après LoRA, les 15 444 réponses de validation respectent le format de label. La justesse des labels est mesurée séparément.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "sorties-invalides.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "صلاحية صيغة المخرجات",
+    "text": "تكون إجابة Qwen صالحة عندما تطابق تسمية مسموحة للمهمة. تبقى المخرجات غير الصالحة ضمن مصفوفة الالتباس وتحسب أخطاء. بعد LoRA احترمت إجابات التحقق البالغ عددها 15 444 صيغة التسمية، وتقاس صحة التصنيفات بصورة منفصلة.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "graines.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Répétitions avec trois graines",
+    "text": "Les graines 13, 42 et 2026 fixent notamment l’initialisation de l’adaptateur et l’ordre des exemples. Nous gardons les données et la configuration fixes et rapportons la moyenne et l’écart-type des trois scores pour mesurer la variabilité.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/64_protocole_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "graines.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "التكرار باستخدام ثلاث بذور",
+    "text": "تحدد البذور 13 و42 و2026 القيم الأولية للمهايئ وترتيب الأمثلة. تبقى البيانات والإعدادات ثابتة، ويعرض متوسط النتائج الثلاث وانحرافها المعياري لقياس التباين.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/64_protocole_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "rechargement.fr",
+    "version": 1,
+    "lang": "fr",
+    "title": "Rechargement des poids LoRA",
+    "text": "La version adaptée se recharge en associant la révision exacte de Qwen de base aux poids et à la configuration de l’adaptateur de la graine voulue. Les trois adaptateurs de la campagne ont été rechargés sur Mac, avec vérification des empreintes et génération sur deux exemples inventés par graine.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  },
+  {
+    "id": "rechargement.ar",
+    "version": 1,
+    "lang": "ar",
+    "title": "إعادة تحميل أوزان LoRA",
+    "text": "تعاد النسخة المضبوطة بربط الإصدار المحدد من نموذج Qwen الأساسي بأوزان المهايئ وإعداداته للبذرة المختارة. أعيد تحميل المهايئات الثلاثة على جهاز ماك مع التحقق من البصمات والتوليد على مثالين مصطنعين لكل بذرة.",
+    "author": "TuniScope (rédaction assistée par IA)",
+    "references": [
+      "docs/65_resultats_campagne_lora.md"
+    ]
+  }
+]

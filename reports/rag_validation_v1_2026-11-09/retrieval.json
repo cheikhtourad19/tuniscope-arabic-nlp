@@ -1,0 +1,1419 @@
+{
+  "split": "validation",
+  "classification_test_loaded": false,
+  "human_review": "pending",
+  "top_k": 3,
+  "cards": 44,
+  "cards_sha256": "c19065a76375e720aa351b4e6fcc0abf29710cd8d2d2de6dbc77808846c9ba2e",
+  "questions_sha256": "37dc9905f78c4ccf2a3c2fcad4973be57ee1ce7a2e6174d80dea7b81064db018",
+  "protocol_sha256": "951d1af15813fed426e9f13d42caea0cacd1b0629ce28b0ad1a096a7cc86c460",
+  "code_sha256": {
+    "search.py": "edc7d2a734c86919de1abf25a684dc7e321ead3a22e624ef35f14438a6f1c301",
+    "dense.py": "c90773896cd1be1392c5a27e54ed757c72f1c627ae59ad828f3ff317ae3a5e8c",
+    "evaluate.py": "d20f90b960b75df6ebc5c72a53a9b4e4806daa2f7ae92e389f78969195359c63"
+  },
+  "systems": {
+    "bm25": {
+      "threshold": 8.187184890704186,
+      "all": {
+        "questions": 20,
+        "answerable": 16,
+        "unanswerable": 4,
+        "recall_at_3": 0.875,
+        "mrr_at_3": 0.875,
+        "answered": 9,
+        "answerable_accepted": 9,
+        "unanswerable_rejected": 4,
+        "answered_with_relevant_citation": 9
+      },
+      "by_language": {
+        "fr": {
+          "questions": 10,
+          "answerable": 8,
+          "unanswerable": 2,
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "answered": 6,
+          "answerable_accepted": 6,
+          "unanswerable_rejected": 2,
+          "answered_with_relevant_citation": 6
+        },
+        "ar": {
+          "questions": 10,
+          "answerable": 8,
+          "unanswerable": 2,
+          "recall_at_3": 0.75,
+          "mrr_at_3": 0.75,
+          "answered": 3,
+          "answerable_accepted": 3,
+          "unanswerable_rejected": 2,
+          "answered_with_relevant_citation": 3
+        }
+      },
+      "rows": [
+        {
+          "id": "Q001",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quels labels peut produire le système de sentiment et de quel genre de textes proviennent-ils ?",
+          "relevant_ids": [
+            "tsac.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.fr",
+              "score": 5.566795778492991
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 3.815729026026334
+            },
+            {
+              "id": "annotations.fr",
+              "score": 3.3634057684068948
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q002",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما التصنيفات الممكنة في تحليل المشاعر ومن أي نوع من النصوص جاءت؟",
+          "relevant_ids": [
+            "tsac.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 6.581446383322025
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 4.071834981073395
+            },
+            {
+              "id": "tfidf.ar",
+              "score": 3.9373490042237598
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q003",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Dans MADAR, quelles villes se cachent derrière TN et EG, et que désigne MSA ?",
+          "relevant_ids": [
+            "madar.fr"
+          ],
+          "ranking": [
+            {
+              "id": "madar.fr",
+              "score": 10.887568035902286
+            },
+            {
+              "id": "groupes.fr",
+              "score": 4.484404515024831
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 3.9219172076028865
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Pour identifier la variété dans MADAR, TuniScope utilise MSA pour l’arabe standard moderne, TN pour Tunis et Sfax et EG pour Le Caire. Les phrases relèvent du domaine du voyage.",
+            "sources": [
+              {
+                "id": "madar.fr",
+                "title": "Variétés retenues dans MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q004",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما المدن التي يمثلها الرمزان TN وEG في MADAR، وما المقصود بالرمز MSA؟",
+          "relevant_ids": [
+            "madar.ar"
+          ],
+          "ranking": [
+            {
+              "id": "madar.ar",
+              "score": 8.245613155404564
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 2.8935783852497647
+            },
+            {
+              "id": "annotations.ar",
+              "score": 2.403477030815033
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يستخدم المشروع MSA للعربية الفصحى الحديثة، وTN للهجتي تونس وصفاقس، وEG للهجة القاهرة. تنتمي جمل MADAR إلى مجال السفر.",
+            "sources": [
+              {
+                "id": "madar.ar",
+                "title": "التنوعات اللغوية المعتمدة في MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q005",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Combien de lignes ont servi à apprendre et à comparer les réglages pour chacun des deux corpus ?",
+          "relevant_ids": [
+            "partitions.fr"
+          ],
+          "ranking": [
+            {
+              "id": "partitions.fr",
+              "score": 13.817732656450067
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 5.914154413727168
+            },
+            {
+              "id": "tsac.fr",
+              "score": 5.535917451622862
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Le train sert à apprendre les paramètres. La validation sert à comparer des réglages avant l’évaluation finale. TSAC v2 compte 10 053 lignes train et 1 774 lignes de validation, MADAR compte 6 388 et 800 lignes respectivement. Les scores décrits dans ce rapport sont des scores de validation.",
+            "sources": [
+              {
+                "id": "partitions.fr",
+                "title": "Rôles et tailles des partitions de travail v2",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q006",
+          "lang": "ar",
+          "split": "validation",
+          "question": "كم سطرا خصص للتعلم ولمقارنة الإعدادات في كل مجموعة بيانات؟",
+          "relevant_ids": [
+            "partitions.ar"
+          ],
+          "ranking": [
+            {
+              "id": "partitions.ar",
+              "score": 7.496817996955321
+            },
+            {
+              "id": "lora.ar",
+              "score": 3.2320844207719803
+            },
+            {
+              "id": "tsac.ar",
+              "score": 3.1250864334412367
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q007",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Pourquoi les traductions d’une phrase ne sont-elles pas distribuées entre entraînement et validation ?",
+          "relevant_ids": [
+            "groupes.fr"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.fr",
+              "score": 16.97141877741892
+            },
+            {
+              "id": "majorite.fr",
+              "score": 6.501579837192175
+            },
+            {
+              "id": "limites-tsac.fr",
+              "score": 5.018900644371223
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans MADAR, sentID.BTEC relie les traductions parallèles d’une même phrase source. Les traductions d’un groupe sont affectées à la même partition pour éviter que le modèle voie à l’entraînement une autre version d’une phrase réservée à la validation.",
+            "sources": [
+              {
+                "id": "groupes.fr",
+                "title": "Regroupement des traductions MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q008",
+          "lang": "ar",
+          "split": "validation",
+          "question": "لماذا توضع ترجمات الجملة الأصلية في تقسيم واحد بدل توزيعها بين التدريب والتحقق؟",
+          "relevant_ids": [
+            "groupes.ar"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.ar",
+              "score": 14.792486593422302
+            },
+            {
+              "id": "lora.ar",
+              "score": 4.649347073139965
+            },
+            {
+              "id": "droits.ar",
+              "score": 3.2320844207719803
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يربط المعرف sentID.BTEC ترجمات الجملة الأصلية الواحدة. توضع جميع ترجمات المجموعة في التقسيم نفسه لتجنب اطلاع النموذج أثناء التدريب على صيغة أخرى من جملة مخصصة للتحقق.",
+            "sources": [
+              {
+                "id": "groupes.ar",
+                "title": "تجميع ترجمات MADAR المتوازية",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q009",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Que transforme exactement la variante norm-nfc-space-v1 ?",
+          "relevant_ids": [
+            "normalisation.fr"
+          ],
+          "ranking": [
+            {
+              "id": "normalisation.fr",
+              "score": 14.975514540153078
+            },
+            {
+              "id": "groupes.fr",
+              "score": 2.9078625997646963
+            },
+            {
+              "id": "majorite.fr",
+              "score": 0.28493360264509693
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "La variante norm-nfc-space-v1 applique Unicode NFC puis réduit les suites d’espaces à un seul espace et retire les espaces en bordure. Elle conserve les emojis et les indices d’écriture comme les lettres arabes ou latines.",
+            "sources": [
+              {
+                "id": "normalisation.fr",
+                "title": "Normalisation minimale du texte",
+                "references": [
+                  "docs/16_normalisation_minimale_v1.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q010",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما التغييرات التي تطبقها الصيغة norm-nfc-space-v1 على النص؟",
+          "relevant_ids": [
+            "normalisation.ar"
+          ],
+          "ranking": [
+            {
+              "id": "normalisation.ar",
+              "score": 15.598819735494871
+            },
+            {
+              "id": "annotations.ar",
+              "score": 4.442542551808371
+            },
+            {
+              "id": "majorite.ar",
+              "score": 2.957255745106201
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تطبق الصيغة norm-nfc-space-v1 تطبيع يونيكود NFC ثم تختزل المسافات المتتابعة إلى مسافة واحدة وتحذف المسافات الطرفية. وتحتفظ بالرموز التعبيرية والحروف العربية واللاتينية.",
+            "sources": [
+              {
+                "id": "normalisation.ar",
+                "title": "التطبيع الأدنى للنص",
+                "references": [
+                  "docs/16_normalisation_minimale_v1.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q011",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Un avis classé LATIN est-il nécessairement rédigé dans une langue étrangère ?",
+          "relevant_ids": [
+            "ecriture.fr"
+          ],
+          "ranking": [
+            {
+              "id": "ecriture.fr",
+              "score": 7.5124057135402245
+            },
+            {
+              "id": "tsac.fr",
+              "score": 6.229177747145679
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 4.7732557185465465
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q012",
+          "lang": "ar",
+          "split": "validation",
+          "question": "هل يعني التصنيف LATIN أن التعليق مكتوب بالضرورة بلغة أجنبية؟",
+          "relevant_ids": [
+            "ecriture.ar"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-gele.ar",
+              "score": 2.3410449610083583
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 2.1718024968400433
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q013",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quel indicateur donne le même poids à une classe rare et à une classe fréquente ?",
+          "relevant_ids": [
+            "macro-f1.fr"
+          ],
+          "ranking": [
+            {
+              "id": "macro-f1.fr",
+              "score": 9.750586088014797
+            },
+            {
+              "id": "groupes.fr",
+              "score": 6.792569524858357
+            },
+            {
+              "id": "majorite.fr",
+              "score": 4.897265356721645
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Le macro-F1 calcule d’abord le F1 de chaque classe, à partir de sa précision et de son rappel. Il fait ensuite la moyenne des F1 en donnant le même poids à chaque classe, même si leurs effectifs sont différents.",
+            "sources": [
+              {
+                "id": "macro-f1.fr",
+                "title": "Macro-F1 et poids des classes",
+                "references": [
+                  "docs/19_protocole_ablation_normalisation.md",
+                  "docs/32_relecture_metriques_validation.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q014",
+          "lang": "ar",
+          "split": "validation",
+          "question": "أي مقياس يعطي الفئة النادرة والفئة الشائعة الوزن نفسه؟",
+          "relevant_ids": [
+            "macro-f1.ar"
+          ],
+          "ranking": [
+            {
+              "id": "macro-f1.ar",
+              "score": 4.930046656024933
+            },
+            {
+              "id": "majorite.ar",
+              "score": 3.6089827516000024
+            },
+            {
+              "id": "limites-madar.ar",
+              "score": 2.3110296205771172
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q015",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Pendant LoRA, quelles parties apprennent et le même adaptateur traite-t-il les deux tâches ?",
+          "relevant_ids": [
+            "lora.fr"
+          ],
+          "ranking": [
+            {
+              "id": "lora.fr",
+              "score": 8.187184890704186
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 7.592786779888929
+            },
+            {
+              "id": "macro-f1.fr",
+              "score": 6.872947398778022
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans la campagne Qwen3-0.6B, un adaptateur LoRA par graine traite à la fois TSAC et MADAR. L’apprentissage ajuste 1 146 880 paramètres ajoutés aux projections q et v. Les paramètres du modèle Qwen de base sont gelés.",
+            "sources": [
+              {
+                "id": "lora.fr",
+                "title": "Adaptateur LoRA partagé",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q016",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما الأجزاء التي تتغير أثناء تدريب LoRA وهل يخدم المهايئ نفسه المهمتين؟",
+          "relevant_ids": [
+            "lora.ar"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.ar",
+              "score": 4.217589307064926
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 4.217471793493695
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 4.189770192984001
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q049",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quels sont les identifiants des auteurs de chacun des commentaires TSAC ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "limites-tsac.fr",
+              "score": 4.855902365439026
+            },
+            {
+              "id": "tsac.fr",
+              "score": 4.688897860025686
+            },
+            {
+              "id": "annotations.fr",
+              "score": 3.5787389113362975
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q050",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما معرفات مؤلفي كل تعليق في مجموعة TSAC؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 4.50816768440029
+            },
+            {
+              "id": "lora.ar",
+              "score": 4.218131475852089
+            },
+            {
+              "id": "partitions.ar",
+              "score": 3.4674009542072093
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q051",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quel est le macro-F1 de TuniScope sur un corpus marocain indépendant ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tsac.fr",
+              "score": 7.755725471689706
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 7.66373064578714
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 7.488364806276319
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q052",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما متوسط F1 لنظام TuniScope على مجموعة مغربية مستقلة؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tfidf.ar",
+              "score": 5.7810564059521035
+            },
+            {
+              "id": "macro-f1.ar",
+              "score": 4.405394681469855
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 3.881962381388037
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        }
+      ]
+    },
+    "e5": {
+      "threshold": 0.8687087297439575,
+      "all": {
+        "questions": 20,
+        "answerable": 16,
+        "unanswerable": 4,
+        "recall_at_3": 1.0,
+        "mrr_at_3": 1.0,
+        "answered": 8,
+        "answerable_accepted": 8,
+        "unanswerable_rejected": 4,
+        "answered_with_relevant_citation": 8
+      },
+      "by_language": {
+        "fr": {
+          "questions": 10,
+          "answerable": 8,
+          "unanswerable": 2,
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "answered": 3,
+          "answerable_accepted": 3,
+          "unanswerable_rejected": 2,
+          "answered_with_relevant_citation": 3
+        },
+        "ar": {
+          "questions": 10,
+          "answerable": 8,
+          "unanswerable": 2,
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "answered": 5,
+          "answerable_accepted": 5,
+          "unanswerable_rejected": 2,
+          "answered_with_relevant_citation": 5
+        }
+      },
+      "rows": [
+        {
+          "id": "Q001",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quels labels peut produire le système de sentiment et de quel genre de textes proviennent-ils ?",
+          "relevant_ids": [
+            "tsac.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.fr",
+              "score": 0.8320180177688599
+            },
+            {
+              "id": "ecriture.fr",
+              "score": 0.8065880537033081
+            },
+            {
+              "id": "sft.fr",
+              "score": 0.8059238195419312
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q002",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما التصنيفات الممكنة في تحليل المشاعر ومن أي نوع من النصوص جاءت؟",
+          "relevant_ids": [
+            "tsac.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 0.8433644771575928
+            },
+            {
+              "id": "annotations.ar",
+              "score": 0.8366379141807556
+            },
+            {
+              "id": "ecriture.ar",
+              "score": 0.8043120503425598
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q003",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Dans MADAR, quelles villes se cachent derrière TN et EG, et que désigne MSA ?",
+          "relevant_ids": [
+            "madar.fr"
+          ],
+          "ranking": [
+            {
+              "id": "madar.fr",
+              "score": 0.8803142309188843
+            },
+            {
+              "id": "limites-madar.fr",
+              "score": 0.8517176508903503
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8186373710632324
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Pour identifier la variété dans MADAR, TuniScope utilise MSA pour l’arabe standard moderne, TN pour Tunis et Sfax et EG pour Le Caire. Les phrases relèvent du domaine du voyage.",
+            "sources": [
+              {
+                "id": "madar.fr",
+                "title": "Variétés retenues dans MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q004",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما المدن التي يمثلها الرمزان TN وEG في MADAR، وما المقصود بالرمز MSA؟",
+          "relevant_ids": [
+            "madar.ar"
+          ],
+          "ranking": [
+            {
+              "id": "madar.ar",
+              "score": 0.8712661266326904
+            },
+            {
+              "id": "limites-madar.ar",
+              "score": 0.8502802848815918
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8110557794570923
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يستخدم المشروع MSA للعربية الفصحى الحديثة، وTN للهجتي تونس وصفاقس، وEG للهجة القاهرة. تنتمي جمل MADAR إلى مجال السفر.",
+            "sources": [
+              {
+                "id": "madar.ar",
+                "title": "التنوعات اللغوية المعتمدة في MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q005",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Combien de lignes ont servi à apprendre et à comparer les réglages pour chacun des deux corpus ?",
+          "relevant_ids": [
+            "partitions.fr"
+          ],
+          "ranking": [
+            {
+              "id": "partitions.fr",
+              "score": 0.8515324592590332
+            },
+            {
+              "id": "sft.fr",
+              "score": 0.8137004375457764
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.8058065176010132
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q006",
+          "lang": "ar",
+          "split": "validation",
+          "question": "كم سطرا خصص للتعلم ولمقارنة الإعدادات في كل مجموعة بيانات؟",
+          "relevant_ids": [
+            "partitions.ar"
+          ],
+          "ranking": [
+            {
+              "id": "partitions.ar",
+              "score": 0.8721075654029846
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.8137782216072083
+            },
+            {
+              "id": "majorite.ar",
+              "score": 0.8133673071861267
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم مجموعة التدريب لتعلم المعاملات، وتستخدم مجموعة التحقق لمقارنة الإعدادات قبل التقييم النهائي. تضم TSAC عدد 10 053 سطرا للتدريب و1 774 للتحقق، وتضم MADAR عدد 6 388 و800 على الترتيب. نتائج التقرير تخص التحقق.",
+            "sources": [
+              {
+                "id": "partitions.ar",
+                "title": "أدوار وأحجام تقسيمات البيانات في النسخة الثانية",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q007",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Pourquoi les traductions d’une phrase ne sont-elles pas distribuées entre entraînement et validation ?",
+          "relevant_ids": [
+            "groupes.fr"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.fr",
+              "score": 0.8536767959594727
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8220222592353821
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8168744444847107
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q008",
+          "lang": "ar",
+          "split": "validation",
+          "question": "لماذا توضع ترجمات الجملة الأصلية في تقسيم واحد بدل توزيعها بين التدريب والتحقق؟",
+          "relevant_ids": [
+            "groupes.ar"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.ar",
+              "score": 0.8687087297439575
+            },
+            {
+              "id": "sft.ar",
+              "score": 0.8323886394500732
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8316222429275513
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يربط المعرف sentID.BTEC ترجمات الجملة الأصلية الواحدة. توضع جميع ترجمات المجموعة في التقسيم نفسه لتجنب اطلاع النموذج أثناء التدريب على صيغة أخرى من جملة مخصصة للتحقق.",
+            "sources": [
+              {
+                "id": "groupes.ar",
+                "title": "تجميع ترجمات MADAR المتوازية",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q009",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Que transforme exactement la variante norm-nfc-space-v1 ?",
+          "relevant_ids": [
+            "normalisation.fr"
+          ],
+          "ranking": [
+            {
+              "id": "normalisation.fr",
+              "score": 0.8979505300521851
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8043581247329712
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.7993847131729126
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "La variante norm-nfc-space-v1 applique Unicode NFC puis réduit les suites d’espaces à un seul espace et retire les espaces en bordure. Elle conserve les emojis et les indices d’écriture comme les lettres arabes ou latines.",
+            "sources": [
+              {
+                "id": "normalisation.fr",
+                "title": "Normalisation minimale du texte",
+                "references": [
+                  "docs/16_normalisation_minimale_v1.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q010",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما التغييرات التي تطبقها الصيغة norm-nfc-space-v1 على النص؟",
+          "relevant_ids": [
+            "normalisation.ar"
+          ],
+          "ranking": [
+            {
+              "id": "normalisation.ar",
+              "score": 0.8897750973701477
+            },
+            {
+              "id": "tfidf.ar",
+              "score": 0.8222322463989258
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 0.8040482997894287
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تطبق الصيغة norm-nfc-space-v1 تطبيع يونيكود NFC ثم تختزل المسافات المتتابعة إلى مسافة واحدة وتحذف المسافات الطرفية. وتحتفظ بالرموز التعبيرية والحروف العربية واللاتينية.",
+            "sources": [
+              {
+                "id": "normalisation.ar",
+                "title": "التطبيع الأدنى للنص",
+                "references": [
+                  "docs/16_normalisation_minimale_v1.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q011",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Un avis classé LATIN est-il nécessairement rédigé dans une langue étrangère ?",
+          "relevant_ids": [
+            "ecriture.fr"
+          ],
+          "ranking": [
+            {
+              "id": "ecriture.fr",
+              "score": 0.8376678824424744
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.8145487308502197
+            },
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8055899143218994
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q012",
+          "lang": "ar",
+          "split": "validation",
+          "question": "هل يعني التصنيف LATIN أن التعليق مكتوب بالضرورة بلغة أجنبية؟",
+          "relevant_ids": [
+            "ecriture.ar"
+          ],
+          "ranking": [
+            {
+              "id": "ecriture.ar",
+              "score": 0.8103936314582825
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 0.8064270615577698
+            },
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8031172752380371
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q013",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quel indicateur donne le même poids à une classe rare et à une classe fréquente ?",
+          "relevant_ids": [
+            "macro-f1.fr"
+          ],
+          "ranking": [
+            {
+              "id": "macro-f1.fr",
+              "score": 0.8452054262161255
+            },
+            {
+              "id": "majorite.fr",
+              "score": 0.8424062728881836
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 0.8137255907058716
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q014",
+          "lang": "ar",
+          "split": "validation",
+          "question": "أي مقياس يعطي الفئة النادرة والفئة الشائعة الوزن نفسه؟",
+          "relevant_ids": [
+            "macro-f1.ar"
+          ],
+          "ranking": [
+            {
+              "id": "macro-f1.ar",
+              "score": 0.839895486831665
+            },
+            {
+              "id": "majorite.ar",
+              "score": 0.8273710012435913
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8094505071640015
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q015",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Pendant LoRA, quelles parties apprennent et le même adaptateur traite-t-il les deux tâches ?",
+          "relevant_ids": [
+            "lora.fr"
+          ],
+          "ranking": [
+            {
+              "id": "lora.fr",
+              "score": 0.8768213987350464
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 0.8414669632911682
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8262628316879272
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans la campagne Qwen3-0.6B, un adaptateur LoRA par graine traite à la fois TSAC et MADAR. L’apprentissage ajuste 1 146 880 paramètres ajoutés aux projections q et v. Les paramètres du modèle Qwen de base sont gelés.",
+            "sources": [
+              {
+                "id": "lora.fr",
+                "title": "Adaptateur LoRA partagé",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q016",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما الأجزاء التي تتغير أثناء تدريب LoRA وهل يخدم المهايئ نفسه المهمتين؟",
+          "relevant_ids": [
+            "lora.ar"
+          ],
+          "ranking": [
+            {
+              "id": "lora.ar",
+              "score": 0.8694661855697632
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 0.8623450398445129
+            },
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8205845952033997
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم كل بذرة في تجربة Qwen3-0.6B مهايئ LoRA مشتركا بين مهمتي TSAC وMADAR. يحدث التدريب 1 146 880 معاملا مضافا إلى إسقاطي q وv وتبقى معاملات النموذج الأساسي مجمدة.",
+            "sources": [
+              {
+                "id": "lora.ar",
+                "title": "مهايئ LoRA المشترك",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q049",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quels sont les identifiants des auteurs de chacun des commentaires TSAC ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8492409586906433
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.8411095142364502
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8258368968963623
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q050",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما معرفات مؤلفي كل تعليق في مجموعة TSAC؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 0.8658692240715027
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 0.8544269800186157
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8395894169807434
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q051",
+          "lang": "fr",
+          "split": "validation",
+          "question": "Quel est le macro-F1 de TuniScope sur un corpus marocain indépendant ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "madar.fr",
+              "score": 0.8393082022666931
+            },
+            {
+              "id": "droits.fr",
+              "score": 0.8354040384292603
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.8308044075965881
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q052",
+          "lang": "ar",
+          "split": "validation",
+          "question": "ما متوسط F1 لنظام TuniScope على مجموعة مغربية مستقلة؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tfidf.ar",
+              "score": 0.826732873916626
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8252816200256348
+            },
+            {
+              "id": "macro-f1.ar",
+              "score": 0.8217440247535706
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        }
+      ],
+      "model": "intfloat/multilingual-e5-small",
+      "revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+      "plan_sha256": "60b10665edb39066828f69a144241ef1ebeaa7767e63aa773986551772887637",
+      "device": "cpu",
+      "torch": "2.15.0"
+    }
+  }
+}
