@@ -28,13 +28,13 @@ def verify(path, info):
         raise ValueError(f'Unexpected file digest for {path.name}')
 
 
-def assets(download=False):
+def assets(download=False, directory=CACHE):
     if download:
-        CACHE.mkdir(parents=True, exist_ok=True)
+        directory.mkdir(parents=True, exist_ok=True)
     for name, info in MODEL['files'].items():
-        path = CACHE / name
+        path = directory / name
         if download and not path.exists():
-            partial = CACHE / f'{name}.part'
+            partial = directory / f'{name}.part'
             print(f'Téléchargement E5 {name} ({info["bytes"]:,} octets)', flush=True)
             url = f'https://huggingface.co/{MODEL["model_id"]}/resolve/{MODEL["revision"]}/{name}?download=true'
             with urlopen(url, timeout=90) as source, partial.open('wb') as sink:
@@ -48,7 +48,7 @@ def assets(download=False):
             partial.replace(path)
         else:
             verify(path, info)
-    return CACHE
+    return directory
 
 
 if __name__ == '__main__':

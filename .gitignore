@@ -59,3 +59,7 @@ mlruns/
 !data/README.md
 !data/manifests/
 !data/manifests/**
+
+# Optional private neural inference bundle
+/App/models/neural/*
+!/App/models/neural/.gitkeep

@@ -44,9 +44,28 @@ const examples = {
   dialect: ["وين المحطة؟", "أين المحطة؟", "فين المحطة؟"],
 };
 const percent = (value) => `${(value * 100).toFixed(2).replace(".", ",")} %`;
-const number = (value) => Number(value).toLocaleString("fr-FR");
-const modelName = (id) =>
-  `${id.split("__")[0].replace("tfidf_", "TF-IDF ").replace("char", "caractères").replace("word", "mots")} · ${id.endsWith("raw-v0") ? "brut" : "normalisé"}`;
+const number = (value) => value == null ? "—" : Number(value).toLocaleString("fr-FR");
+const modelNames = {
+  camelbert: "CAMeLBERT adapté",
+  qwen_base: "Qwen3-0.6B · base",
+  qwen_lora: "Qwen3-0.6B · LoRA",
+  tfidf_char: "TF-IDF caractères",
+  tfidf_word: "TF-IDF mots",
+  tfidf_word_char: "TF-IDF mots + caractères",
+};
+const modelName = (id, seed) => {
+  const [system, variant] = id.split("__");
+  const name = modelNames[system] || system;
+  if (system.startsWith("tfidf_")) return `${name} · ${variant === "raw-v0" ? "brut" : "normalisé"}`;
+  return seed == null ? name : `${name} · graine ${seed}`;
+};
+const documentaryNames = { bm25: "BM25 · mots-clés", e5: "E5 · similarité" };
+const macroVariation = (aggregate) => {
+  if (!aggregate) return null;
+  const mean = aggregate.macro_f1?.mean ?? aggregate.mean_macro_f1;
+  const deviation = aggregate.macro_f1?.sample_std ?? aggregate.stdev_macro_f1;
+  return `${mean.toFixed(4)} ± ${deviation.toFixed(4)}`;
+};
 
 async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, options);
@@ -132,6 +151,8 @@ function App() {
   const [menu, setMenu] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState(null);
+  const [documentaryLang, setDocumentaryLang] = useState("fr");
+  const [documentaryMethod, setDocumentaryMethod] = useState("bm25");
   const choices =
     health?.models?.filter((m) => m.task === task && m.available) || [];
   const available = choices.some((m) => m.id === model);
@@ -263,7 +284,7 @@ function App() {
         </div>
       </header>
       <main>
-        <section className="hero">
+        <section className={page === "about" ? "hero hero-about" : "hero"}>
           <div>
             <p className="eyebrow">
               <span className="tiny-line" /> LANGUE, VARIÉTÉS & SENTIMENT
@@ -503,7 +524,7 @@ function App() {
                         ) : (
                           choices.map((m) => (
                             <option value={m.id} key={m.id}>
-                              {modelName(m.id)}
+                              {modelName(m.id, m.seed)}
                             </option>
                           ))
                         )}
@@ -520,7 +541,7 @@ function App() {
                             setResults([]);
                           }}
                         />
-                        <span>Comparer les variantes</span>
+                        <span>Comparer les modèles</span>
                       </label>
                     )}
                   </div>
@@ -746,7 +767,8 @@ function App() {
                 <thead>
                   <tr>
                     <th>Tâche / modèle</th>
-                    <th>Macro-F1</th>
+                    <th>Macro-F1 servi</th>
+                    <th>Moyenne ± écart-type</th>
                     <th>Accuracy</th>
                     <th>Train</th>
                     <th>Validation</th>
@@ -757,9 +779,10 @@ function App() {
                     <tr key={i}>
                       <td>
                         <strong>{taskNames[r.task]}</strong>
-                        <span>{modelName(r.id)}</span>
+                        <span>{modelName(r.id, r.seed)}{r.prompt_mode === "zero_shot" ? " · zero-shot" : ""}</span>
                       </td>
                       <td>{r.metrics.macro_f1.toFixed(6)}</td>
+                      <td>{macroVariation(r.aggregate) || "—"}</td>
                       <td>{percent(r.metrics.accuracy)}</td>
                       <td>{number(r.train_rows)}</td>
                       <td>{number(r.validation_rows)}</td>
@@ -817,9 +840,9 @@ function App() {
                   d’apprentissage ou de validation.
                 </p>
                 <p>
-                  Cette version de l’application utilise des pipelines TF-IDF et
-                  une régression logistique déjà entraînés. Aucun corpus n’est
-                  nécessaire pour analyser un nouveau texte.
+                  L’atelier propose les références TF-IDF, CAMeLBERT adapté
+                  et Qwen3-0.6B avec ou sans LoRA, selon les poids chargés.
+                  Les versions adaptées de démonstration utilisent une graine fixe.
                 </p>
                 <div className="reference-links">
                   <a
@@ -845,9 +868,10 @@ function App() {
                     "TF-IDF + régression logistique",
                     health?.ready ? "Disponible" : "Indisponible",
                   ],
-                  ["Encodeur Transformer", "À implémenter"],
-                  ["LLM et adaptateur LoRA", "À implémenter"],
-                  ["Recherche documentaire RAG", "À implémenter"],
+                  ["CAMeLBERT adapté", health?.models?.some((m) => m.system === "camelbert" && m.available) ? "Disponible" : "Indisponible"],
+                  ["Qwen3 et adaptateur LoRA", health?.models?.some((m) => m.system === "qwen_lora" && m.available) ? "Disponible" : "Indisponible"],
+                  ["Recherche documentaire BM25", health?.documentary?.bm25?.available ? "Disponible" : "Indisponible"],
+                  ["Recherche documentaire E5", health?.documentary?.e5?.available ? "Disponible" : "Indisponible"],
                 ].map(([name, state]) => (
                   <div key={name}>
                     <span>{name}</span>
@@ -856,9 +880,8 @@ function App() {
                 ))}
                 <p>
                   Les scores des classifieurs ne sont pas calibrés. L’abstention
-                  actuelle couvre uniquement l’absence totale d’indices dans le
-                  vocabulaire ; elle ne détecte pas tous les textes hors
-                  domaine.
+                  dépend du modèle. TF-IDF peut signaler une absence d’indices
+                  connus et Qwen peut renvoyer une sortie invalide.
                 </p>
               </article>
             </div>
@@ -866,21 +889,33 @@ function App() {
               <span className="eyebrow">ASSISTANCE DOCUMENTAIRE</span>
               <h2>Une question sur la méthode ?</h2>
               <p>
-                Le futur RAG répondra depuis des fiches sourcées. Il
-                n’expliquera pas automatiquement pourquoi une prédiction est
-                correcte.
+                La recherche retrouve un passage dans les fiches du projet et
+                affiche sa source. Les questions portent sur les données,
+                les modèles et la méthode.
               </p>
+              {metrics?.documentary && (
+                <p className="documentary-metrics">
+                  <strong>Validation documentaire · 20 questions</strong>
+                  {Object.entries(metrics.documentary.results).map(([id, row]) => (
+                    <span key={id}>
+                      {documentaryNames[id]} · Recall@{metrics.documentary.top_k} {percent(row.recall_at_3)}
+                      {" · "}questions sans réponse rejetées {row.unanswerable_rejected}/{row.unanswerable}
+                    </span>
+                  ))}
+                </p>
+              )}
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
                   setBusy(true);
                   setError("");
+                  setAnswer(null);
                   try {
                     setAnswer(
                       await api("/ask", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ question }),
+                        body: JSON.stringify({ question, lang: documentaryLang, method: documentaryMethod }),
                       }),
                     );
                   } catch (err) {
@@ -890,29 +925,59 @@ function App() {
                   }
                 }}
               >
+                <div className="documentary-controls">
+                  <label htmlFor="documentary-lang" className="field-label">
+                    LANGUE DES FICHES
+                    <select id="documentary-lang" value={documentaryLang} disabled={busy}
+                      onChange={(e) => { setDocumentaryLang(e.target.value); setAnswer(null); }}>
+                      <option value="fr">Français</option>
+                      <option value="ar" lang="ar">العربية</option>
+                    </select>
+                  </label>
+                  <label htmlFor="documentary-method" className="field-label">
+                    RECHERCHE
+                    <select id="documentary-method" value={documentaryMethod} disabled={busy}
+                      onChange={(e) => { setDocumentaryMethod(e.target.value); setAnswer(null); }}>
+                      {Object.entries(documentaryNames).map(([id, name]) => (
+                        <option key={id} value={id} disabled={!health?.documentary?.[id]?.available}>{name}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
                 <label htmlFor="question" className="field-label">
                   QUESTION DOCUMENTAIRE
                 </label>
                 <div className="question-row">
                   <input
                     id="question"
+                    dir="auto"
                     value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="Comment les données ont-elles été séparées ?"
+                    onChange={(e) => { setQuestion(e.target.value); setAnswer(null); }}
+                    placeholder={documentaryLang === "ar" ? "ما المقصود بمتوسط F1؟" : "Que signifie macro-F1 ?"}
                     maxLength={2000}
                   />
                   <button
                     className="secondary"
-                    disabled={busy || !question.trim()}
+                    disabled={busy || !question.trim() || !health?.documentary?.[documentaryMethod]?.available}
                   >
-                    {busy ? "Vérification…" : "Vérifier la disponibilité"}
+                    {busy ? "Recherche…" : "Chercher dans les fiches"}
                     <ArrowRight size={16} />
                   </button>
                 </div>
               </form>
               {answer && (
-                <div className="notice" role="status">
-                  {answer.reason} Aucune réponse ni citation n’a été générée.
+                <div className="notice documentary-answer" role="status">
+                  <strong>{answer.status === "answered" ? "Passage de la fiche" : answer.status === "unavailable" ? "Recherche indisponible" : "Sources insuffisantes"}</strong>
+                  <p lang={answer.lang} dir={answer.lang === "ar" ? "rtl" : "ltr"}>{answer.answer || answer.reason}</p>
+                  {answer.sources?.map((source) => (
+                    <div key={source.id} className="documentary-source">
+                      <span className="mini-tag" dir="ltr">{source.id}</span>
+                      <span lang={answer.lang} dir={answer.lang === "ar" ? "rtl" : "ltr"}>{source.title}</span>
+                      <ul>{source.links.map((link) => (
+                        <li key={link.url}><a className="text-link" href={link.url} target="_blank" rel="noreferrer">{link.label} <ArrowUpRight size={14} /></a></li>
+                      ))}</ul>
+                    </div>
+                  ))}
                 </div>
               )}
             </section>
@@ -943,7 +1008,7 @@ function Result({ result }) {
   return (
     <article className="result-card">
       <div className="section-label">
-        <span className="eyebrow">{modelName(result.model)}</span>
+        <span className="eyebrow">{modelName(result.model, result.versions.seed)}</span>
         <span className="mini-tag">{result.script}</span>
       </div>
       <div className="prediction">
@@ -956,10 +1021,10 @@ function Result({ result }) {
         </span>
         <div>
           <span className="mono">
-            {result.status === "predicted" ? "PRÉDICTION" : "ABSTENTION"}
+            {result.status === "predicted" ? "PRÉDICTION" : result.status === "error" ? "ERREUR" : "ABSTENTION"}
           </span>
           <h3>
-            {labelNames[result.label] || "Indices insuffisants"}
+            {labelNames[result.label] || (result.status === "error" ? "Inférence indisponible" : "Aucun label")}
             {result.label && <small>{result.label}</small>}
           </h3>
         </div>
@@ -983,7 +1048,7 @@ function Result({ result }) {
             </div>
           ))}
       </div>
-      <p className="score-note">Scores du modèle · non calibrés</p>
+      {Object.keys(result.scores).length > 0 && <p className="score-note">Scores du modèle · non calibrés</p>}
       <details>
         <summary>
           Limites et provenance <ChevronDown size={14} />
@@ -996,6 +1061,8 @@ function Result({ result }) {
         <p className="mono provenance">
           RUN {result.versions.source_run}
           <br />
+          {result.versions.prompt_mode && <>MODE zero-shot<br /></>}
+          {result.versions.device && <>APPAREIL {result.versions.device}<br /></>}
           SHA {result.versions.checkpoint_sha256.slice(0, 16)}…<br />
           ID {result.id}
         </p>

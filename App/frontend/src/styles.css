@@ -167,6 +167,9 @@ main {
   gap: 50px;
   padding: 72px 0 60px;
 }
+.hero > div {
+  min-width: 0;
+}
 .eyebrow {
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -1069,6 +1072,10 @@ footer > .mono {
     font-size: 72px;
     letter-spacing: -2px;
   }
+  .hero-about h1 {
+    font-size: clamp(2.5rem, 13.2vw, 4.5rem);
+    overflow-wrap: anywhere;
+  }
   .hero-copy {
     font-size: 15px;
     max-width: 380px;
@@ -1241,4 +1248,48 @@ footer > .mono {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+.documentary-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5, 1rem);
+  margin-block: 1rem;
+}
+
+.documentary-controls label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.documentary-metrics {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.documentary-answer p {
+  color: var(--color-ghost, #c0c0c0);
+  overflow-wrap: anywhere;
+}
+
+.documentary-answer [lang="ar"] {
+  font-family: var(--font-arabic);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.documentary-source {
+  display: grid;
+  gap: 0.4rem;
+  margin-block-start: 0.85rem;
+}
+
+.documentary-source .mini-tag {
+  justify-self: start;
+}
+
+.documentary-source ul {
+  margin-block: 0;
+  padding-inline-start: 1.2rem;
+  overflow-wrap: anywhere;
 }

@@ -2,17 +2,20 @@
 from contextlib import asynccontextmanager
 import csv
 import io
+import logging
 import os
+from pathlib import Path
 from typing import Literal
 import unicodedata
 import uuid
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, ConfigDict, StrictStr
 
 from .models import ModelStore, ROOT, normalize
+from .documents import Documents
 
 MAX_CHARS = 2000
 MAX_BYTES = 1024 * 1024
@@ -34,7 +37,10 @@ class PredictRequest(BaseModel):
 
 
 class AskRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     question: StrictStr
+    lang: Literal["fr", "ar"] | None = None
+    method: Literal["bm25", "e5"] = "bm25"
 
 
 def validate_text(text):
@@ -58,31 +64,55 @@ def infer(store, request):
     scope = ("Sentiment évalué sur des commentaires tunisiens POS/NEG ; neutre, ironie et hors domaine non validés."
              if request.task == "sentiment" else "MSA, Tunis/Sfax et arabe du Caire, domaine MADAR du voyage ; couverture limitée.")
     script = writing_system(request.text)
+    versions = {"app": "0.1.0", "source_run": entry["source_run"], "normalization": entry["variant"],
+                "checkpoint_sha256": entry["checkpoint_sha256"], "manifest": "v2"}
+    for name in ("seed", "revision", "device", "prompt_mode"):
+        if entry.get(name) is not None:
+            versions[name] = entry[name]
     return {"id": request.id or str(uuid.uuid4()), "task": request.task, "model": request.model,
             "text_raw": request.text, "text_norm": normalize(request.text), "script": script,
             **result, "scores_calibrated": False,
-            "warnings": [scope, "Les scores ne sont pas des probabilités de correction calibrées."] +
+            "warnings": [scope] +
+                        (["Les scores ne sont pas des probabilités de correction calibrées."] if result["scores"] else []) +
                         (["L'écriture latine ne permet pas de distinguer français, anglais et Arabizi."] if script in {"LATIN", "MIXED"} else []),
-            "versions": {"app": "0.1.0", "source_run": entry["source_run"], "normalization": entry["variant"],
-                         "checkpoint_sha256": entry["checkpoint_sha256"], "manifest": "v2"}}
+            "versions": versions}
 
 
-def create_app(model_dir=None):
+def load_services(model_dir=None, neural_dir=None):
+    classical = Path(model_dir or os.environ.get("TUNISCOPE_MODEL_DIR", ROOT / "App/models/current"))
+    store = ModelStore(classical).load()
+    if os.environ.get("TUNISCOPE_REQUIRE_MODELS", "false").lower() == "true" and (
+            store.error or not store.ready or not all(e["available"] for e in store.entries)):
+        raise RuntimeError("Les modèles TF-IDF requis sont absents ou incompatibles.")
+    directory = Path(neural_dir or os.environ.get("TUNISCOPE_NEURAL_DIR", classical.parent / "neural"))
+    strict = os.environ.get("TUNISCOPE_REQUIRE_NEURAL", "false").lower() == "true"
+    try:
+        neural = store.load_optional(directory)
+    except Exception:
+        if strict:
+            raise
+        logging.getLogger(__name__).exception("Chargement du bundle neural impossible")
+        neural = False
+    documents = Documents().load(directory / "e5" if neural else None)
+    if strict and (not neural or not all(value["available"] for value in documents.status().values())):
+        raise RuntimeError("Bundle neural ou moteurs documentaires requis indisponibles.")
+    return store, documents
+
+
+def create_app(model_dir=None, neural_dir=None):
     @asynccontextmanager
     async def lifespan(app):
         # Complete model loading before Uvicorn accepts requests.
-        app.state.store = ModelStore(model_dir or os.environ.get("TUNISCOPE_MODEL_DIR", ROOT / "App/models/current")).load()
-        if os.environ.get("TUNISCOPE_REQUIRE_MODELS", "false").lower() == "true" and (
-                not app.state.store.ready or not all(e["available"] for e in app.state.store.entries)):
-            raise RuntimeError("Les modèles requis sont absents ou incompatibles. Préparer le bundle avant le démarrage.")
+        app.state.store, app.state.documents = load_services(model_dir, neural_dir)
         yield
         app.state.store.models.clear()
+        app.state.store.neural.clear()
 
     app = FastAPI(title="TuniScope — Inférence", version="0.1.0", lifespan=lifespan)
 
     @app.get("/health")
     def health():
-        return app.state.store.health()
+        return {**app.state.store.health(), "documentary": app.state.documents.status()}
 
     @app.get("/ready")
     def ready():
@@ -103,7 +133,20 @@ def create_app(model_dir=None):
         candidates = [e for e in app.state.store.entries if e["task"] == request.task and e["available"]]
         if not candidates:
             raise HTTPException(503, "Aucun modèle disponible pour cette tâche.")
-        return {"id": identifier, "results": [infer(app.state.store, request.model_copy(update={"model": e["id"], "id": identifier})) for e in candidates]}
+        results = []
+        for entry in candidates:
+            model = entry["id"]
+            try:
+                result = infer(app.state.store, request.model_copy(update={"model": model, "id": identifier}))
+            except HTTPException as error:
+                result = {"id": identifier, "model": model, "task": request.task, "status": "error",
+                          "label": None, "scores": {}, "reason": error.detail, "script": writing_system(request.text),
+                          "text_raw": request.text, "text_norm": normalize(request.text), "scores_calibrated": False,
+                          "error": error.detail,
+                          "warnings": [], "versions": {"source_run": entry["source_run"],
+                                                        "checkpoint_sha256": entry["checkpoint_sha256"]}}
+            results.append(result)
+        return {"id": identifier, "results": results}
 
     @app.post("/batch")
     async def batch(file: UploadFile = File(...), task: Literal["sentiment", "dialect"] = Form(...),
@@ -153,14 +196,22 @@ def create_app(model_dir=None):
     @app.get("/metrics")
     def metrics():
         return {"split": "validation", "test_evaluated": False,
-                "notice": "Résultats sauvegardés du run source ; ce ne sont pas les scores des textes saisis.",
+                "notice": "Résultats sauvegardés sur validation ; ce ne sont pas les scores des textes saisis.",
+                "documentary": app.state.documents.metrics,
                 "results": [{k: v for k, v in entry.items() if k != "error"} for entry in app.state.store.entries]}
 
     @app.post("/ask")
     def ask(request: AskRequest):
         validate_text(request.question)
-        return {"status": "not_implemented", "answer": None, "source_ids": [], "excerpts": [],
-                "reason": "Le module documentaire RAG n'est pas encore implémenté."}
+        lang = request.lang or ("ar" if writing_system(request.question) == "AR" else "fr")
+        return app.state.documents.ask(request.question, lang, request.method)
+
+    @app.get("/documentation/{path:path}")
+    def documentation(path: str):
+        reference = app.state.documents.references.get(path)
+        if reference is None:
+            raise HTTPException(404, "Référence documentaire inconnue.")
+        return FileResponse(reference, media_type="text/plain", headers={"X-Content-Type-Options": "nosniff"})
 
     return app
 

@@ -116,12 +116,38 @@ def test_oversized_csv(client):
     assert client.post("/batch", data={"task": "sentiment"}, files={"file": ("big.csv", b'x' * (1024 * 1024 + 1))}).status_code == 413
 
 
-def test_metrics_and_rag_do_not_fabricate_test_or_answers(client):
+def test_metrics_keep_validation_boundary(client):
     metrics = client.get("/metrics").json()
     assert metrics["split"] == "validation" and metrics["test_evaluated"] is False
     assert len(metrics["results"]) == 4
-    answer = client.post("/ask", json={"question": "Comment ça marche ?"}).json()
-    assert answer["status"] == "not_implemented" and answer["answer"] is None and answer["source_ids"] == []
+
+
+def test_documentary_citation_and_abstention(client):
+    known = client.post("/ask", json={"question": "Que signifie macro-F1 et comment calcule-t-on la moyenne des F1 des classes ?",
+                                     "method": "bm25", "lang": "fr"}).json()
+    assert known["status"] == "answered" and known["source_ids"] == ["macro-f1.fr"]
+    source = client.get(known["sources"][0]["links"][0]["url"].removeprefix("/api"))
+    assert source.status_code == 200 and source.headers["content-type"].startswith("text/plain")
+    assert client.get("/documentation/AGENTS.md").status_code == 404
+    unknown = client.post("/ask", json={"question": "Quel est le macro-F1 de TuniScope sur un corpus marocain indépendant ?"}).json()
+    assert unknown["status"] == "insufficient_sources" and not unknown["sources"]
+    assert client.post("/ask", json={"question": "test", "method": "e5"}).json()["status"] == "unavailable"
+
+
+def test_compare_keeps_available_results_when_one_model_fails(client, monkeypatch):
+    original = ModelStore.predict
+
+    def predict(store, task, model, text):
+        if model.endswith("raw-v0"):
+            raise RuntimeError("fictitious failure")
+        return original(store, task, model, text)
+
+    monkeypatch.setattr(ModelStore, "predict", predict)
+    response = client.post("/compare", json={"text": "fictif classe POS", "task": "sentiment", "id": "demo"})
+    assert response.status_code == 200
+    rows = response.json()["results"]
+    assert {row["status"] for row in rows} == {"error", "predicted"}
+    assert {row["id"] for row in rows} == {"demo"}
 
 
 def test_corrupted_checkpoint_never_loaded(bundle):

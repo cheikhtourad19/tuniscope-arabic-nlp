@@ -6,8 +6,10 @@ services:
       dockerfile: App/backend/Dockerfile
       args:
         REQUIRE_MODELS: ${REQUIRE_MODELS:-true}
+        REQUIRE_NEURAL: ${REQUIRE_NEURAL:-true}
     environment:
       TUNISCOPE_REQUIRE_MODELS: ${REQUIRE_MODELS:-true}
+      TUNISCOPE_REQUIRE_NEURAL: ${REQUIRE_NEURAL:-true}
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     healthcheck:

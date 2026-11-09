@@ -2,13 +2,13 @@
 import torch
 from transformers import AutoModel, AutoTokenizer
 
-from fetch_e5 import assets
+from fetch_e5 import CACHE, assets
 from search import ordered
 
 
 class DenseE5:
-    def __init__(self, cards, device='cpu'):
-        cache = assets()
+    def __init__(self, cards, device='cpu', directory=CACHE):
+        cache = assets(directory=directory)
         self.cards = cards
         self.device = torch.device(device)
         self.tokenizer = AutoTokenizer.from_pretrained(cache, local_files_only=True, trust_remote_code=False)

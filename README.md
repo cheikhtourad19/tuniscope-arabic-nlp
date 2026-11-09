@@ -60,7 +60,7 @@ TuniScope produces an experimental NLP application together with comparative res
 
 ## Local application
 
-The React/FastAPI application is in [App/](App/README.md). It serves explicitly selected saved classical models, supports text/CSV prediction and comparison, and displays saved validation results. Model files stay Git-ignored and are copied into the backend image during the Docker build. See the application README to prepare a bundle and run Docker Compose. Encoder, LLM and RAG integration remain pending.
+The React/FastAPI application is in [App/](App/README.md). It serves TF-IDF, fine-tuned CAMeLBERT, base Qwen and Qwen with a shared LoRA adapter. It supports text and CSV prediction, same-input comparison, validation metrics, and cited documentary search with BM25 or E5. The private model bundles stay Git-ignored and are copied into the backend image during the Docker build. See the application guide for preparation and execution.
 
 ## Development environment
 

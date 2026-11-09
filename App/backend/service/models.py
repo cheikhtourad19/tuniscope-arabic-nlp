@@ -26,6 +26,8 @@ class ModelStore:
         self.entries = []
         self.error = None
         self.source_run = None
+        self.neural = {}
+        self.neural_error = None
 
     def load(self):
         self.models.clear()
@@ -84,16 +86,44 @@ class ModelStore:
 
     @property
     def ready(self):
-        return self.error is None and all(any(e["available"] and e["task"] == task for e in self.entries) for task in TASKS)
+        return all(any(e["available"] and e["task"] == task for e in self.entries) for task in TASKS)
+
+    def load_optional(self, directory):
+        if not (directory / "manifest.json").is_file():
+            self.neural_error = "Bundle neural absent."
+            return False
+        classical_count = len(self.entries)
+        try:
+            from .neural import load_neural
+            load_neural(self, directory)
+        except Exception as error:
+            del self.entries[classical_count:]
+            self.neural.clear()
+            self.neural_error = f"Chargement neural impossible ({type(error).__name__})."
+            raise
+        return True
+
+    def register_neural(self, task, system, predict, labels, metrics, run, checkpoint, train, validation,
+                        seed, revision, aggregate, device):
+        model_id = f"{system}__raw-v0"
+        self.neural[task, model_id] = predict
+        self.entries.append({"id": model_id, "task": task, "system": system, "variant": "raw-v0",
+                             "available": True, "labels": labels, "checkpoint_sha256": checkpoint,
+                             "source_run": run, "split": "validation", "train_rows": train,
+                             "validation_rows": validation, "metrics": metrics, "error": None,
+                             "seed": seed, "revision": revision, "aggregate": aggregate, "device": device,
+                             "prompt_mode": "zero_shot" if system.startswith("qwen_") else None})
 
     def health(self):
-        complete = self.ready and all(e["available"] for e in self.entries)
-        return {"status": "ready" if complete else "degraded" if self.models else "unavailable",
+        complete = self.ready and self.error is None and all(e["available"] for e in self.entries)
+        return {"status": "ready" if complete else "degraded" if self.models or self.neural else "unavailable",
                 "ready": self.ready, "version": "0.1.0", "source_run": self.source_run,
-                "models": [{k: v for k, v in e.items() if k != "metrics"} for e in self.entries],
-                "error": self.error, "future_components": {"encoder": "not_implemented", "llm": "not_implemented", "rag": "not_implemented"}}
+                "models": [{k: v for k, v in e.items() if k not in {"metrics", "aggregate"}} for e in self.entries],
+                "error": self.error, "neural_error": self.neural_error}
 
     def predict(self, task, model_id, text):
+        if (task, model_id) in self.neural:
+            return self.neural[task, model_id](text)
         model = self.models.get((task, model_id))
         if model is None:
             raise KeyError("Modèle indisponible pour cette tâche.")
