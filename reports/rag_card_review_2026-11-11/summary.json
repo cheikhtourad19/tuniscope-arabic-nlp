@@ -1,0 +1,17 @@
+{
+  "received_on": "2026-11-11",
+  "reviewer_role": "auteur du projet",
+  "editorial_decisions": "received",
+  "signature_metadata": "pending",
+  "cards_sha256": "c19065a76375e720aa351b4e6fcc0abf29710cd8d2d2de6dbc77808846c9ba2e",
+  "review_form_sha256": "5961163a2a1dd9906fa70f4ac9597aea175a70706923e6cec53ace527bd67064",
+  "original_blank_form_sha256": "6d2c798f0edbf15ed9fef7e70bcc9026e447c2e08277ceef404ed73f7ac3a433",
+  "reference_files_unchanged": 16,
+  "card_contents_unchanged": true,
+  "decision_counts": {
+    "Conforme": 44
+  },
+  "independent_question_review": "pending",
+  "cards_reviewed": 44,
+  "receipt_sha256": "b4f94abcc4d8bb8bf8e58b61f3a9726c4d4e7c70592a24514313168fce166b17"
+}

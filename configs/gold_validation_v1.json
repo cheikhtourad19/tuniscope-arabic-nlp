@@ -1,0 +1,14 @@
+{
+  "version": "gold-validation-v1",
+  "manifest_version": "v2",
+  "seeds": [13, 42, 2026],
+  "budget_percentages": [10, 25, 50, 100],
+  "minimum_coverage": 0.9,
+  "abstention_thresholds": [0.0, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.99],
+  "baseline_config": "configs/baselines_grouped_v2.json",
+  "baseline_config_sha256": "76b01c7478af84b09b5d43bf44f7a553f408664ee53e1cac19fe7b63a992dc60",
+  "baseline_run": "outputs/baselines/2026-10-17_grouped_v2_full",
+  "baseline_results_sha256": "86965f1bb775fa89307458a0bcb804efa498f261297dec91b3f4a065b0ffcbba",
+  "encoder_run": "outputs/encoder_finetuning/confirmation/notebooks/177d9f5ad78b4ef4907e97d97abe96f8_full",
+  "confirmation_sha256": "a645ae3b78236c2c6c5f6c83b5ef56f8d8cdd4c32cd2a837b2a4fb57ed0886ef"
+}

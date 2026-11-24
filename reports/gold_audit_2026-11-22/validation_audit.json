@@ -1,0 +1,119 @@
+{
+  "split": "validation",
+  "test_loaded": false,
+  "manifest_version": "v2",
+  "bootstrap_contrast": "camelbert-confirmed-mean-three-seeds minus tfidf-char-raw",
+  "bootstrap": {
+    "tsac": {
+      "groups": 1721,
+      "rows": 1774,
+      "samples": 1000,
+      "seed": 42,
+      "reference_macro_f1": 0.9288980669985036,
+      "mean_alt_macro_f1": 0.9308343286133859,
+      "difference": 0.001936261614882251,
+      "percentile_interval_95": [
+        -0.010500837419375464,
+        0.013142128064703692
+      ]
+    },
+    "madar": {
+      "groups": 200,
+      "rows": 800,
+      "samples": 1000,
+      "seed": 42,
+      "reference_macro_f1": 0.9492441926133318,
+      "mean_alt_macro_f1": 0.9534817382213506,
+      "difference": 0.004237545608018811,
+      "percentile_interval_95": [
+        -0.011167000287738277,
+        0.020620224482459464
+      ]
+    }
+  },
+  "error_inventory": {
+    "tsac": {
+      "tfidf_char": {
+        "predictions": 1774,
+        "errors": 126,
+        "error_groups": 124,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      },
+      "camelbert_seed_42": {
+        "predictions": 1774,
+        "errors": 123,
+        "error_groups": 122,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      },
+      "bigru_seed_42": {
+        "predictions": 1774,
+        "errors": 256,
+        "error_groups": 251,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      },
+      "qwen_base_zero_shot": {
+        "predictions": 1774,
+        "errors": 850,
+        "error_groups": 820,
+        "invalid_predictions": 16,
+        "selected_for_review": 30
+      },
+      "qwen_base_few_shot": {
+        "predictions": 1774,
+        "errors": 847,
+        "error_groups": 817,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      }
+    },
+    "madar": {
+      "tfidf_char": {
+        "predictions": 800,
+        "errors": 39,
+        "error_groups": 34,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      },
+      "camelbert_seed_42": {
+        "predictions": 800,
+        "errors": 34,
+        "error_groups": 28,
+        "invalid_predictions": 0,
+        "selected_for_review": 28
+      },
+      "bigru_seed_42": {
+        "predictions": 800,
+        "errors": 79,
+        "error_groups": 57,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      },
+      "qwen_base_zero_shot": {
+        "predictions": 800,
+        "errors": 800,
+        "error_groups": 200,
+        "invalid_predictions": 800,
+        "selected_for_review": 30
+      },
+      "qwen_base_few_shot": {
+        "predictions": 800,
+        "errors": 576,
+        "error_groups": 200,
+        "invalid_predictions": 0,
+        "selected_for_review": 30
+      }
+    }
+  },
+  "missing_error_inventory": {
+    "qwen_lora_cuda": "original row-level predictions unavailable"
+  },
+  "source_sha256": {
+    "baseline": "86965f1bb775fa89307458a0bcb804efa498f261297dec91b3f4a065b0ffcbba",
+    "encoder": "a645ae3b78236c2c6c5f6c83b5ef56f8d8cdd4c32cd2a837b2a4fb57ed0886ef",
+    "bigru": "58c615f9b652ea79599747b54db154c91d7945faf8cf82e882f630119ada2178",
+    "qwen": "8d74e9fb979c02cc06dabc4fe67553994f2628195234082114a899b9a6d12250"
+  }
+}

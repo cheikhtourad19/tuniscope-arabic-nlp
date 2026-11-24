@@ -1,0 +1,8 @@
+{
+  "results_sha256": "713a3dbee6f11825924ad9f079fa8af95f65a4882749746a3322fb4e34f3d6d7",
+  "plotter_sha256": "e3fcf55b7dc7215e1e408ae7a8001e889a38ba4f54c33d99ff7f9c2f1c8a1be5",
+  "figures": {
+    "recherche.png": "fdc9af9be0ee69375586530ad912ea7181c00b7707bb6e1c7ce369bf5ce5ca80",
+    "reponses.png": "281f81fae403ffbc6ea23d6d90961160a77680d1f79cf4595d0ad9f19d6961b1"
+  }
+}

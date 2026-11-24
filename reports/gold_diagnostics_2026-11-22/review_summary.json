@@ -1,0 +1,49 @@
+{
+  "scope": "new-local-lora-diagnostic-validation",
+  "test_loaded": false,
+  "diagnostic_sha256": "79ba128fc7dbe7668390817c429c8f1d4eab6d0fcc6c9933691fcac4fc5a2cdc",
+  "notes_sha256": "77f0bd0ba5de61dbf35c1bd5a9114b55d2a1e28b7dce6c3ce5a7d9289722188d",
+  "origin": "Propositions qualitatives produites par Codex à partir des textes de validation.",
+  "analysis": "Hypothèses linguistiques à relire. Elles ne démontrent pas une cause interne.",
+  "independent_human_review": false,
+  "tasks": {
+    "tsac": {
+      "sample_rows": 144,
+      "sample_errors": 46,
+      "invalid_rows": 0,
+      "reviewed": 30,
+      "categories": {
+        "Graphie Arabizi": 6,
+        "Ambiguïté et contexte": 5,
+        "Expression locale": 5,
+        "Graphie et répétition": 2,
+        "Contexte et cible": 4,
+        "Indices expressifs": 1,
+        "Expression figurée": 3,
+        "Négation": 4
+      },
+      "reference_to_prediction": {
+        "POS → NEG": 24,
+        "NEG → POS": 6
+      }
+    },
+    "madar": {
+      "sample_rows": 144,
+      "sample_errors": 48,
+      "invalid_rows": 0,
+      "reviewed": 30,
+      "categories": {
+        "Lexique dialectal": 14,
+        "Formulation partagée": 10,
+        "Morphologie dialectale": 5,
+        "Mélange lexical": 1
+      },
+      "reference_to_prediction": {
+        "EG → MSA": 7,
+        "TN → EG": 21,
+        "MSA → EG": 1,
+        "EG → TN": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "scope": "offline historical traceability reconciliation",
+  "lora_source_report_sha256": "b15dd3852129e0ac448a0ba7400b7346b828b07a88e596ba18c03973e2a0829e",
+  "qwen_plan_sha256": "4a227536b5ea10a897b71f815132b8133746b59138057515291aaea30eed8a16",
+  "original_lora_archives": {
+    "13": {
+      "archive": "outputs/qwen/2026-11-07_cuda_lora_c10d02666e154607ac9d7faddbd47838_full/seed_13/tuniscope_lora_c10d02666e154607ac9d7faddbd47838_full_seed_13.zip",
+      "sha256": "bf7f51453d526140090a30ec7291fff1ae0242ab93cc484aa66222c8962a8b89",
+      "download_copy_identical": true,
+      "members": [
+        "adapter/adapter_config.json",
+        "adapter/adapter_model.safetensors",
+        "plan.json",
+        "result.json",
+        "smoke.json",
+        "training.json"
+      ],
+      "adapter_files": {
+        "adapter/adapter_config.json": "9bbe4d32d7c49db937f1c28f39f0c6f56ea4c9ecc01b3c56a5e231549c4f167c",
+        "adapter/adapter_model.safetensors": "8fc7a1a1db6314d358950f681cfb6a105cfa38a2b0ad93d6a8465a78ccea9e25"
+      }
+    },
+    "42": {
+      "archive": "outputs/qwen/2026-11-07_cuda_lora_c10d02666e154607ac9d7faddbd47838_full/seed_42/tuniscope_lora_c10d02666e154607ac9d7faddbd47838_full_seed_42.zip",
+      "sha256": "7904a766a6a95087b8e628333b9c3400eae8baa0626c75ed387b6ca2b7ce8c8e",
+      "download_copy_identical": true,
+      "members": [
+        "adapter/adapter_config.json",
+        "adapter/adapter_model.safetensors",
+        "plan.json",
+        "result.json",
+        "smoke.json",
+        "training.json"
+      ],
+      "adapter_files": {
+        "adapter/adapter_config.json": "d6ee95bad07c71771aa81256e8ffcecdd092241432dd2a585188aa6637cb5433",
+        "adapter/adapter_model.safetensors": "e4a24bc6949d9f11645e230da42751b2c2308686bd0a6d5ea6d9403618b30e9b"
+      }
+    },
+    "2026": {
+      "archive": "outputs/qwen/2026-11-07_cuda_lora_c10d02666e154607ac9d7faddbd47838_full/seed_2026/tuniscope_lora_c10d02666e154607ac9d7faddbd47838_full_seed_2026.zip",
+      "sha256": "1e1b4121e18957ef9caeee748da71948991aec074a1f9565690ddccc9f45185e",
+      "download_copy_identical": true,
+      "members": [
+        "adapter/adapter_config.json",
+        "adapter/adapter_model.safetensors",
+        "plan.json",
+        "result.json",
+        "smoke.json",
+        "training.json"
+      ],
+      "adapter_files": {
+        "adapter/adapter_config.json": "d6ee95bad07c71771aa81256e8ffcecdd092241432dd2a585188aa6637cb5433",
+        "adapter/adapter_model.safetensors": "0cf87cc5a8b1575e16f97218f9cd5e18f768b6c798fc098ff71a3d2a005b2528"
+      }
+    }
+  },
+  "cuda_prediction_files": {
+    "13/tsac_zero_shot": {
+      "expected_sha256": "28d40e00d472eb403b02e5bd2cbb6ea950f496dba96486e445de8407f52e2146",
+      "matching_local_file": null
+    },
+    "13/tsac_few_shot": {
+      "expected_sha256": "0060537faf3e2df0a75e0e1f901d940ce5745415ce0d4c35a9aec85e3d6abbc6",
+      "matching_local_file": null
+    },
+    "13/madar_zero_shot": {
+      "expected_sha256": "51e8f4946bbef153e1dd38ee5b4de79a33cbd448b0fc70c268ef3fa9e6e63509",
+      "matching_local_file": null
+    },
+    "13/madar_few_shot": {
+      "expected_sha256": "27d525ab4969e5d86d336692cef00ed0413b661d8c7926dcbdc719cac8e5009e",
+      "matching_local_file": null
+    },
+    "42/tsac_zero_shot": {
+      "expected_sha256": "352135d5a1f5c258a692397f41a869e6bd9f9fb6a918fa3fc45634d683b78d05",
+      "matching_local_file": null
+    },
+    "42/tsac_few_shot": {
+      "expected_sha256": "5d8214120a610675eab3d42def989a480ec63a93d94e1a6b8fb4cc09bbf987d2",
+      "matching_local_file": null
+    },
+    "42/madar_zero_shot": {
+      "expected_sha256": "4de8c95b4d25783c09fe921236d6405c023eff1925183fb9096f683802881e4b",
+      "matching_local_file": null
+    },
+    "42/madar_few_shot": {
+      "expected_sha256": "25b8d3c757b182c0d119d9c03e8742bcd745725b36ebea11ac612804bbe02755",
+      "matching_local_file": null
+    },
+    "2026/tsac_zero_shot": {
+      "expected_sha256": "686e05df3806a59171971d9e585a150879629db558beef8999b90eb2ace22383",
+      "matching_local_file": null
+    },
+    "2026/tsac_few_shot": {
+      "expected_sha256": "f70595715ca6c0631c2052a3fc33036c23fb3e6334c14f5a2efd36d1f55a47ad",
+      "matching_local_file": null
+    },
+    "2026/madar_zero_shot": {
+      "expected_sha256": "7c7a0a2d86744ec5ebf79af40f8246d874428e4e15a09ba5cd0f28f1dc92efd8",
+      "matching_local_file": null
+    },
+    "2026/madar_few_shot": {
+      "expected_sha256": "3c1b0550612e2ccf54a98307a4c9d413d9b81f25baf74413a8c756488e0ff36b",
+      "matching_local_file": null
+    }
+  },
+  "candidate_json_files_checked": 12,
+  "original_cuda_prediction_files_found": 0,
+  "original_campaign_summary_received": false,
+  "original_campaign_wall_seconds": null,
+  "derived_campaign_index": {
+    "status": "reconstructed_from_original_seed_archives",
+    "source_report": "reports/qwen_lora_cuda_2026-11-07/summary.json",
+    "training_commit": "c7f979f5d7c6d3e1127e2e96025a28ce88b633a5",
+    "seeds": [
+      13,
+      42,
+      2026
+    ]
+  },
+  "qwen_base_source_provenance": {
+    "recorded_execution_commit": null,
+    "source_fingerprints_verified": {
+      "run_qwen_validation.py": "b19229bfcce7fcf0328c0afcdbe94c5e94630451e6a41c6bdb9fa4de300037ef",
+      "qwen_prompting.py": "8b21fc6a1218bf1d9bdb109388c3d3dd083220192535abfd07bb86120a0a3e6a",
+      "run_qwen_tokenizer_audit.py": "a92b7484f2a62eb4785f18a260f28a55d9b8455983ac1f8445c7db4282d2c72e",
+      "load_working_data.py": "6f65ff4d8bcdf7e0127f7ae16e75e726fe7fc581b7cca2800e0fe444f4a1847e"
+    },
+    "compatible_repository_revisions": [
+      "9c4fb77e00abd54e8502fdc3eb3a2d47ad7b47df",
+      "e00cc4e884835b3af468099052ac29fcca5f99b5",
+      "c7f979f5d7c6d3e1127e2e96025a28ce88b633a5",
+      "6c74ce20dcf2e66313a6d5a5bf7895f19f0a84b3"
+    ],
+    "compatibility_identifies_execution_commit": false
+  },
+  "new_training_or_inference": false,
+  "classification_test_evaluated": false,
+  "reporter_sha256": "7fd6010c1180cfcd2b00bbcedce2750188c10c525becbd327001fa4c50d6be68"
+}

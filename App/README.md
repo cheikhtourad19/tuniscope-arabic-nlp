@@ -110,12 +110,14 @@ Les tâches sont indépendantes : `sentiment` ou `dialect`. Le sentiment ne filt
 - Normalisation : réutilisation de `scripts/normalize_text.py` (NFC et espaces). Le modèle brut reçoit le texte brut ; l'autre reçoit la normalisation.
 - Scores : sorties non calibrées pour TF-IDF et CAMeLBERT. Qwen rend un label ou une abstention, avec une liste de scores vide.
 - CAMeLBERT applique le plafond de 128 tokens utilisé en validation et signale une troncature. Qwen s’abstient lorsque le prompt dépasse 480 tokens ou que la sortie ne correspond à aucun label.
-- RAG : sélectionner la langue des fiches et BM25 ou E5 dans **Le projet**. Le backend construit l’index BM25 et les embeddings E5 une fois au démarrage. Chaque question E5 encode seulement la question. La réponse cite un extrait de la fiche, ou signale que les sources sont insuffisantes.
+- RAG : choisir la langue et BM25 ou E5 dans **Le projet**. Les deux index sont construits au démarrage. Pour une question courte, BM25 écarte les mots grammaticaux, privilégie les correspondances dans les titres et vérifie la couverture des mots utiles et l’avance de la première fiche. Le moteur affiche le passage et sa source si ces critères sont remplis. Les métriques affichées proviennent de l’expérience de validation d’origine.
 - Abstention TF-IDF : absence totale de caractéristiques connues dans le vocabulaire. Ce contrôle couvre seulement une partie des textes hors domaine.
 - L'écriture AR/LATIN/MIXED/UNKNOWN indique la présence de caractères, pas une langue identifiée.
 - Aucune métrique n'est calculée sur les saisies libres, qui n'ont pas de labels de référence.
 
 Le cahier demande à terme les métriques du test figé. Cette version affiche explicitement la **validation**, car l'évaluation finale n'est pas encore ouverte.
+
+La [validation de la politique documentaire applicative](../docs/69_validation_recherche_applicative.md) mesure aussi le comportement actuel sur les mêmes 20 questions, avec classements avant abstention, décisions de réponse et figures. Elle conserve les réglages de développement et documente la revue de pertinence encore incomplète.
 
 ## Développement sans Docker
 

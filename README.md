@@ -28,14 +28,16 @@ Arabic NLP systems often perform differently across Modern Standard Arabic, regi
 - **Lightweight neural baseline:** train-from-scratch word embeddings and a bidirectional GRU, evaluated on the same v2 validation examples with three seeds. See the [BiGRU results](docs/40_resultats_bigru.md) and [isolated PyTorch environment](docs/39_environnement_bigru.md).
 - **Encoder model:** an Arabic Transformer fine-tuned separately for dialect and sentiment classification.
 - **Frozen encoder reference:** pinned CAMeLBERT Mix mean-pooled representations with learned linear heads, measured locally on Apple MPS before fine-tuning. See the [verified results and resource measurements](docs/45_resultats_encodeur_gele.md).
-- **Generative model:** Qwen3-0.6B evaluated before and after one shared multitask LoRA adapter.
-- **RAG:** 44 French and Arabic source cards, with a lexical and dense retrieval comparison and an extractive prototype. [Documentary validation](docs/67_resultats_validation_rag.md)
+- **Generative model:** Qwen3-4B is selected for the next before/after study with one shared multitask adapter. The completed Qwen3-0.6B campaign is the historical reference. See the [transition protocol](docs/81_transition_qwen3_4b.md).
+- **RAG:** 44 French and Arabic source cards, with a lexical and dense retrieval comparison and an extractive prototype. [Initial documentary validation](docs/67_resultats_validation_rag.md) · [Application search-policy validation](docs/69_validation_recherche_applicative.md) · [Frozen documentary test and reference-review limitations](docs/71_resultats_test_documentaire.md)
 - **Interface:** a local application for text/CSV input, model comparison, documented sources, and prediction export.
 
 ## Evaluation
 
+- [Consolidated Silver evidence](docs/72_bilan_preuves_silver.md) brings together validation comparisons, three-seed statistics, documentary evaluation, saved-artifact checks and outstanding review/provenance limitations.
+- [Classification protocol v1](docs/73_protocole_classification_finale.md) records the frozen 0.6B comparison. The [4B transition protocol](docs/81_transition_qwen3_4b.md) specifies the next comparison before the official classification test. [Historical traceability reconciliation](docs/74_tracabilite_classification_et_lora.md) identifies the original LoRA evidence and remaining export limitations.
 - Macro-F1 is the primary classification metric, with per-class precision, recall, and confusion matrices.
-- Final stochastic experiments use three seeds and report mean plus standard deviation.
+- Historical multi-seed campaigns report mean and standard deviation. The 4B adaptation is planned with one fixed seed.
 - The test set remains frozen until the protocol is finalized.
 - MADAR parallel translations are grouped to prevent leakage across splits.
 - The analysis includes robustness by script, error categories, abstention behaviour, and computational cost.
@@ -49,7 +51,7 @@ Dataset use follows the respective licences and attribution requirements. Raw da
 
 ## Technical constraints
 
-- Models must remain under one billion parameters.
+- The original one-billion parameter cap applied to the historical comparison. The approved LLM transition selects Qwen3-4B.
 - External paid APIs are excluded.
 - Training is performed with a reproducible configuration and data-split protocol.
 - The project targets Apple Silicon for local development and CUDA GPUs for larger training runs.
@@ -60,7 +62,7 @@ TuniScope produces an experimental NLP application together with comparative res
 
 ## Local application
 
-The React/FastAPI application is in [App/](App/README.md). It serves TF-IDF, fine-tuned CAMeLBERT, base Qwen and Qwen with a shared LoRA adapter. It supports text and CSV prediction, same-input comparison, validation metrics, and cited documentary search with BM25 or E5. The private model bundles stay Git-ignored and are copied into the backend image during the Docker build. See the application guide for preparation and execution.
+The React/FastAPI application is in [App/](App/README.md). Its current generative bundle serves Qwen3-0.6B before and after LoRA, alongside TF-IDF and fine-tuned CAMeLBERT. It supports text and CSV prediction, same-input comparison, validation metrics, and cited documentary search with BM25 or E5. The private model bundles stay Git-ignored and are copied into the backend image during the Docker build. See the application guide for preparation and execution.
 
 ## Development environment
 

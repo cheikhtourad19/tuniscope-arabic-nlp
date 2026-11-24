@@ -1,0 +1,9 @@
+{
+  "results_sha256": "b1eddec80ef9f669de5588919fc7226832f967f957a2edd42b52de6b5a9dc6f2",
+  "plotter_sha256": "2d5356c57519d550382067c19bb5ef73800a5c14e07d2315abc333c7c6685a06",
+  "figures": {
+    "recherche.png": "ccbe2b03c77742faec70d1b73cecff8c6aed0b05c8cf00d4ad2047ceb0ad6773",
+    "reponses.png": "6e7e9c3cf1aceddcf90cb46776e7874b2bbce5b251e9999c1efc28042c6815cd",
+    "decisions.png": "ee6d3c29550015f439f4df51653447e2b72a1b33406efbc8388203150ebe58f8"
+  }
+}

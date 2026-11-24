@@ -87,14 +87,22 @@ class BM25:
             average = sum(sum(counts.values()) for _, counts in docs) / len(docs)
             self.index[lang] = (docs, frequencies, average)
 
+    def vocabulary(self, lang):
+        return self.index[lang][1].keys()
+
+    def term_weights(self, tokens, lang):
+        documents, frequencies, _ = self.index[lang]
+        return {word: math.log1p((len(documents) - frequencies[word] + 0.5) / (frequencies[word] + 0.5))
+                for word in tokens}
+
     def rank(self, text, lang, k=3):
-        documents, frequencies, average = self.index[lang]
+        documents, _, average = self.index[lang]
         tokens = set(terms(text))
+        weights = self.term_weights(tokens, lang)
         scores = []
         for card, counts in documents:
             norm = 1.2 * (0.25 + 0.75 * sum(counts.values()) / average)
-            score = sum(math.log1p((len(documents) - frequencies[word] + 0.5) / (frequencies[word] + 0.5))
-                        * counts[word] * 2.2 / (counts[word] + norm)
+            score = sum(weights[word] * counts[word] * 2.2 / (counts[word] + norm)
                         for word in sorted(tokens & counts.keys()))
             if score > 0:
                 scores.append((card, score))

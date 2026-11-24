@@ -11,12 +11,16 @@ from .models import ROOT
 sys.path.insert(0, str(ROOT / 'rag'))
 from search import BM25, CARDS, extract, load_cards
 
+from .lexical import SHORT_QUERY_MAX_TERMS, ShortLexicalSearch
+
 CALIBRATION = ROOT / 'reports/rag_validation_v1_2026-11-09/retrieval.json'
+BM25_MIN_SCORE_WITH_MARGIN = 3.5
+BM25_MIN_RELATIVE_MARGIN = 0.25
 
 
 class Documents:
     def __init__(self):
-        self.bm25 = self.e5 = None
+        self.bm25 = self.e5 = self.short_lexical = None
         self.errors = {}
         self.references = {}
         self.thresholds = {}
@@ -35,6 +39,7 @@ class Documents:
                     raise ValueError('Seuil documentaire non fini.')
                 self.thresholds[name] = score
             self.bm25 = BM25(cards)
+            self.short_lexical = ShortLexicalSearch(self.bm25, cards)
             self.references = {path: ROOT / path for card in cards for path in card.references}
             self.metrics = {"split": "validation", "top_k": proof["top_k"],
                             "results": {method: proof["systems"][method]["all"] for method in ("bm25", "e5")}}
@@ -57,18 +62,35 @@ class Documents:
         return {method: {'available': getattr(self, method) is not None, 'reason': self.errors.get(method)}
                 for method in ('bm25', 'e5')}
 
-    def ask(self, question, lang, method):
+    def retrieve(self, question, lang, method, k=3):
+        """Return ranking before abstention and the request's acceptance threshold."""
         engine = getattr(self, method)
-        if engine is None:
+        threshold = self.thresholds[method]
+        if method == 'e5':
+            with self.lock:
+                hits, = engine.rank_many([{'question': question, 'lang': lang}], k=k)
+        else:
+            keywords = self.short_lexical.keywords(question, lang)
+            if len(keywords) <= SHORT_QUERY_MAX_TERMS:
+                hits = self.short_lexical.rank(keywords, lang, k=max(2, k))
+                threshold = 0.0 if self.short_lexical.accepts(keywords, lang, hits) else math.inf
+            else:
+                hits = engine.rank(question, lang, k=max(2, k))
+                if hits and hits[0][1] < threshold:
+                    score = hits[0][1]
+                    runner_up = hits[1][1] if len(hits) > 1 else 0.0
+                    if (score >= BM25_MIN_SCORE_WITH_MARGIN
+                            and (score - runner_up) / score >= BM25_MIN_RELATIVE_MARGIN):
+                        threshold = score
+        return hits[:k], threshold
+
+    def ask(self, question, lang, method):
+        if getattr(self, method) is None:
             return {'status': 'unavailable', 'answer': None, 'sources': [], 'source_ids': [], 'excerpts': [],
                     'reason': self.errors.get(method) or 'Moteur documentaire indisponible.',
                     'method': method, 'lang': lang}
-        if method == 'e5':
-            with self.lock:
-                hits, = engine.rank_many([{'question': question, 'lang': lang}])
-        else:
-            hits = engine.rank(question, lang)
-        result = extract(question, lang, hits, self.thresholds[method])
+        hits, threshold = self.retrieve(question, lang, method)
+        result = extract(question, lang, hits, threshold)
         for source in result['sources']:
             source['links'] = [{'label': path, 'url': f'/api/documentation/{quote(path, safe="/")}'}
                                for path in source['references']]

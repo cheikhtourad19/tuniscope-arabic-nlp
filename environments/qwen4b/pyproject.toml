@@ -1,0 +1,10 @@
+[project]
+name = "tuniscope-qwen4b"
+version = "0.1.0"
+description = "Local MLX environment for the Qwen3-4B evaluation"
+requires-python = ">=3.12,<3.13"
+dependencies = ["mlx-lm==0.32.2"]
+
+[tool.uv]
+package = false
+environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]

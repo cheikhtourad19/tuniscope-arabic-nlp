@@ -1,0 +1,2858 @@
+{
+  "split": "test",
+  "scope": "documentary_only",
+  "protocol_sha256": "6cde8624ad406c6f47a70ca8ab2d7fe18f653cd2d7c4b94e08363f59ca7f0ed4",
+  "top_k": 3,
+  "thresholds_refitted": false,
+  "classification_test_evaluated": false,
+  "reference_review": "pending",
+  "reference_origin": "AI proposals",
+  "interpretation": "provisional_reference_labels",
+  "previously_disclosed_sample_test_ids": [
+    "Q033",
+    "Q034",
+    "Q057",
+    "Q058"
+  ],
+  "application_responses_replayed": 80,
+  "device": "cpu",
+  "torch": "2.15.0",
+  "python": "3.12.15",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "packages": {
+    "torch": "2.15.0",
+    "transformers": "4.57.6",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4"
+  },
+  "torch_threads": 2,
+  "git_commit": "9c4fb77e00abd54e8502fdc3eb3a2d47ad7b47df",
+  "worktree_dirty": true,
+  "seconds_including_load_and_replay": 4.109219000005396,
+  "systems": {
+    "bm25": {
+      "all": {
+        "questions": 40,
+        "answerable": 32,
+        "unanswerable": 8,
+        "recall_at_3": 0.84375,
+        "mrr_at_3": 0.7760416666666666,
+        "answered": 28,
+        "answerable_accepted": 24,
+        "unanswerable_rejected": 4,
+        "answered_with_relevant_citation": 19,
+        "answer_coverage": 0.7,
+        "relevant_citation_rate_among_answers": 0.6785714285714286,
+        "answers_with_irrelevant_citation": 9,
+        "answerable_abstained": 8,
+        "unanswerable_answered": 4
+      },
+      "by_language": {
+        "fr": {
+          "questions": 20,
+          "answerable": 16,
+          "unanswerable": 4,
+          "recall_at_3": 0.8125,
+          "mrr_at_3": 0.75,
+          "answered": 15,
+          "answerable_accepted": 12,
+          "unanswerable_rejected": 1,
+          "answered_with_relevant_citation": 9,
+          "answer_coverage": 0.75,
+          "relevant_citation_rate_among_answers": 0.6,
+          "answers_with_irrelevant_citation": 6,
+          "answerable_abstained": 4,
+          "unanswerable_answered": 3
+        },
+        "ar": {
+          "questions": 20,
+          "answerable": 16,
+          "unanswerable": 4,
+          "recall_at_3": 0.875,
+          "mrr_at_3": 0.8020833333333334,
+          "answered": 13,
+          "answerable_accepted": 12,
+          "unanswerable_rejected": 3,
+          "answered_with_relevant_citation": 10,
+          "answer_coverage": 0.65,
+          "relevant_citation_rate_among_answers": 0.7692307692307693,
+          "answers_with_irrelevant_citation": 3,
+          "answerable_abstained": 4,
+          "unanswerable_answered": 1
+        }
+      },
+      "rows": [
+        {
+          "id": "Q017",
+          "lang": "fr",
+          "split": "test",
+          "question": "Pourquoi faut-il être prudent avant d’appliquer le modèle de sentiment à des avis d’une autre plateforme ?",
+          "relevant_ids": [
+            "limites-tsac.fr"
+          ],
+          "ranking": [
+            {
+              "id": "groupes.fr",
+              "score": 10.775073523250446
+            },
+            {
+              "id": "tsac.fr",
+              "score": 8.958964088630223
+            },
+            {
+              "id": "macro-f1.fr",
+              "score": 6.616706553180913
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans MADAR, sentID.BTEC relie les traductions parallèles d’une même phrase source. Les traductions d’un groupe sont affectées à la même partition pour éviter que le modèle voie à l’entraînement une autre version d’une phrase réservée à la validation.",
+            "sources": [
+              {
+                "id": "groupes.fr",
+                "title": "Regroupement des traductions MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q018",
+          "lang": "ar",
+          "split": "test",
+          "question": "لماذا يجب الحذر عند تطبيق نموذج المشاعر على تعليقات من منصة أخرى؟",
+          "relevant_ids": [
+            "limites-tsac.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 6.938235373544067
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 5.856439372425676
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 4.265067008802042
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q019",
+          "lang": "fr",
+          "split": "test",
+          "question": "Peut-on déduire de MADAR que le système reconnaît tous les parlers de Tunisie et d’Égypte ?",
+          "relevant_ids": [
+            "limites-madar.fr"
+          ],
+          "ranking": [
+            {
+              "id": "limites-madar.fr",
+              "score": 8.312880024911498
+            },
+            {
+              "id": "groupes.fr",
+              "score": 6.6008573206801096
+            },
+            {
+              "id": "ecriture.fr",
+              "score": 4.839186133150162
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Tunis et Sfax représentent les deux variétés tunisiennes retenues, et Le Caire représente la classe égyptienne. MADAR utilise des phrases parallèles du domaine du voyage. Les performances observées ne démontrent pas une couverture de tous les parlers tunisiens ou égyptiens.",
+            "sources": [
+              {
+                "id": "limites-madar.fr",
+                "title": "Portée géographique et domaine MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q020",
+          "lang": "ar",
+          "split": "test",
+          "question": "هل تكفي نتائج MADAR لإثبات التعرف على جميع اللهجات في تونس ومصر؟",
+          "relevant_ids": [
+            "limites-madar.ar"
+          ],
+          "ranking": [
+            {
+              "id": "limites-madar.ar",
+              "score": 8.87220422281136
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 5.25726493128924
+            },
+            {
+              "id": "groupes.ar",
+              "score": 4.762228125083877
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تمثل تونس وصفاقس التنوعين التونسيين المعتمدين، وتمثل القاهرة الفئة المصرية. تستخدم MADAR جملا متوازية من مجال السفر. لا تثبت النتائج تغطية جميع اللهجات التونسية أو المصرية.",
+            "sources": [
+              {
+                "id": "limites-madar.ar",
+                "title": "النطاق الجغرافي ومجال MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q021",
+          "lang": "fr",
+          "split": "test",
+          "question": "Où vérifier les conditions d’accès à MADAR et que partage le dépôt à la place des données brutes ?",
+          "relevant_ids": [
+            "droits.fr"
+          ],
+          "ranking": [
+            {
+              "id": "droits.fr",
+              "score": 12.483254891313855
+            },
+            {
+              "id": "groupes.fr",
+              "score": 8.162693743334325
+            },
+            {
+              "id": "limites-madar.fr",
+              "score": 4.96038809555397
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "L’accès à MADAR passe par les modalités officielles du fournisseur. Le dépôt TuniScope partage des éléments de méthode, des manifestes et des résultats agrégés. Les fichiers bruts des corpus sont conservés à part, conformément aux restrictions consignées dans le registre.",
+            "sources": [
+              {
+                "id": "droits.fr",
+                "title": "Accès et redistribution des corpus",
+                "references": [
+                  "SOURCE_REGISTER.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q022",
+          "lang": "ar",
+          "split": "test",
+          "question": "أين توثق شروط الوصول إلى MADAR وما الذي ينشره المستودع بدلا من البيانات الخام؟",
+          "relevant_ids": [
+            "droits.ar"
+          ],
+          "ranking": [
+            {
+              "id": "droits.ar",
+              "score": 9.877833544324144
+            },
+            {
+              "id": "tfidf.ar",
+              "score": 3.6908966539944226
+            },
+            {
+              "id": "madar.ar",
+              "score": 3.0987903197668265
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يتم الحصول على MADAR وفق إجراءات الجهة الموفرة. ينشر مستودع TuniScope عناصر المنهج وقوائم التتبع والنتائج المجمعة. تحفظ ملفات البيانات الخام بصورة منفصلة وفقا للقيود الموثقة في سجل المصادر.",
+            "sources": [
+              {
+                "id": "droits.ar",
+                "title": "الوصول إلى البيانات وإعادة توزيعها",
+                "references": [
+                  "SOURCE_REGISTER.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q023",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment a-t-on traité les commentaires identiques dont les annotations de sentiment se contredisaient ?",
+          "relevant_ids": [
+            "annotations.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.fr",
+              "score": 6.7384288522165665
+            },
+            {
+              "id": "lora.fr",
+              "score": 4.021509651691088
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 3.915727651766583
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "answered",
+            "answer": "Le corpus TSAC contient des commentaires de réseaux sociaux annotés pour le sentiment. TuniScope utilise POS pour un avis positif et NEG pour un avis négatif. Le corpus de travail ne prévoit pas de classe neutre.",
+            "sources": [
+              {
+                "id": "tsac.fr",
+                "title": "Sentiment tunisien dans TSAC",
+                "references": [
+                  "docs/12_carte_donnees_tsac.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q024",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف عولجت التعليقات المتطابقة التي تحمل تسميات متعارضة للمشاعر؟",
+          "relevant_ids": [
+            "annotations.ar"
+          ],
+          "ranking": [
+            {
+              "id": "annotations.ar",
+              "score": 15.236298889818961
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 2.1718024968400433
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يشمل إعداد TSAC مراجعة موجهة للنصوص المتطابقة التي تحمل تسميات مشاعر متعارضة. تحفظ قرارات المراجعة لكي يمكن تتبع المعالجة، ويظل النص الأصلي محفوظا.",
+            "sources": [
+              {
+                "id": "annotations.ar",
+                "title": "معالجة تسميات المشاعر المتناقضة",
+                "references": [
+                  "docs/12_carte_donnees_tsac.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q025",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment la référence majoritaire choisit-elle sa prédiction ?",
+          "relevant_ids": [
+            "majorite.fr"
+          ],
+          "ranking": [
+            {
+              "id": "majorite.fr",
+              "score": 11.87690879125703
+            },
+            {
+              "id": "tfidf.fr",
+              "score": 4.52237706164391
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 2.757319291423787
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "La référence majoritaire apprend la classe la plus fréquente dans la partition d’entraînement. Elle prédit ensuite cette classe pour chaque entrée. Elle fournit un point de comparaison qui ne dépend pas du contenu du texte.",
+            "sources": [
+              {
+                "id": "majorite.fr",
+                "title": "Référence par classe majoritaire",
+                "references": [
+                  "docs/21_premieres_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q026",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف يختار مرجع الأغلبية التسمية التي يتوقعها؟",
+          "relevant_ids": [
+            "majorite.ar"
+          ],
+          "ranking": [
+            {
+              "id": "majorite.ar",
+              "score": 8.329683423750438
+            },
+            {
+              "id": "tfidf.ar",
+              "score": 4.080953433688908
+            },
+            {
+              "id": "sorties-invalides.ar",
+              "score": 2.120698225121661
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q027",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels scores de validation a obtenus la référence classique fondée sur les fragments de caractères ?",
+          "relevant_ids": [
+            "tfidf.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tfidf.fr",
+              "score": 13.34006276972112
+            },
+            {
+              "id": "limites-tsac.fr",
+              "score": 6.726223854446518
+            },
+            {
+              "id": "partitions.fr",
+              "score": 6.030116574510228
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "TF-IDF de caractères représente les textes par des fragments de caractères pondérés selon leur fréquence. La référence brute v2 obtient un macro-F1 de 0,928898 sur TSAC et de 0,949244 sur MADAR en validation.",
+            "sources": [
+              {
+                "id": "tfidf.fr",
+                "title": "Référence TF-IDF de caractères",
+                "references": [
+                  "docs/23_manifestes_v2_et_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q028",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما نتائج التحقق للطريقة التقليدية المبنية على مقاطع المحارف؟",
+          "relevant_ids": [
+            "tfidf.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tfidf.ar",
+              "score": 6.149558991138524
+            },
+            {
+              "id": "partitions.ar",
+              "score": 4.418354705537377
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 4.227160144532919
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تمثل طريقة TF-IDF النصوص بمقاطع من المحارف موزونة بحسب تكرارها. حقق المرجع بالنص الخام في النسخة الثانية متوسط F1 قدره 0.928898 على TSAC و0.949244 على MADAR في مجموعة التحقق.",
+            "sources": [
+              {
+                "id": "tfidf.ar",
+                "title": "مرجع TF-IDF على مستوى المحارف",
+                "references": [
+                  "docs/23_manifestes_v2_et_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q029",
+          "lang": "fr",
+          "split": "test",
+          "question": "Dans la référence CAMeLBERT gelée, quel composant apprend à produire les classes ?",
+          "relevant_ids": [
+            "encodeur-gele.fr"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-gele.fr",
+              "score": 15.268188713903012
+            },
+            {
+              "id": "majorite.fr",
+              "score": 5.924548258997047
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 3.576875123810626
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans la référence gelée, CAMeLBERT fournit des représentations fixes des textes. Une tête linéaire apprend à prédire les classes à partir de ces vecteurs. L’encodeur conserve ses paramètres préentraînés.",
+            "sources": [
+              {
+                "id": "encodeur-gele.fr",
+                "title": "CAMeLBERT gelé et tête linéaire",
+                "references": [
+                  "docs/45_resultats_encodeur_gele.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q030",
+          "lang": "ar",
+          "split": "test",
+          "question": "أي جزء يتعلم توقع الفئات عند تجميد CAMeLBERT؟",
+          "relevant_ids": [
+            "encodeur-gele.ar"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-gele.ar",
+              "score": 10.37170108823656
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 3.006294944242297
+            },
+            {
+              "id": "ecriture.ar",
+              "score": 2.5504851047660435
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "ينتج CAMeLBERT تمثيلات ثابتة للنصوص في التجربة المجمدة. يتعلم رأس تصنيف خطي توقع الفئات انطلاقا من هذه المتجهات. يحتفظ المشفر بمعاملاته المدربة مسبقا.",
+            "sources": [
+              {
+                "id": "encodeur-gele.ar",
+                "title": "نموذج CAMeLBERT المجمد ورأس التصنيف الخطي",
+                "references": [
+                  "docs/45_resultats_encodeur_gele.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q031",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels sont les macro-F1 moyens de CAMeLBERT après le fine-tuning confirmé ?",
+          "relevant_ids": [
+            "encodeur-adapte.fr"
+          ],
+          "ranking": [
+            {
+              "id": "macro-f1.fr",
+              "score": 7.666573077234007
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 7.208221410392705
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 6.119214396344117
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q032",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما متوسطا F1 الكلي بعد تأكيد الضبط الدقيق لنموذج CAMeLBERT؟",
+          "relevant_ids": [
+            "encodeur-adapte.ar"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 17.32963075721276
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 4.427968630583987
+            },
+            {
+              "id": "macro-f1.ar",
+              "score": 4.359279174726321
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم تجربة تأكيد CAMeLBERT ثلاث بذور لكل مهمة. بلغ متوسط F1 الكلي على بيانات التحقق 0.930834 لمجموعة TSAC و0.953482 لمجموعة MADAR. أعيد تحميل النماذج الستة والتحقق من تنبؤاتها.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.ar",
+                "title": "تأكيد CAMeLBERT بعد الضبط الدقيق",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q033",
+          "lang": "fr",
+          "split": "test",
+          "question": "Combien d’exemples a vus Qwen en SFT et quels tokens comptent dans la perte ?",
+          "relevant_ids": [
+            "sft.fr"
+          ],
+          "ranking": [
+            {
+              "id": "sft.fr",
+              "score": 7.807138208052418
+            },
+            {
+              "id": "qwen-consignes.fr",
+              "score": 6.501928828964544
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 5.386434892953748
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q034",
+          "lang": "ar",
+          "split": "test",
+          "question": "كم مثالا استخدم في التدريب الموجه لنموذج Qwen وما الوحدات التي تدخل في حساب الخسارة؟",
+          "relevant_ids": [
+            "sft.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sft.ar",
+              "score": 16.154861093744184
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 2.8935783852497647
+            },
+            {
+              "id": "annotations.ar",
+              "score": 2.403477030815033
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تضم مجموعة التدريب الموجه لنموذج Qwen عدد 4 000 مثال من تدريب النسخة الثانية، بواقع 2 000 لكل مهمة. الهدف هو التسمية متبوعة بعلامة نهاية الإجابة. يستبعد حساب الخسارة التعليمة والنص المدخل والحشو.",
+            "sources": [
+              {
+                "id": "sft.ar",
+                "title": "أمثلة التدريب الموجه لنموذج Qwen",
+                "references": [
+                  "docs/61_protocole_sft_qwen.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q035",
+          "lang": "fr",
+          "split": "test",
+          "question": "Dans le protocole Qwen, que rajoute le mode few-shot et d’où viennent ces démonstrations ?",
+          "relevant_ids": [
+            "qwen-consignes.fr"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-consignes.fr",
+              "score": 10.718840443455921
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 8.916811838052205
+            },
+            {
+              "id": "groupes.fr",
+              "score": 5.6274135325290215
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "En zero-shot, Qwen reçoit la consigne et le texte à classer. En few-shot, la consigne inclut aussi des exemples déjà étiquetés, avec un exemple par classe tiré du train. Les démonstrations restent fixes pendant la comparaison.",
+            "sources": [
+              {
+                "id": "qwen-consignes.fr",
+                "title": "Consigne directe et exemples dans la consigne",
+                "references": [
+                  "docs/59_protocole_tokenizer_et_consignes_qwen.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q036",
+          "lang": "ar",
+          "split": "test",
+          "question": "ماذا يضيف وضع few-shot في بروتوكول Qwen ومن أين تؤخذ أمثلة العرض؟",
+          "relevant_ids": [
+            "qwen-consignes.ar"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-consignes.ar",
+              "score": 12.534493982126008
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 10.960887378947742
+            },
+            {
+              "id": "sft.ar",
+              "score": 3.986924552853182
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "في وضع zero-shot يتلقى Qwen التعليمة والنص المراد تصنيفه. وفي وضع few-shot تضاف أمثلة موسومة، بواقع مثال تدريبي لكل فئة. تبقى هذه الأمثلة ثابتة أثناء المقارنة.",
+            "sources": [
+              {
+                "id": "qwen-consignes.ar",
+                "title": "التعليمة المباشرة والتعليمة ذات الأمثلة",
+                "references": [
+                  "docs/59_protocole_tokenizer_et_consignes_qwen.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q037",
+          "lang": "fr",
+          "split": "test",
+          "question": "Que montrent les résultats LoRA sur l’utilité des exemples ajoutés à la consigne MADAR ?",
+          "relevant_ids": [
+            "qwen-resultats.fr"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.fr",
+              "score": 11.760594805151527
+            },
+            {
+              "id": "lora.fr",
+              "score": 7.988377679364411
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 7.130771610841035
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "En zero-shot après LoRA, le macro-F1 moyen atteint 0,7065 sur TSAC et 0,7321 sur MADAR. Cette consigne directe dépasse le few-shot dans les deux tâches pour chaque graine. En few-shot MADAR, la classe EG est prédite sur 760 à 787 des 800 exemples.",
+            "sources": [
+              {
+                "id": "qwen-resultats.fr",
+                "title": "Résultats Qwen LoRA sur validation",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q038",
+          "lang": "ar",
+          "split": "test",
+          "question": "ماذا تظهر نتائج LoRA بشأن إضافة أمثلة إلى التعليمة في MADAR؟",
+          "relevant_ids": [
+            "qwen-resultats.ar"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.ar",
+              "score": 8.556181330062287
+            },
+            {
+              "id": "qwen-consignes.ar",
+              "score": 5.353475322095971
+            },
+            {
+              "id": "lora.ar",
+              "score": 4.173667375932738
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "بعد LoRA بلغ متوسط F1 الكلي في وضع zero-shot قيمة 0.7065 على TSAC و0.7321 على MADAR. تفوقت التعليمة المباشرة على وضع few-shot في المهمتين ولكل بذرة. في وضع few-shot على MADAR توقع النموذج EG في 760 إلى 787 من 800 مثال.",
+            "sources": [
+              {
+                "id": "qwen-resultats.ar",
+                "title": "نتائج Qwen LoRA في التحقق",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q039",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel traitement réserve-t-on à une réponse Qwen qui ne correspond à aucun label autorisé ?",
+          "relevant_ids": [
+            "sorties-invalides.fr"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.fr",
+              "score": 13.156053249558884
+            },
+            {
+              "id": "sft.fr",
+              "score": 6.030886346021267
+            },
+            {
+              "id": "annotations.fr",
+              "score": 5.623590173984677
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Une réponse Qwen est valide quand elle correspond à un label autorisé pour la tâche. Les sorties invalides restent dans la matrice de confusion et comptent comme erreurs. Après LoRA, les 15 444 réponses de validation respectent le format de label. La justesse des labels est mesurée séparément.",
+            "sources": [
+              {
+                "id": "sorties-invalides.fr",
+                "title": "Validité du format de sortie",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q040",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف تعامل إجابة Qwen عندما لا تطابق أي تسمية مسموحة؟",
+          "relevant_ids": [
+            "sorties-invalides.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.ar",
+              "score": 14.411486108567336
+            },
+            {
+              "id": "sft.ar",
+              "score": 1.8908870576648094
+            },
+            {
+              "id": "majorite.ar",
+              "score": 1.7436329690713464
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تكون إجابة Qwen صالحة عندما تطابق تسمية مسموحة للمهمة. تبقى المخرجات غير الصالحة ضمن مصفوفة الالتباس وتحسب أخطاء. بعد LoRA احترمت إجابات التحقق البالغ عددها 15 444 صيغة التسمية، وتقاس صحة التصنيفات بصورة منفصلة.",
+            "sources": [
+              {
+                "id": "sorties-invalides.ar",
+                "title": "صلاحية صيغة المخرجات",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q041",
+          "lang": "fr",
+          "split": "test",
+          "question": "À quoi servent les trois graines quand les données d’apprentissage sont les mêmes ?",
+          "relevant_ids": [
+            "graines.fr"
+          ],
+          "ranking": [
+            {
+              "id": "graines.fr",
+              "score": 13.112149128759576
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 9.78073602430856
+            },
+            {
+              "id": "lora.fr",
+              "score": 2.782819021442559
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Les graines 13, 42 et 2026 fixent notamment l’initialisation de l’adaptateur et l’ordre des exemples. Nous gardons les données et la configuration fixes et rapportons la moyenne et l’écart-type des trois scores pour mesurer la variabilité.",
+            "sources": [
+              {
+                "id": "graines.fr",
+                "title": "Répétitions avec trois graines",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q042",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما فائدة استخدام ثلاث بذور إذا بقيت بيانات التدريب نفسها؟",
+          "relevant_ids": [
+            "graines.ar"
+          ],
+          "ranking": [
+            {
+              "id": "majorite.ar",
+              "score": 6.818822204010351
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 6.51540749052013
+            },
+            {
+              "id": "graines.ar",
+              "score": 4.871917334048519
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q043",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels éléments faut-il pour réutiliser un adaptateur sauvegardé de la campagne LoRA ?",
+          "relevant_ids": [
+            "rechargement.fr"
+          ],
+          "ranking": [
+            {
+              "id": "lora.fr",
+              "score": 8.5257411174923
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 6.162147278361411
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 3.780958218799735
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "response": {
+            "status": "answered",
+            "answer": "Dans la campagne Qwen3-0.6B, un adaptateur LoRA par graine traite à la fois TSAC et MADAR. L’apprentissage ajuste 1 146 880 paramètres ajoutés aux projections q et v. Les paramètres du modèle Qwen de base sont gelés.",
+            "sources": [
+              {
+                "id": "lora.fr",
+                "title": "Adaptateur LoRA partagé",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q044",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما العناصر اللازمة لإعادة استخدام مهايئ محفوظ من تجربة LoRA؟",
+          "relevant_ids": [
+            "rechargement.ar"
+          ],
+          "ranking": [
+            {
+              "id": "lora.ar",
+              "score": 8.156308076024484
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 2.8501444281833797
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 2.5185730523170937
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم كل بذرة في تجربة Qwen3-0.6B مهايئ LoRA مشتركا بين مهمتي TSAC وMADAR. يحدث التدريب 1 146 880 معاملا مضافا إلى إسقاطي q وv وتبقى معاملات النموذج الأساسي مجمدة.",
+            "sources": [
+              {
+                "id": "lora.ar",
+                "title": "مهايئ LoRA المشترك",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q045",
+          "lang": "fr",
+          "split": "test",
+          "question": "Pourquoi 100 % de réponses valides ne veut-il pas dire 100 % de bonnes prédictions ?",
+          "relevant_ids": [
+            "sorties-invalides.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.fr",
+              "score": 3.534922852143377
+            },
+            {
+              "id": "majorite.fr",
+              "score": 3.348275154803338
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 3.321755424077077
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q046",
+          "lang": "ar",
+          "split": "test",
+          "question": "لماذا لا تعني صلاحية جميع الإجابات أن جميع التصنيفات صحيحة؟",
+          "relevant_ids": [
+            "sorties-invalides.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.ar",
+              "score": 5.217698985320232
+            },
+            {
+              "id": "limites-madar.ar",
+              "score": 4.009951156911803
+            },
+            {
+              "id": "groupes.ar",
+              "score": 2.281774210764812
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q047",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment a-t-on résumé la dispersion des performances des répétitions LoRA ?",
+          "relevant_ids": [
+            "graines.fr"
+          ],
+          "ranking": [
+            {
+              "id": "graines.fr",
+              "score": 5.8846487206490234
+            },
+            {
+              "id": "lora.fr",
+              "score": 4.156638010976259
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 3.7565236987751964
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q048",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف لخص التقرير تشتت أداء التكرارات في تجربة LoRA؟",
+          "relevant_ids": [
+            "graines.ar"
+          ],
+          "ranking": [
+            {
+              "id": "lora.ar",
+              "score": 4.954694248084151
+            },
+            {
+              "id": "partitions.ar",
+              "score": 2.9447719047776584
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 2.827057231815595
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم كل بذرة في تجربة Qwen3-0.6B مهايئ LoRA مشتركا بين مهمتي TSAC وMADAR. يحدث التدريب 1 146 880 معاملا مضافا إلى إسقاطي q وv وتبقى معاملات النموذج الأساسي مجمدة.",
+            "sources": [
+              {
+                "id": "lora.ar",
+                "title": "مهايئ LoRA المشترك",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q053",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel prix en euros a été facturé pour l’entraînement sur les deux cartes Kaggle ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "rechargement.fr",
+              "score": 8.330774842232712
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 7.085333002625676
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 5.583716515012172
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "La version adaptée se recharge en associant la révision exacte de Qwen de base aux poids et à la configuration de l’adaptateur de la graine voulue. Les trois adaptateurs de la campagne ont été rechargés sur Mac, avec vérification des empreintes et génération sur deux exemples inventés par graine.",
+            "sources": [
+              {
+                "id": "rechargement.fr",
+                "title": "Rechargement des poids LoRA",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q054",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما المبلغ باليورو الذي دفع مقابل التدريب على البطاقتين في Kaggle؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "majorite.ar",
+              "score": 3.0436342723355594
+            },
+            {
+              "id": "groupes.ar",
+              "score": 2.928045834398898
+            },
+            {
+              "id": "partitions.ar",
+              "score": 2.5701534820042182
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q055",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel score de test officiel CAMeLBERT a-t-il obtenu sur TSAC ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 6.622878738555734
+            },
+            {
+              "id": "encodeur-gele.fr",
+              "score": 4.516712626971156
+            },
+            {
+              "id": "macro-f1.fr",
+              "score": 4.029342334499378
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "La confirmation de CAMeLBERT adapté utilise trois graines par tâche. La moyenne de macro-F1 sur validation est de 0,930834 pour TSAC et de 0,953482 pour MADAR. Les six modèles ont été rechargés et leurs prédictions vérifiées.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.fr",
+                "title": "CAMeLBERT adapté sur trois graines",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q056",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما النتيجة التي حققها CAMeLBERT في الاختبار الرسمي لمجموعة TSAC؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 7.678757793493089
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 4.242057847762974
+            },
+            {
+              "id": "encodeur-gele.ar",
+              "score": 3.7266974801995905
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم تجربة تأكيد CAMeLBERT ثلاث بذور لكل مهمة. بلغ متوسط F1 الكلي على بيانات التحقق 0.930834 لمجموعة TSAC و0.953482 لمجموعة MADAR. أعيد تحميل النماذج الستة والتحقق من تنبؤاتها.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.ar",
+                "title": "تأكيد CAMeLBERT بعد الضبط الدقيق",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q057",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quelle performance obtient Qwen sur des enregistrements audio tunisiens ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tfidf.fr",
+              "score": 5.2207844735642075
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 3.8755302423160316
+            },
+            {
+              "id": "rechargement.fr",
+              "score": 3.546980917407663
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "TF-IDF de caractères représente les textes par des fragments de caractères pondérés selon leur fréquence. La référence brute v2 obtient un macro-F1 de 0,928898 sur TSAC et de 0,949244 sur MADAR en validation.",
+            "sources": [
+              {
+                "id": "tfidf.fr",
+                "title": "Référence TF-IDF de caractères",
+                "references": [
+                  "docs/23_manifestes_v2_et_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q058",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما أداء Qwen على التسجيلات الصوتية التونسية؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 3.5955819009180168
+            },
+            {
+              "id": "sft.ar",
+              "score": 3.170585294111522
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 2.6046280256954297
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q059",
+          "lang": "fr",
+          "split": "test",
+          "question": "Peux-tu me donner le label du texte « le service était formidable » ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "sft.fr",
+              "score": 5.659250772434923
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 4.301893683859833
+            },
+            {
+              "id": "qwen-consignes.fr",
+              "score": 2.7599363684509512
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q060",
+          "lang": "ar",
+          "split": "test",
+          "question": "هل يمكنك تصنيف مشاعر هذا النص: « كانت الخدمة ممتازة »؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "annotations.ar",
+              "score": 4.995785038265685
+            },
+            {
+              "id": "majorite.ar",
+              "score": 4.384084159752941
+            },
+            {
+              "id": "encodeur-gele.ar",
+              "score": 2.879916570152646
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        }
+      ]
+    },
+    "e5": {
+      "all": {
+        "questions": 40,
+        "answerable": 32,
+        "unanswerable": 8,
+        "recall_at_3": 0.9375,
+        "mrr_at_3": 0.8854166666666666,
+        "answered": 16,
+        "answerable_accepted": 14,
+        "unanswerable_rejected": 6,
+        "answered_with_relevant_citation": 13,
+        "answer_coverage": 0.4,
+        "relevant_citation_rate_among_answers": 0.8125,
+        "answers_with_irrelevant_citation": 3,
+        "answerable_abstained": 18,
+        "unanswerable_answered": 2
+      },
+      "by_language": {
+        "fr": {
+          "questions": 20,
+          "answerable": 16,
+          "unanswerable": 4,
+          "recall_at_3": 0.9375,
+          "mrr_at_3": 0.8958333333333334,
+          "answered": 7,
+          "answerable_accepted": 6,
+          "unanswerable_rejected": 3,
+          "answered_with_relevant_citation": 6,
+          "answer_coverage": 0.35,
+          "relevant_citation_rate_among_answers": 0.8571428571428571,
+          "answers_with_irrelevant_citation": 1,
+          "answerable_abstained": 10,
+          "unanswerable_answered": 1
+        },
+        "ar": {
+          "questions": 20,
+          "answerable": 16,
+          "unanswerable": 4,
+          "recall_at_3": 0.9375,
+          "mrr_at_3": 0.875,
+          "answered": 9,
+          "answerable_accepted": 8,
+          "unanswerable_rejected": 3,
+          "answered_with_relevant_citation": 7,
+          "answer_coverage": 0.45,
+          "relevant_citation_rate_among_answers": 0.7777777777777778,
+          "answers_with_irrelevant_citation": 2,
+          "answerable_abstained": 8,
+          "unanswerable_answered": 1
+        }
+      },
+      "rows": [
+        {
+          "id": "Q017",
+          "lang": "fr",
+          "split": "test",
+          "question": "Pourquoi faut-il être prudent avant d’appliquer le modèle de sentiment à des avis d’une autre plateforme ?",
+          "relevant_ids": [
+            "limites-tsac.fr"
+          ],
+          "ranking": [
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8359861373901367
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.8284170627593994
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8076184391975403
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q018",
+          "lang": "ar",
+          "split": "test",
+          "question": "لماذا يجب الحذر عند تطبيق نموذج المشاعر على تعليقات من منصة أخرى؟",
+          "relevant_ids": [
+            "limites-tsac.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 0.8329002857208252
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 0.8319374322891235
+            },
+            {
+              "id": "annotations.ar",
+              "score": 0.8282415866851807
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q019",
+          "lang": "fr",
+          "split": "test",
+          "question": "Peut-on déduire de MADAR que le système reconnaît tous les parlers de Tunisie et d’Égypte ?",
+          "relevant_ids": [
+            "limites-madar.fr"
+          ],
+          "ranking": [
+            {
+              "id": "limites-madar.fr",
+              "score": 0.8840094804763794
+            },
+            {
+              "id": "madar.fr",
+              "score": 0.8636064529418945
+            },
+            {
+              "id": "droits.fr",
+              "score": 0.8430287837982178
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Tunis et Sfax représentent les deux variétés tunisiennes retenues, et Le Caire représente la classe égyptienne. MADAR utilise des phrases parallèles du domaine du voyage. Les performances observées ne démontrent pas une couverture de tous les parlers tunisiens ou égyptiens.",
+            "sources": [
+              {
+                "id": "limites-madar.fr",
+                "title": "Portée géographique et domaine MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q020",
+          "lang": "ar",
+          "split": "test",
+          "question": "هل تكفي نتائج MADAR لإثبات التعرف على جميع اللهجات في تونس ومصر؟",
+          "relevant_ids": [
+            "limites-madar.ar"
+          ],
+          "ranking": [
+            {
+              "id": "limites-madar.ar",
+              "score": 0.8935820460319519
+            },
+            {
+              "id": "madar.ar",
+              "score": 0.8716359734535217
+            },
+            {
+              "id": "droits.ar",
+              "score": 0.8444057703018188
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تمثل تونس وصفاقس التنوعين التونسيين المعتمدين، وتمثل القاهرة الفئة المصرية. تستخدم MADAR جملا متوازية من مجال السفر. لا تثبت النتائج تغطية جميع اللهجات التونسية أو المصرية.",
+            "sources": [
+              {
+                "id": "limites-madar.ar",
+                "title": "النطاق الجغرافي ومجال MADAR",
+                "references": [
+                  "docs/13_carte_donnees_madar.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q021",
+          "lang": "fr",
+          "split": "test",
+          "question": "Où vérifier les conditions d’accès à MADAR et que partage le dépôt à la place des données brutes ?",
+          "relevant_ids": [
+            "droits.fr"
+          ],
+          "ranking": [
+            {
+              "id": "droits.fr",
+              "score": 0.8846237659454346
+            },
+            {
+              "id": "groupes.fr",
+              "score": 0.8352304697036743
+            },
+            {
+              "id": "madar.fr",
+              "score": 0.8319332599639893
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "L’accès à MADAR passe par les modalités officielles du fournisseur. Le dépôt TuniScope partage des éléments de méthode, des manifestes et des résultats agrégés. Les fichiers bruts des corpus sont conservés à part, conformément aux restrictions consignées dans le registre.",
+            "sources": [
+              {
+                "id": "droits.fr",
+                "title": "Accès et redistribution des corpus",
+                "references": [
+                  "SOURCE_REGISTER.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q022",
+          "lang": "ar",
+          "split": "test",
+          "question": "أين توثق شروط الوصول إلى MADAR وما الذي ينشره المستودع بدلا من البيانات الخام؟",
+          "relevant_ids": [
+            "droits.ar"
+          ],
+          "ranking": [
+            {
+              "id": "droits.ar",
+              "score": 0.8880294561386108
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.843085765838623
+            },
+            {
+              "id": "groupes.ar",
+              "score": 0.8369135856628418
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يتم الحصول على MADAR وفق إجراءات الجهة الموفرة. ينشر مستودع TuniScope عناصر المنهج وقوائم التتبع والنتائج المجمعة. تحفظ ملفات البيانات الخام بصورة منفصلة وفقا للقيود الموثقة في سجل المصادر.",
+            "sources": [
+              {
+                "id": "droits.ar",
+                "title": "الوصول إلى البيانات وإعادة توزيعها",
+                "references": [
+                  "SOURCE_REGISTER.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q023",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment a-t-on traité les commentaires identiques dont les annotations de sentiment se contredisaient ?",
+          "relevant_ids": [
+            "annotations.fr"
+          ],
+          "ranking": [
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8298758268356323
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.8268799781799316
+            },
+            {
+              "id": "annotations.fr",
+              "score": 0.8080263137817383
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q024",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف عولجت التعليقات المتطابقة التي تحمل تسميات متعارضة للمشاعر؟",
+          "relevant_ids": [
+            "annotations.ar"
+          ],
+          "ranking": [
+            {
+              "id": "annotations.ar",
+              "score": 0.8525084257125854
+            },
+            {
+              "id": "tsac.ar",
+              "score": 0.8099362850189209
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 0.8024836778640747
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q025",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment la référence majoritaire choisit-elle sa prédiction ?",
+          "relevant_ids": [
+            "majorite.fr"
+          ],
+          "ranking": [
+            {
+              "id": "majorite.fr",
+              "score": 0.8735174536705017
+            },
+            {
+              "id": "encodeur-gele.fr",
+              "score": 0.8051413297653198
+            },
+            {
+              "id": "tfidf.fr",
+              "score": 0.804442286491394
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "La référence majoritaire apprend la classe la plus fréquente dans la partition d’entraînement. Elle prédit ensuite cette classe pour chaque entrée. Elle fournit un point de comparaison qui ne dépend pas du contenu du texte.",
+            "sources": [
+              {
+                "id": "majorite.fr",
+                "title": "Référence par classe majoritaire",
+                "references": [
+                  "docs/21_premieres_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q026",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف يختار مرجع الأغلبية التسمية التي يتوقعها؟",
+          "relevant_ids": [
+            "majorite.ar"
+          ],
+          "ranking": [
+            {
+              "id": "majorite.ar",
+              "score": 0.8703097105026245
+            },
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8194371461868286
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.8097853660583496
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "يحدد مرجع الأغلبية الفئة الأكثر تكرارا في بيانات التدريب ثم يتوقع الفئة نفسها لكل مدخل. يوفر هذا مرجعا للمقارنة لا يعتمد على محتوى النص.",
+            "sources": [
+              {
+                "id": "majorite.ar",
+                "title": "مرجع الفئة الأكثر شيوعا",
+                "references": [
+                  "docs/21_premieres_baselines.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q027",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels scores de validation a obtenus la référence classique fondée sur les fragments de caractères ?",
+          "relevant_ids": [
+            "tfidf.fr"
+          ],
+          "ranking": [
+            {
+              "id": "tfidf.fr",
+              "score": 0.8552632331848145
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8340592384338379
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8259750604629517
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q028",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما نتائج التحقق للطريقة التقليدية المبنية على مقاطع المحارف؟",
+          "relevant_ids": [
+            "tfidf.ar"
+          ],
+          "ranking": [
+            {
+              "id": "tfidf.ar",
+              "score": 0.852679967880249
+            },
+            {
+              "id": "droits.ar",
+              "score": 0.8054595589637756
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8032479286193848
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q029",
+          "lang": "fr",
+          "split": "test",
+          "question": "Dans la référence CAMeLBERT gelée, quel composant apprend à produire les classes ?",
+          "relevant_ids": [
+            "encodeur-gele.fr"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-gele.fr",
+              "score": 0.8996857404708862
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.8456032276153564
+            },
+            {
+              "id": "majorite.fr",
+              "score": 0.8159990310668945
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Dans la référence gelée, CAMeLBERT fournit des représentations fixes des textes. Une tête linéaire apprend à prédire les classes à partir de ces vecteurs. L’encodeur conserve ses paramètres préentraînés.",
+            "sources": [
+              {
+                "id": "encodeur-gele.fr",
+                "title": "CAMeLBERT gelé et tête linéaire",
+                "references": [
+                  "docs/45_resultats_encodeur_gele.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q030",
+          "lang": "ar",
+          "split": "test",
+          "question": "أي جزء يتعلم توقع الفئات عند تجميد CAMeLBERT؟",
+          "relevant_ids": [
+            "encodeur-gele.ar"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-gele.ar",
+              "score": 0.8886704444885254
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.878699541091919
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8138435482978821
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "ينتج CAMeLBERT تمثيلات ثابتة للنصوص في التجربة المجمدة. يتعلم رأس تصنيف خطي توقع الفئات انطلاقا من هذه المتجهات. يحتفظ المشفر بمعاملاته المدربة مسبقا.",
+            "sources": [
+              {
+                "id": "encodeur-gele.ar",
+                "title": "نموذج CAMeLBERT المجمد ورأس التصنيف الخطي",
+                "references": [
+                  "docs/45_resultats_encodeur_gele.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q031",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels sont les macro-F1 moyens de CAMeLBERT après le fine-tuning confirmé ?",
+          "relevant_ids": [
+            "encodeur-adapte.fr"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.8568029403686523
+            },
+            {
+              "id": "macro-f1.fr",
+              "score": 0.8313449621200562
+            },
+            {
+              "id": "encodeur-gele.fr",
+              "score": 0.8229193687438965
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q032",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما متوسطا F1 الكلي بعد تأكيد الضبط الدقيق لنموذج CAMeLBERT؟",
+          "relevant_ids": [
+            "encodeur-adapte.ar"
+          ],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.8971197009086609
+            },
+            {
+              "id": "macro-f1.ar",
+              "score": 0.8751237392425537
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8637301921844482
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم تجربة تأكيد CAMeLBERT ثلاث بذور لكل مهمة. بلغ متوسط F1 الكلي على بيانات التحقق 0.930834 لمجموعة TSAC و0.953482 لمجموعة MADAR. أعيد تحميل النماذج الستة والتحقق من تنبؤاتها.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.ar",
+                "title": "تأكيد CAMeLBERT بعد الضبط الدقيق",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q033",
+          "lang": "fr",
+          "split": "test",
+          "question": "Combien d’exemples a vus Qwen en SFT et quels tokens comptent dans la perte ?",
+          "relevant_ids": [
+            "sft.fr"
+          ],
+          "ranking": [
+            {
+              "id": "sft.fr",
+              "score": 0.8611085414886475
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8221917152404785
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8210919499397278
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q034",
+          "lang": "ar",
+          "split": "test",
+          "question": "كم مثالا استخدم في التدريب الموجه لنموذج Qwen وما الوحدات التي تدخل في حساب الخسارة؟",
+          "relevant_ids": [
+            "sft.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sft.ar",
+              "score": 0.9246982336044312
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8416829705238342
+            },
+            {
+              "id": "qwen-consignes.ar",
+              "score": 0.8411057591438293
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "تضم مجموعة التدريب الموجه لنموذج Qwen عدد 4 000 مثال من تدريب النسخة الثانية، بواقع 2 000 لكل مهمة. الهدف هو التسمية متبوعة بعلامة نهاية الإجابة. يستبعد حساب الخسارة التعليمة والنص المدخل والحشو.",
+            "sources": [
+              {
+                "id": "sft.ar",
+                "title": "أمثلة التدريب الموجه لنموذج Qwen",
+                "references": [
+                  "docs/61_protocole_sft_qwen.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q035",
+          "lang": "fr",
+          "split": "test",
+          "question": "Dans le protocole Qwen, que rajoute le mode few-shot et d’où viennent ces démonstrations ?",
+          "relevant_ids": [
+            "qwen-consignes.fr"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-consignes.fr",
+              "score": 0.8660346269607544
+            },
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8439527750015259
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8263121843338013
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q036",
+          "lang": "ar",
+          "split": "test",
+          "question": "ماذا يضيف وضع few-shot في بروتوكول Qwen ومن أين تؤخذ أمثلة العرض؟",
+          "relevant_ids": [
+            "qwen-consignes.ar"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-consignes.ar",
+              "score": 0.8955838084220886
+            },
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8667013645172119
+            },
+            {
+              "id": "sft.ar",
+              "score": 0.829032301902771
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "في وضع zero-shot يتلقى Qwen التعليمة والنص المراد تصنيفه. وفي وضع few-shot تضاف أمثلة موسومة، بواقع مثال تدريبي لكل فئة. تبقى هذه الأمثلة ثابتة أثناء المقارنة.",
+            "sources": [
+              {
+                "id": "qwen-consignes.ar",
+                "title": "التعليمة المباشرة والتعليمة ذات الأمثلة",
+                "references": [
+                  "docs/59_protocole_tokenizer_et_consignes_qwen.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q037",
+          "lang": "fr",
+          "split": "test",
+          "question": "Que montrent les résultats LoRA sur l’utilité des exemples ajoutés à la consigne MADAR ?",
+          "relevant_ids": [
+            "qwen-resultats.fr"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8618000745773315
+            },
+            {
+              "id": "lora.fr",
+              "score": 0.8398202657699585
+            },
+            {
+              "id": "madar.fr",
+              "score": 0.8329867124557495
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q038",
+          "lang": "ar",
+          "split": "test",
+          "question": "ماذا تظهر نتائج LoRA بشأن إضافة أمثلة إلى التعليمة في MADAR؟",
+          "relevant_ids": [
+            "qwen-resultats.ar"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8644604086875916
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8513935804367065
+            },
+            {
+              "id": "lora.ar",
+              "score": 0.8504846096038818
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q039",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel traitement réserve-t-on à une réponse Qwen qui ne correspond à aucun label autorisé ?",
+          "relevant_ids": [
+            "sorties-invalides.fr"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8722821474075317
+            },
+            {
+              "id": "sft.fr",
+              "score": 0.8399491310119629
+            },
+            {
+              "id": "qwen-consignes.fr",
+              "score": 0.8199899196624756
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "Une réponse Qwen est valide quand elle correspond à un label autorisé pour la tâche. Les sorties invalides restent dans la matrice de confusion et comptent comme erreurs. Après LoRA, les 15 444 réponses de validation respectent le format de label. La justesse des labels est mesurée séparément.",
+            "sources": [
+              {
+                "id": "sorties-invalides.fr",
+                "title": "Validité du format de sortie",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q040",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف تعامل إجابة Qwen عندما لا تطابق أي تسمية مسموحة؟",
+          "relevant_ids": [
+            "sorties-invalides.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8587279319763184
+            },
+            {
+              "id": "sft.ar",
+              "score": 0.8472156524658203
+            },
+            {
+              "id": "qwen-consignes.ar",
+              "score": 0.8370684385299683
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q041",
+          "lang": "fr",
+          "split": "test",
+          "question": "À quoi servent les trois graines quand les données d’apprentissage sont les mêmes ?",
+          "relevant_ids": [
+            "graines.fr"
+          ],
+          "ranking": [
+            {
+              "id": "graines.fr",
+              "score": 0.8505186438560486
+            },
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.8248453736305237
+            },
+            {
+              "id": "encodeur-gele.fr",
+              "score": 0.8208593130111694
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q042",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما فائدة استخدام ثلاث بذور إذا بقيت بيانات التدريب نفسها؟",
+          "relevant_ids": [
+            "graines.ar"
+          ],
+          "ranking": [
+            {
+              "id": "graines.ar",
+              "score": 0.8458679914474487
+            },
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.8262757062911987
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 0.8188149333000183
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q043",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quels éléments faut-il pour réutiliser un adaptateur sauvegardé de la campagne LoRA ?",
+          "relevant_ids": [
+            "rechargement.fr"
+          ],
+          "ranking": [
+            {
+              "id": "rechargement.fr",
+              "score": 0.8696420192718506
+            },
+            {
+              "id": "lora.fr",
+              "score": 0.8598192930221558
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8265035152435303
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "answered",
+            "answer": "La version adaptée se recharge en associant la révision exacte de Qwen de base aux poids et à la configuration de l’adaptateur de la graine voulue. Les trois adaptateurs de la campagne ont été rechargés sur Mac, avec vérification des empreintes et génération sur deux exemples inventés par graine.",
+            "sources": [
+              {
+                "id": "rechargement.fr",
+                "title": "Rechargement des poids LoRA",
+                "references": [
+                  "docs/65_resultats_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q044",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما العناصر اللازمة لإعادة استخدام مهايئ محفوظ من تجربة LoRA؟",
+          "relevant_ids": [
+            "rechargement.ar"
+          ],
+          "ranking": [
+            {
+              "id": "lora.ar",
+              "score": 0.8704062700271606
+            },
+            {
+              "id": "rechargement.ar",
+              "score": 0.8631535768508911
+            },
+            {
+              "id": "droits.ar",
+              "score": 0.8305010199546814
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم كل بذرة في تجربة Qwen3-0.6B مهايئ LoRA مشتركا بين مهمتي TSAC وMADAR. يحدث التدريب 1 146 880 معاملا مضافا إلى إسقاطي q وv وتبقى معاملات النموذج الأساسي مجمدة.",
+            "sources": [
+              {
+                "id": "lora.ar",
+                "title": "مهايئ LoRA المشترك",
+                "references": [
+                  "docs/64_protocole_campagne_lora.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q045",
+          "lang": "fr",
+          "split": "test",
+          "question": "Pourquoi 100 % de réponses valides ne veut-il pas dire 100 % de bonnes prédictions ?",
+          "relevant_ids": [
+            "sorties-invalides.fr"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8348785638809204
+            },
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8277261257171631
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8179876208305359
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q046",
+          "lang": "ar",
+          "split": "test",
+          "question": "لماذا لا تعني صلاحية جميع الإجابات أن جميع التصنيفات صحيحة؟",
+          "relevant_ids": [
+            "sorties-invalides.ar"
+          ],
+          "ranking": [
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8674818873405457
+            },
+            {
+              "id": "limites-tsac.ar",
+              "score": 0.8105111122131348
+            },
+            {
+              "id": "majorite.ar",
+              "score": 0.8014000654220581
+            }
+          ],
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q047",
+          "lang": "fr",
+          "split": "test",
+          "question": "Comment a-t-on résumé la dispersion des performances des répétitions LoRA ?",
+          "relevant_ids": [
+            "graines.fr"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.fr",
+              "score": 0.8193715810775757
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.8105133771896362
+            },
+            {
+              "id": "lora.fr",
+              "score": 0.8078544735908508
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q048",
+          "lang": "ar",
+          "split": "test",
+          "question": "كيف لخص التقرير تشتت أداء التكرارات في تجربة LoRA؟",
+          "relevant_ids": [
+            "graines.ar"
+          ],
+          "ranking": [
+            {
+              "id": "qwen-resultats.ar",
+              "score": 0.8403019309043884
+            },
+            {
+              "id": "lora.ar",
+              "score": 0.8391948938369751
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.8320518732070923
+            }
+          ],
+          "recall": 0.0,
+          "reciprocal_rank": 0.0,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q053",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel prix en euros a été facturé pour l’entraînement sur les deux cartes Kaggle ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.7945617437362671
+            },
+            {
+              "id": "limites-madar.fr",
+              "score": 0.7883889079093933
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.7873737812042236
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q054",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما المبلغ باليورو الذي دفع مقابل التدريب على البطاقتين في Kaggle؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.7985202074050903
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.7982809543609619
+            },
+            {
+              "id": "lora.ar",
+              "score": 0.791215717792511
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q055",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quel score de test officiel CAMeLBERT a-t-il obtenu sur TSAC ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.fr",
+              "score": 0.8867619037628174
+            },
+            {
+              "id": "limites-tsac.fr",
+              "score": 0.8302346467971802
+            },
+            {
+              "id": "partitions.fr",
+              "score": 0.8293250799179077
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "La confirmation de CAMeLBERT adapté utilise trois graines par tâche. La moyenne de macro-F1 sur validation est de 0,930834 pour TSAC et de 0,953482 pour MADAR. Les six modèles ont été rechargés et leurs prédictions vérifiées.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.fr",
+                "title": "CAMeLBERT adapté sur trois graines",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q056",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما النتيجة التي حققها CAMeLBERT في الاختبار الرسمي لمجموعة TSAC؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "encodeur-adapte.ar",
+              "score": 0.8942471742630005
+            },
+            {
+              "id": "encodeur-gele.ar",
+              "score": 0.8440452814102173
+            },
+            {
+              "id": "partitions.ar",
+              "score": 0.843948245048523
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "answered",
+            "answer": "تستخدم تجربة تأكيد CAMeLBERT ثلاث بذور لكل مهمة. بلغ متوسط F1 الكلي على بيانات التحقق 0.930834 لمجموعة TSAC و0.953482 لمجموعة MADAR. أعيد تحميل النماذج الستة والتحقق من تنبؤاتها.",
+            "sources": [
+              {
+                "id": "encodeur-adapte.ar",
+                "title": "تأكيد CAMeLBERT بعد الضبط الدقيق",
+                "references": [
+                  "docs/57_resultats_confirmation_encodeur.md"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q057",
+          "lang": "fr",
+          "split": "test",
+          "question": "Quelle performance obtient Qwen sur des enregistrements audio tunisiens ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "sft.fr",
+              "score": 0.800876259803772
+            },
+            {
+              "id": "lora.fr",
+              "score": 0.789568305015564
+            },
+            {
+              "id": "limites-madar.fr",
+              "score": 0.78919917345047
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q058",
+          "lang": "ar",
+          "split": "test",
+          "question": "ما أداء Qwen على التسجيلات الصوتية التونسية؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "qwen-consignes.ar",
+              "score": 0.7966071367263794
+            },
+            {
+              "id": "ecriture.ar",
+              "score": 0.7907480001449585
+            },
+            {
+              "id": "sft.ar",
+              "score": 0.7905446290969849
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q059",
+          "lang": "fr",
+          "split": "test",
+          "question": "Peux-tu me donner le label du texte « le service était formidable » ?",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "sft.fr",
+              "score": 0.8048259019851685
+            },
+            {
+              "id": "sorties-invalides.fr",
+              "score": 0.7876461744308472
+            },
+            {
+              "id": "tsac.fr",
+              "score": 0.7850531339645386
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "Les fiches disponibles ne suffisent pas pour répondre.",
+            "sources": []
+          }
+        },
+        {
+          "id": "Q060",
+          "lang": "ar",
+          "split": "test",
+          "question": "هل يمكنك تصنيف مشاعر هذا النص: « كانت الخدمة ممتازة »؟",
+          "relevant_ids": [],
+          "ranking": [
+            {
+              "id": "tsac.ar",
+              "score": 0.8164179921150208
+            },
+            {
+              "id": "annotations.ar",
+              "score": 0.8104323148727417
+            },
+            {
+              "id": "sorties-invalides.ar",
+              "score": 0.8053418397903442
+            }
+          ],
+          "recall": null,
+          "reciprocal_rank": null,
+          "response": {
+            "status": "insufficient_sources",
+            "answer": "لا تكفي البطاقات المتاحة للإجابة عن هذا السؤال.",
+            "sources": []
+          }
+        }
+      ]
+    }
+  }
+}

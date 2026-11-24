@@ -134,6 +134,56 @@ def test_documentary_citation_and_abstention(client):
     assert client.post("/ask", json={"question": "test", "method": "e5"}).json()["status"] == "unavailable"
 
 
+@pytest.mark.parametrize(("question", "lang", "expected"), [
+    ("c'est quoi macro F1", "fr", "macro-f1.fr"),
+    ("Que siginifie Macro-F1", "fr", "macro-f1.fr"),
+    ("ما المقصود بمتوسط F1؟", "ar", "macro-f1.ar"),
+    ("TN dans MADAR ?", "fr", "madar.fr"),
+    ("Comment fonctionne LoRA ?", "fr", "lora.fr"),
+    ("Quel est le résultat LoRA ?", "fr", "qwen-resultats.fr"),
+    ("C’est quoi Arabizi ?", "fr", "ecriture.fr"),
+    ("Que fait la normalisation ?", "fr", "normalisation.fr"),
+    ("كم مثالا في التدريب الموجه؟", "ar", "sft.ar"),
+    ("ما فائدة البذور؟", "ar", "graines.ar"),
+])
+def test_bm25_short_questions_cite_the_expected_card(client, question, lang, expected):
+    answer = client.post("/ask", json={"question": question, "lang": lang, "method": "bm25"}).json()
+    assert answer["status"] == "answered"
+    assert answer["source_ids"] == [expected]
+
+
+@pytest.mark.parametrize(("question", "lang"), [
+    ("Qui a écrit les commentaires TSAC ?", "fr"),
+    ("Quel score sur un corpus marocain ?", "fr"),
+    ("Combien coûte une requête ?", "fr"),
+    ("ما نتيجة الاختبار الرسمي على مجموعة مغربية؟", "ar"),
+])
+def test_bm25_abstains_on_short_questions_without_support(client, question, lang):
+    answer = client.post("/ask", json={"question": question, "method": "bm25", "lang": lang}).json()
+    assert answer["status"] == "insufficient_sources"
+    assert answer["sources"] == []
+
+
+def test_documentary_ranking_is_available_even_when_response_abstains(client):
+    documents = client.app.state.documents
+    question = "Labels de TSAC ?"
+    hits, threshold = documents.retrieve(question, "fr", "bm25", k=3)
+    assert len(hits) == 3
+    assert hits[0][1] < threshold
+    assert documents.ask(question, "fr", "bm25")["status"] == "insufficient_sources"
+
+
+def test_documentary_response_uses_the_evaluated_ranking(client):
+    documents = client.app.state.documents
+    question = "TN dans MADAR ?"
+    hits, threshold = documents.retrieve(question, "fr", "bm25", k=3)
+    assert len(hits) == 3
+    assert hits[0][1] >= threshold
+    answer = documents.ask(question, "fr", "bm25")
+    assert answer["source_ids"] == [hits[0][0].id]
+    assert answer["answer"] == hits[0][0].text
+
+
 def test_compare_keeps_available_results_when_one_model_fails(client, monkeypatch):
     original = ModelStore.predict
 

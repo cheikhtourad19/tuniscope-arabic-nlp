@@ -1,0 +1,50 @@
+{
+  "version": "qwen3-4b-transition-v1",
+  "model": {
+    "id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "license": "apache-2.0",
+    "declared_parameters": 4000000000,
+    "enable_thinking": false,
+    "weights_sha256": {
+      "model-00001-of-00003.safetensors": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+      "model-00002-of-00003.safetensors": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+      "model-00003-of-00003.safetensors": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1"
+    }
+  },
+  "execution": {
+    "preferred_profile": "apple_silicon_mlx",
+    "quantization_bits": 4,
+    "initial_microbatch": 1,
+    "gradient_checkpointing": true,
+    "require_local_memory_check": true
+  },
+  "training": {
+    "sft_selection": "configs/qwen_sft_v1.json",
+    "epochs": 2,
+    "accumulation_steps": 16,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "gradient_clip": 1.0,
+    "checkpoint_interval_updates": 15,
+    "lora": {
+      "rank": 8,
+      "scale": 2.0,
+      "dropout": 0.05,
+      "keys": ["self_attn.q_proj", "self_attn.v_proj"]
+    }
+  },
+  "comparison": {
+    "corpora": ["tsac", "madar"],
+    "manifest_version": "v2",
+    "split": "validation",
+    "prompt_config": "configs/qwen_prompting_v2.json",
+    "prompt_modes": ["few_shot"],
+    "conditions": ["qwen3_4b_before_lora", "qwen3_4b_after_lora"],
+    "same_quantized_base_before_after": true,
+    "seed": 42,
+    "shared_adapter_count": 1,
+    "hyperparameter_search": false,
+    "historical_protocol": "configs/classification_final_v1.json"
+  }
+}

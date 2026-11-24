@@ -1,0 +1,7 @@
+{
+  "archive": "outputs/rag/documentary_test_v1_2026-11-12/source_snapshot.zip",
+  "archive_sha256": "3dd0722003211fbd9d1e9c1be59dc28d026a038d5faef5f263d6cd25b59afb39",
+  "protocol_sha256": "6cde8624ad406c6f47a70ca8ab2d7fe18f653cd2d7c4b94e08363f59ca7f0ed4",
+  "frozen_files_verified": 35,
+  "classification_corpus_or_weights_included": false
+}

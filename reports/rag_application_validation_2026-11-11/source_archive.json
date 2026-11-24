@@ -1,0 +1,25 @@
+{
+  "archive": "outputs/rag/application_validation_2026-11-11/sources_and_validation.zip",
+  "sha256": "f0c011f8a812c378608b59621eb211529a6bd71e79b30d81826258e182a1e476",
+  "members": 16,
+  "validation_questions": 20,
+  "classification_data_included": false,
+  "model_weights_included": false,
+  "source_sha256": {
+    "App/backend/service/documents.py": "6959abaa14c018aeb0a0ff22b642c2f158f5f7cfe53bf2b1b369613b4e06de49",
+    "App/backend/service/lexical.py": "76ca8ebfa8b1c5ac3597613b7186120ac8c586f5879e3a3cf33d9b4eec065e52",
+    "rag/search.py": "83f99662bd31439b22150888295b93a17cea5b69aa06dc58dbdea6446fcc5ce7",
+    "rag/dense.py": "6a51a4d943b66caa6cb3ca7d4324b61a8a51c0c8683d75445c7bb99f74fc7665",
+    "rag/fetch_e5.py": "d4887ce1d53c881ffed754b751492a36c1d4629e2865c54896e025e2544ac4a4",
+    "rag/evaluate.py": "d20f90b960b75df6ebc5c72a53a9b4e4806daa2f7ae92e389f78969195359c63",
+    "rag/evaluate_application.py": "cb9624ca9b1aa589228eba32a309a32815c04de5944c2f77b70444896e535cd3",
+    "App/backend/service/models.py": "f713722cb8be29fa06f2674382c1a47317739a3b1b80c50ad7ff7cbabc92b749",
+    "scripts/normalize_text.py": "eee5a49e8b8ccfe266338d1654055404fcb820f7f6d1233e8fa29c74dd93507a",
+    "configs/rag_e5_small_v1.json": "60b10665edb39066828f69a144241ef1ebeaa7767e63aa773986551772887637",
+    "App/backend/uv.lock": "214bbfd289768b510abe1a7521e5a9325b5c4e624c667792930bcdde707ff754",
+    "rag/cards_v1.json": "c19065a76375e720aa351b4e6fcc0abf29710cd8d2d2de6dbc77808846c9ba2e",
+    "reports/rag_validation_v1_2026-11-09/retrieval.json": "adceee7a11c742ae68e8f09a062e1fde0137fb58c67f7af6d92c103c3086717c",
+    "docs/66_protocole_rag_documentaire.md": "951d1af15813fed426e9f13d42caea0cacd1b0629ce28b0ad1a096a7cc86c460",
+    "scripts/plot_rag_validation.py": "e3fcf55b7dc7215e1e408ae7a8001e889a38ba4f54c33d99ff7f9c2f1c8a1be5"
+  }
+}

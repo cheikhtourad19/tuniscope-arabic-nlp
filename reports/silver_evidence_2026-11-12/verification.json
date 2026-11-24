@@ -1,0 +1,11 @@
+{
+  "summary_sha256": "b207f86867084cd319ac12a2845bb6814eaae56837f33b5991ca6393e4e916cf",
+  "reporter_sha256": "25da7e6d71d8aba12662a8e3ead2af1036c2c47913e973de2b18c0d6c7459681",
+  "fingerprinted_files": 245,
+  "three_seed_groups": 14,
+  "matrix_invalid_column_check": true,
+  "sample_standard_deviation_check": true,
+  "duplicate_seed_rejection_check": true,
+  "new_model_inference": false,
+  "classification_test_evaluated": false
+}
