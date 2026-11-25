@@ -1,0 +1,67 @@
+\section{Audit de robustesse et analyse des erreurs}\label{sec:audit}
+
+\subsection{Effet de la quantité de données}
+Nous faisons varier le nombre d’exemples de train pour TF-IDF caractères sur TSAC. Pour chaque graine, les quatre sous-ensembles sont imbriqués et construits par groupes. La validation et les hyperparamètres sont communs. Cette construction permet de mesurer le choix de budget sans changer simultanément la composition du jeu d’évaluation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Budget de données TSAC. Trois sous-échantillonnages groupés pour chaque budget.}\label{tab:budget}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Part du train & Textes de train & Macro-F1 moyen & Écart-type (pp) \\
+\midrule
+\ReportRows{budget}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le macro-F1 augmente de 85,02\,\% à 92,89\,\% entre les budgets de 10\,\% et 100\,\%. Entre 50\,\% et 100\,\%, le gain est de 1,46 point. Avec tout le train, les trois exécutions reproduisent les prédictions de la référence. Le résultat décrit les rendements de cette représentation sur TSAC. Il donne un ordre de grandeur pour ce modèle et ce corpus, avec un protocole à validation constante.
+
+\subsection{Sensibilité aux variations d’écriture}
+L’audit applique des perturbations artificielles à la totalité de la validation TSAC et compare la décision sur chaque original et sa variante. Les modifications d’espaces laissent les prédictions de TF-IDF et de CAMeLBERT identiques. Une duplication de lettre modifie 40 décisions pour TF-IDF et 83 pour CAMeLBERT, sur 1\,645 textes modifiés. Le macro-F1 baisse de 1,12 et 1,64 point respectivement. Ces écarts quantifient la sensibilité à une transformation précise.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Robustesse sur 1\,774 avis TSAC. « Chang. » compte les décisions qui changent. Les variations de macro-F1 sont en points.}\label{tab:robustesse}
+\begin{tabularx}{\linewidth}{@{}Yrrrrr@{}}
+\toprule
+ & & \multicolumn{2}{c}{TF-IDF} & \multicolumn{2}{c}{CAMeLBERT} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6}
+Transformation & Avis modifiés & Chang. & $\Delta$ F1 & Chang. & $\Delta$ F1 \\
+\midrule
+\ReportRows{robustesse}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La comparaison varie aussi selon l’écriture. Sur les 785 avis en caractères arabes, CAMeLBERT graine 42 dépasse TF-IDF dans le diagnostic retenu. Sur les 932 avis en caractères latins, l’ordre s’inverse. Les effectifs des groupes mixtes et indéterminés sont bien plus petits. Les conclusions sur ces sous-groupes sont donc descriptives. L’écriture latine constitue un regroupement technique et recouvre plusieurs usages linguistiques.
+
+\subsection{Confiance et abstention}
+L’abstention permet de signaler qu’une décision mérite une revue. Sur validation, pour un seuil exploratoire de 0,90 sur TSAC, CAMeLBERT couvre en moyenne 95,00\,\% des avis. Le taux d’erreur parmi les réponses passe de 6,90\,\% sur l’ensemble à 5,16\,\% parmi les réponses acceptées. Sur MADAR, au seuil de 0,99, la couverture est de 92,67\,\% et l’erreur parmi les réponses de 1,93\,\%. Les seuils répondent au critère exploratoire de couverture sur validation. La mesure sur des données nouvelles reste à confirmer.
+
+La couverture TSAC est plus faible pour les textes en caractères latins que pour ceux en caractères arabes, avec un écart de 6,40 points pour le seuil étudié. Un seuil unique peut ainsi réduire la couverture de manière inégale. La calibration par température en validation croisée groupée réduit l’écart moyen de calibration (ECE), de 4,87 à 1,40 points sur TSAC et de 3,39 à 1,13 sur MADAR. La décision de classe reste la même par construction. L’expérience concerne la qualité des scores de confiance.
+
+Pour l’abstention, le seuil brut est choisi sous un minimum de couverture de 90\,\% pour chacune des trois graines. Pour la calibration, chacun des cinq blocs groupés sert une fois à l’évaluation, avec une température estimée sur les quatre autres blocs. La répartition préserve les groupes de la validation. À chaque estimation, les logits sont divisés par une température strictement positive et réinjectés dans le softmax. L’ordre des classes reste identique. L’ECE à dix intervalles compare confiance et fréquence de réussite, et la perte logarithmique quantifie la pénalité des probabilités attribuées aux étiquettes correctes. Les seuils d’abstention ci-dessus proviennent des scores bruts. Les mêmes valeurs numériques appliquées après calibration décriraient une autre règle.
+
+\subsection{Incertitude du contraste CAMeLBERT–TF-IDF}
+Le bootstrap apparié tire des groupes avec remise et utilise les mêmes groupes pour les deux modèles. Pour CAMeLBERT, le macro-F1 de chaque tirage est moyenné sur les trois graines confirmées. Le tableau~\ref{tab:bootstrap} présente les différences et les percentiles 2,5 et 97,5 sur 1\,000 tirages. Les deux intervalles couvrent zéro. La validation ne permet donc pas d’établir un avantage clair de CAMeLBERT sur la référence de caractères.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Différence de macro-F1 CAMeLBERT moins TF-IDF et intervalle apparié à 95\,\%, en points.}\label{tab:bootstrap}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Corpus & Groupes & Différence (pp) & Intervalle (pp) \\
+\midrule
+\ReportRows{bootstrap}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cas d’erreur et portée des interprétations}
+La même prédiction incorrecte peut s’expliquer par la négation, une cible ambiguë, un changement de langue, une forme rare ou une étiquette discutable. L’analyse qualitative associe chaque cas à une hypothèse vérifiable. Les revues échantillonnées sur l’encodeur et sur le modèle génératif comprennent des propositions produites avec assistance IA. Ces propositions sont signalées dans les fichiers d’analyse et attendent une confirmation indépendante. Les agrégats de scores proviennent des scripts de mesure.
+
+Le rappel TN de Qwen3-4B après adaptation illustre la différence entre une hausse du score moyen et une amélioration homogène. Les sources de confusion restent à étudier par groupe de phrases et par type de marqueur dialectal. Un audit externe permettrait de vérifier si les mêmes erreurs se reproduisent sur des phrases spontanées ou d’autres domaines.
+
+Le diagnostic Qwen3-0.6B recharge l’adaptateur historique de la graine 42 sur CPU. Le lot comprend 144 exemples équilibrés par tâche et un seul représentant par groupe. Les comparaisons zero-shot avant/après utilisent le même ordre. Après LoRA, 46 avis TSAC et 48 phrases MADAR restent incorrects, avec des sorties valides dans les deux tâches. Le macro-F1 avant/après et ses intervalles figurent à l’annexe~\ref{ann:audit}. Parmi les erreurs, des hypothèses sont proposées pour 30 cas par tâche, avec provenance IA explicite. Ce diagnostic renseigne sur le sous-échantillon défini et complète les agrégats historiques.
+\FloatBarrier

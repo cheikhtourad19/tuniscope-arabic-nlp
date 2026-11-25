@@ -1,0 +1,87 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{Latin Modern Mono}[Scale=MatchLowercase]
+\usepackage[french]{babel}
+\usepackage[a4paper,top=24mm,bottom=24mm,left=23mm,right=23mm,headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{graphicx,booktabs,tabularx,array,amsmath}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{calc}
+\pgfplotsset{compat=1.18}
+\usepackage{fancyhdr,titlesec,caption,enumitem,placeins}
+\usepackage{hyperref}
+
+\definecolor{Ink}{gray}{0.08}
+\definecolor{Muted}{gray}{0.29}
+\definecolor{Line}{gray}{0.71}
+\definecolor{Wash}{gray}{0.96}
+\hypersetup{hidelinks,
+  pdftitle={TuniScope — Rapport scientifique},pdfauthor={Mohamed Elgheith}}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.52em plus 0.1em minus 0.08em}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+\setlist{topsep=0.28em,itemsep=0.24em,parsep=0pt,leftmargin=1.6em}
+\renewcommand{\arraystretch}{1.18}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\titleformat{\section}{\Large\bfseries}{\thesection}{0.65em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.55em}{}
+\titlespacing*{\section}{0pt}{2.35ex plus .5ex}{.72ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .3ex}{.5ex}
+\captionsetup{font=small,labelfont=bf,labelsep=period,skip=6pt}
+\addto\captionsfrench{\renewcommand{\tablename}{Tableau}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{Muted} TuniScope}
+\fancyhead[R]{\small\sffamily\color{Muted} Rapport scientifique}
+\fancyfoot[L]{\footnotesize\sffamily\color{Muted} Projet individuel de TAL}
+\fancyfoot[R]{\small\sffamily\bfseries\color{Ink}\thepage}
+\renewcommand{\headrule}{\color{Line}\hrule width\headwidth height .35pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=4000
+\widowpenalty=4000
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.84}
+\renewcommand{\textfraction}{0.12}
+
+\newcommand{\ReportDate}{24 novembre 2026}
+\newcommand{\smalltitle}[1]{{\small\bfseries #1}}
+\newcommand{\evidence}[1]{\par\smallskip{\footnotesize\color{Muted}#1}\par}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\artifact}[1]{\nolinkurl{#1}}
+\newcommand{\ReportRows}[1]{\csname tuniscoperows@#1\endcsname}
+\input{build/generated/values.tex}
+\input{build/generated/tables.tex}
+
+\begin{document}
+\input{cover.tex}
+
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\input{sections/resume.tex}
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\input{sections/cadre.tex}
+\input{sections/donnees.tex}
+\input{sections/methodes.tex}
+\input{sections/resultats.tex}
+\input{sections/audit.tex}
+\input{sections/application.tex}
+\input{sections/discussion.tex}
+\input{references.tex}
+\clearpage
+\appendix
+\input{sections/annexes.tex}
+\input{sections/campagnes.tex}
+\input{sections/verifications.tex}
+\end{document}

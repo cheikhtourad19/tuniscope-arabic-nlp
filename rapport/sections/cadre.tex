@@ -1,0 +1,26 @@
+\section{Problématique et objectifs}\label{sec:question}
+
+L’arabe standard moderne et les variétés dialectales coexistent dans les usages écrits. Dans les avis tunisiens, un même mot peut apparaître en caractères arabes, en Arabizi ou dans un texte qui mêle plusieurs langues. Un commentaire peut exprimer une polarité par la négation, par l’ironie ou par des émojis. Une phrase courte du domaine du voyage peut, de son côté, être compatible avec plusieurs variétés. Ces phénomènes motivent l’étude d’erreurs et la prudence sur les étiquettes.
+
+\textbf{Question principale.} À données et consignes d’évaluation constantes, l’ajout d’un adaptateur partagé améliore-t-il les prédictions de Qwen3 sur le sentiment tunisien et l’identification des variétés d’arabe~? Pour apprécier l’utilité du modèle génératif, nous comparons aussi les résultats à des modèles spécialisés appliqués aux mêmes validations. Ce deuxième contraste décrit les différences entre systèmes complets, avec leurs architectures et budgets propres.
+
+La tâche \textbf{sentiment} produit une étiquette \code{POS} ou \code{NEG}. La tâche \textbf{variété} produit \code{MSA} pour l’arabe standard moderne, \code{TN} pour Tunis et Sfax, ou \code{EG} pour Le Caire. Chaque texte est évalué selon sa tâche et reçoit l’étiquette prévue dans le corpus correspondant. Les deux tâches sont exposées dans une interface commune. Le module documentaire répond à des questions sur le projet à partir d’un catalogue de fiches sourcées.
+
+\subsection{Contributions}
+\begin{enumerate}
+  \item Des manifestes versionnés qui conservent l’origine des exemples et regroupent les variantes ou traductions apparentées.
+  \item Des références classiques et neuronales sur les mêmes partitions, puis une expérience avant/après sur un seul modèle Qwen3-4B et un seul adaptateur.
+  \item Un audit empirique qui quantifie les erreurs, la sensibilité à l’écriture et l’effet d’un budget réduit de données.
+  \item Une application locale qui expose les modèles et un service documentaire à réponses traçables.
+\end{enumerate}
+
+\subsection{Travaux de référence}
+Medhaffar et ses coauteurs ont proposé TSAC et expérimenté des représentations distribuées pour le sentiment tunisien~\cite{tsac}. Leur travail motive une référence spécialisée pour cette variété. Notre partition de travail et notre traitement des doublons définissent un protocole différent. Les scores de l’article constituent un contexte bibliographique. Une reproduction demanderait de reprendre les conditions de l’étude d’origine.
+
+Le cadrage bibliographique identifie Doc2vec associé à un SVM, un classifieur de Bernoulli ou un perceptron multicouche. Pour le perceptron entraîné sur TSAC seul, l’article rapporte un taux d’erreur de 0,22 sur son évaluation, soit environ 78\,\% d’exactitude. Notre comparaison utilise une validation dédupliquée et le macro-F1 comme indicateur principal. Les hyperparamètres nécessaires à une reproduction exacte de Doc2vec et du perceptron restent incomplets dans la publication et le dépôt consultés. Le décompte physique du train acquis dépasse de neuf lignes celui déclaré dans l’article. Ces différences ont été consignées avant toute tentative de reproduction numérique.
+
+Les données MADAR alignent plusieurs variétés d’arabe sur des phrases sources communes~\cite{madar}. Cette structure permet de comparer des réalisations dialectales sur un contenu proche et crée une dépendance entre traductions. Notre unité de partitionnement et de rééchantillonnage est donc la phrase source.
+
+CAMeLBERT étudie l’influence de la proximité linguistique entre préentraînement et tâche aval~\cite{camelbert}. Nous retenons le checkpoint Mix comme encodeur général de plusieurs variétés. Qwen3 fournit un modèle génératif à consignes et un mode sans raisonnement explicite~\cite{qwen3}. L’adaptation de rang faible ajoute des matrices de petite taille à une base gelée~\cite{lora}. La quantification réduit l’empreinte des poids de cette base~\cite{qlora}.
+
+Le module documentaire sépare la recherche, le classement et la politique de réponse. La recherche lexicale BM25 et les embeddings E5 représentent deux signaux complémentaires~\cite{bm25,e5}. La génération avec documents, telle que proposée dans les travaux sur le RAG~\cite{rag}, constitue une expérience distincte de la restitution extractive retenue dans l’application.

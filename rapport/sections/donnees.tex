@@ -1,0 +1,50 @@
+\section{Données et contrôle de la provenance}\label{sec:data}
+
+\textbf{TSAC.} Les avis proviennent de fichiers UTF-8 étiquetés par polarité. Le train officiel contient 13\,669 lignes physiques. L’audit a identifié des lignes vides, des occurrences identiques et des variantes de graphie. Après application des décisions documentées, 1\,842 lignes du train officiel sont exclues du jeu de travail. Les motifs se recouvrent, par exemple lorsqu’un commentaire est à la fois dupliqué et proche d’une ligne d’une autre partition. Après exclusions, nous dérivons une validation groupée avec une cible de 15\,\% par classe.
+
+\textbf{MADAR.} Corpus-26 fournit des traductions parallèles de phrases de voyage. Nous retenons les identifiants communs à MSA, Tunis, Sfax et Le Caire. Chaque identifiant source relie quatre traductions. Les deux traductions tunisiennes reçoivent \code{TN}. Trois groupes du train, soit douze lignes, ont été écartés à cause de répétitions exactes entre partitions. Les groupes conservés dans le train, la validation et le test sont disjoints pour les contraintes établies. Avec deux villes pour \code{TN}, cette classe représente la moitié de la validation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Effectifs et étiquettes des partitions v2. Les effectifs du test proviennent des manifestes.}\label{tab:partitions}
+\begin{tabularx}{\linewidth}{@{}llYr@{}}
+\toprule
+Corpus & Partition & Répartition des étiquettes & Total \\
+\midrule
+\ReportRows{partitions}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Déduplication, revue et partage par groupes}
+Le manifeste relie un identifiant stable au fichier source, au numéro de ligne, à l’étiquette et à la partition. Il contient aussi un identifiant de groupe. Sur TSAC, un groupe conserve ensemble les textes apparentés selon les critères de l’audit. Sur MADAR, un groupe représente une phrase source et ses traductions. Cette décision réduit le risque de mesurer sur une reformulation d’un exemple déjà rencontré à l’entraînement. Elle couvre les relations détectées par les critères documentés.
+
+Sur TSAC, les 13 groupes exacts aux labels contradictoires ont été examinés individuellement. Douze ont reçu un choix de polarité et le dernier a été écarté comme non linguistique. Les avis portant uniquement un émoji restent examinés selon ce que le symbole exprime. Des paires proches ont été inspectées pour distinguer des variantes orthographiques de changements de sens. En version v2, les répétitions de lettres ont servi à ajouter des contraintes de groupement. Les douze paires qui traversaient train et validation ont été relues. D’autres familles sont conservées ensemble par précaution. L’exercice est une revue individuelle et la fiabilité interannotateur reste à mesurer.
+
+L’audit initial repère 846 groupes de chaînes identiques dans TSAC, dont 316 présents des deux côtés du partage officiel. Le dépistage de candidats identifie ensuite deux lots, l’un de 124 paires longues et l’autre de 160 paires courtes. Les 124 longues et 152 courtes ont été jugées de même sens. Sur le lot court, sept paires ont été jugées de sens différent et un cas a été traité comme non linguistique. Le registre distingue les décisions saisies des décisions interprétées selon la convention fixée pour la revue. La similarité calculée sert à établir la liste à examiner. L’arbitrage détermine le sort des observations.
+
+Les exclusions sont appliquées par étapes. La première retire 1\,261 lignes pour invalidité ou recouvrement avec le test. La déduplication du train restant retire 574 occurrences identiques puis sept occurrences supplémentaires sous la clé NFKC/espaces. Chaque référence figure une fois dans le bilan final de 1\,842 exclusions, avec tous les motifs applicables. Les audits historiques lisent le test source pour détecter des recouvrements. Ils conservent sa partition et ses étiquettes. La production de prédictions et le calcul des scores du test officiel restent réservés à l’évaluation finale.
+
+Dans le partage TSAC v2, 374 liens candidats antérieurs et les familles de graphie à lettres répétées fournissent des contraintes pour les composantes connexes. Les 11\,827 références train/validation sont réparties en 11\,441 groupes, dont 225 groupes multi-lignes. Huit groupes contiennent des étiquettes différentes. Le nouveau partage déplace 1\,476 lignes dans chaque sens entre train et validation par rapport à v1. Comparer les scores v1 et v2 mélange donc effet de groupement et changement des textes de validation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{build/figures/donnees.png}
+\caption{Les manifestes v2 servent de référence commune et gardent les groupes associés dans une même partition.}\label{fig:donnees}
+\end{figure}
+
+\subsection{Normalisation et typologie d’écriture}
+Le traitement conserve le texte brut, et peut construire une variante qui applique Unicode NFC et une mise en forme des espaces. Les lettres répétées, les émojis, les chiffres Arabizi et les marqueurs de négation restent disponibles pour les modèles. Des clés de comparaison plus agressives ont servi à repérer des doublons pendant l’audit. La comparaison brut contre NFC/espaces mesure un choix de représentation en gardant les autres réglages fixes.
+
+L’audit d’écriture distingue les lignes en caractères arabes, latins, mixtes ou indéterminés. Cette variable observable aide à choisir des sous-groupes d’analyse. Sur la validation TSAC, les effectifs sont respectivement 785, 932, 46 et 11. Le groupe latin peut inclure de l’Arabizi, du français ou des textes mixtes. Une évaluation de l’Arabizi seul demanderait une annotation linguistique dédiée.
+
+Deux circuits de préparation sont conservés. Le circuit d’audit utilise des clés d’égalité Unicode et des heuristiques sur les répétitions pour limiter les recouvrements. Le circuit d’inférence sélectionne \code{raw-v0} ou \code{norm-nfc-space-v1}. Dans ce second circuit, tout prétraitement dépend de la version du modèle, et les entrées brutes restent disponibles pour l’audit. La longueur, le script Unicode et la provenance complètent le résultat, tandis que la langue reste indéterminée lorsqu’aucune annotation linguistique ne la documente.
+
+\subsection{Étude linguistique sur les données d’apprentissage}
+Un lot de 50 textes du train a été fixé avant lecture. Il comprend 25 avis TSAC, dont 13 POS et 12 NEG, et 25 phrases MSA. Les avis couvrent trois catégories d’écriture, avec neuf avis en caractères arabes, huit en caractères latins et huit mixtes. La sélection est groupée, limite la taille des textes et enrichit le lot en marqueurs candidats de négation. Elle sert à étudier la syntaxe locale, la portée de la négation, la cible de l’appréciation et les ambiguïtés. Elle privilégie des cas informatifs et décrit une sélection qualitative.
+
+Des analyses assistées par IA sont disponibles pour les 50 cas. Parmi les 20 cas sélectionnés avec un marqueur candidat, deux reçoivent une proposition d’absence de négation. Cinq cas sans marqueur reconnu reçoivent une proposition de négation. Le marqueur observé, son rôle grammatical et l’effet sur la polarité relèvent donc de trois jugements distincts. Les propositions ont motivé l’essai lexical, avec vérification quantitative séparée sur validation. La confirmation humaine de ces lectures reste à effectuer.
+
+\subsection{Droits et séparation des artefacts}
+L’accès à MADAR repose sur l’inscription au service officiel~\cite{madar-access}. Les archives sources et les textes restent dans les espaces privés autorisés. Le dépôt de TSAC est public~\cite{tsac-repo}; les conditions applicables aux éventuels dérivés doivent être contrôlées avant diffusion. Le rapport partage les méthodes et agrégats, ainsi que les références publiques des ressources. Les manifestes versionnés permettent de retrouver les observations lorsque les fichiers sources sont accessibles sous les conditions adéquates.
+\FloatBarrier

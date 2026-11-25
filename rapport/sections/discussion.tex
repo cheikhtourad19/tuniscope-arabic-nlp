@@ -1,0 +1,33 @@
+\section{Discussion et limites}\label{sec:discussion}
+
+\subsection{Interprétation du contraste principal}
+L’adaptation de Qwen3-4B avec 4\,000 exemples et une base quantifiée améliore le macro-F1 dans les deux tâches sur la validation étudiée. Le gain le plus important concerne MADAR, où la référence sans adaptation privilégiait la classe égyptienne. Les rappels montrent une récupération particulièrement forte sur l’arabe standard, tandis que le tunisien reste fréquemment classé égyptien. Le résultat rend l’adaptation utile dans le cadre mesuré, avec un coût compatible avec l’exécution sur le Mac utilisé.
+
+TF-IDF caractères et CAMeLBERT atteignent des scores de validation plus élevés. Leur budget d’exemples est différent. Les comparaisons entre familles indiquent ce que les systèmes apportent dans leurs configurations respectives. L’expérience avant/après garde la base 4B et le protocole constants. Une nouvelle comparaison à budget égal pourrait répondre à une question distincte sur l’efficacité des architectures.
+
+\subsection{Validité des conclusions}
+\begin{description}[style=nextline,leftmargin=0pt,labelsep=0pt,font=\bfseries]
+\item[Domaine et couverture.] TSAC rassemble des avis tunisiens issus de son contexte de collecte. MADAR couvre des énoncés parallèles de voyage et trois étiquettes, avec deux villes tunisiennes et une ville égyptienne. Les tâches rendent compte de ces domaines et variétés.
+\item[Groupes et annotation.] Le groupement protège contre les ressemblances détectées. D’autres liens peuvent subsister. Les arbitrages TSAC ont été réalisés individuellement et les cas discutables restent une source d’incertitude.
+\item[Variabilité.] Le run 4B utilise une seule graine. Le contraste mesure un effet observé dans cette configuration. L’incertitude sur la répétition avec d’autres initialisations reste à estimer. Les mesures historiques à trois graines relèvent d’autres campagnes.
+\item[Consultation de la validation.] Les scores sur validation soutiennent le choix et le diagnostic des modèles. Une nouvelle version du protocole doit référencer le modèle et l’adaptateur 4B avant l’évaluation du test officiel. Le test final servira à évaluer les décisions figées.
+\item[Documentation bilingue.] Les références de pertinence provisoires limitent l’interprétation des résultats documentaires. Une bonne extraction assure la correspondance au passage. L’adéquation de ce passage à la question demande une appréciation distincte.
+\end{description}
+
+\subsection{Généralisation et extension}
+Une preuve de généralisation consisterait à appliquer les modèles figés à une ressource indépendante, dont la provenance et le droit d’usage sont vérifiés. Le protocole devrait fixer le mapping des étiquettes, les critères de sélection et les métriques avant la génération. Il devrait mesurer la couverture du domaine, des classes et des écritures. Les jeux de défi locaux ont un protocole de collecte et de contrôle, et la collecte reste à réaliser.
+
+Le niveau Platinum prévoit une extension maîtrisée, une évaluation sur une ressource indépendante et du matériel diffusable selon les licences. Les données protégées font l’objet d’un accès séparé. La reformulation tunisien vers arabe standard ou la reconnaissance d’entités sont des pistes du cahier des charges. Le choix d’une extension se fera selon les données accessibles et les preuves d’évaluation disponibles.
+
+\section{Reproductibilité et conclusion}\label{sec:conclusion}
+
+\subsection{Traçabilité et disponibilité}
+La préparation et l’inférence sont reproductibles à partir de scripts versionnés, d’environnements verrouillés et de rapports qui lient les résultats aux empreintes des modèles et manifestes. Les données, poids, prédictions et états d’optimisation restent locaux selon leurs conditions d’accès. Le rapport LaTeX lit les agrégats générés et peut être compilé indépendamment des corpus bruts. Le journal des expériences documente les coûts, les versions et le périmètre des campagnes.
+
+Le travail est individuel. Les revues de texte et les décisions d’arbitrage portées par l’auteur sont conservées dans les registres de projet. L’assistance IA est déclarée pour la préparation de code, la rédaction, la mise en forme et les propositions d’analyse. La relecture croisée, la validation indépendante de la recette et la réponse aux relecteurs restent les prochaines preuves à joindre à la version de remise.
+
+\subsection{Conclusion}
+Cette étude montre qu’une adaptation légère sur une base 4 bits peut améliorer sensiblement la classification par Qwen3-4B dans les conditions étudiées. Les références TF-IDF et CAMeLBERT restent fortes. L’analyse par classe explique une partie du contraste qui serait masquée par un score moyen. La recherche documentaire extractive complète l’application avec des références vérifiables et des compromis mesurés entre pertinence et couverture.
+
+Les prochaines étapes scientifiques sont le gel du protocole avec les artefacts 4B, l’exécution de l’évaluation officielle, la vérification sur une ressource indépendante et une relance de reproductibilité. Le projet dispose ainsi d’une comparaison de validation vérifiée et d’une chaîne expérimentale sur laquelle ajouter les preuves de généralisation.
+\FloatBarrier

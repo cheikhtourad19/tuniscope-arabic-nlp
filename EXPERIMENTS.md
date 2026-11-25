@@ -696,3 +696,8 @@ sh scripts/project_uv.sh run --locked --offline python scripts/report_qwen_valid
 
 - Les 4 000 identifiants, séquences et masques SFT reconstruits avec le tokenizer 4B correspondent à la sélection historique. Sur Metal, le contrôle court a exécuté une mise à jour QLoRA après 16 textes du train, qui incluent le texte de 370 tokens. L’adaptateur sauvegardé a été rechargé pour quatre prédictions par corpus en validation few-shot. Les fichiers privés sont dans `outputs/qwen/qwen3_4b_qlora_notebook_smoke_v2_2026-11-24/`.
 - Sur 32 textes fictifs, une interruption après la première mise à jour puis une reprise dans un nouveau processus donnent les mêmes tenseurs d’adaptateur que deux mises à jour continues. Le noyau Jupyter installé a transmis l’affichage actualisé. L’agrégation avant/après a été contrôlée dans un dossier temporaire. Campagne complète à lancer depuis VS Code. L06/L07/L12 intermédiaires.
+
+## 2026-11-24 — Qwen3-4B QLoRA complet sur Mac
+
+- Notebook 11 lancé par l’auteur. Deux époques de 4 000 textes du train, graine 42, un adaptateur sur les deux tâches, 500 mises à jour. Apprentissage en 1 h 50 min 23 s selon le journal, pic MLX de 3,45 Go et 2 949 120 paramètres entraînables. Rechargement et inférence après adaptation en 515,01 s sur les 2 574 textes de validation.
+- Macro-F1 TSAC de 67,66 à 81,30 % et MADAR de 30,70 à 71,13 %. Sorties hors format de 1 à 0 sur TSAC et de 0 à 0 sur MADAR. Les mêmes bases, données, démonstrations et règles de décodage ont été contrôlées pour les deux conditions. Les rapports sont recalculés à partir des prédictions sauvegardées. Agrégats : `reports/qwen3_4b_qlora_v1/summary.json`. Protocole et limites : doc81. Test officiel réservé.

@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam backgroundColor white
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 14
+skinparam ArrowColor #595959
+skinparam shadowing false
+skinparam rectangle {
+ BorderColor #4C4C4C
+ FontColor #171717
+ RoundCorner 10
+}
+rectangle "Interface React\nTexte ou import CSV" as ui #F5F5F5
+rectangle "API FastAPI\nEntrée · tâche · modèle" as api #F5F5F5
+rectangle "TF-IDF caractères\nRégression logistique" as tfidf #F1F1F1
+rectangle "CAMeLBERT\nTête de classification" as encoder #F1F1F1
+rectangle "Qwen\nBase ou adaptateur" as qwen #F1F1F1
+rectangle "Sortie structurée\nLabel · statut · version" as outputs #E9E9E9
+ui --> api
+api --> tfidf
+api --> encoder
+api --> qwen
+tfidf --> outputs
+encoder --> outputs
+qwen --> outputs
+@enduml

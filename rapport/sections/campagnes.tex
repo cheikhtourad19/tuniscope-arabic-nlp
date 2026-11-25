@@ -1,0 +1,120 @@
+\section{Configurations et campagnes détaillées}\label{ann:campagnes}
+
+\subsection{Texte, poids des indices et ablations TF-IDF}
+Pour un fragment $t$ et un document $d$, la fréquence $f_{t,d}>0$ est remplacée par $1+\log f_{t,d}$. Si $n$ est le nombre de documents d’apprentissage et $\mathrm{df}_t$ le nombre qui contient $t$, la pondération IDF lissée est $1+\log((1+n)/(1+\mathrm{df}_t))$. Le vecteur est ensuite normalisé par sa norme $L_2$. Les fragments dont la fréquence documentaire est inférieure à deux sont exclus du vocabulaire. L’espace de caractéristiques est reconstruit dans chaque train correspondant.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Macro-F1 par représentation, avec la même validation et la même liste de classes. La dernière colonne compte les erreurs de la combinaison.}\label{tab:repr-detail}
+\begin{tabularx}{\linewidth}{@{}lYrrrr@{}}
+\toprule
+Corpus & Texte & Mots & Caractères & Combinaison & Erreurs \\
+\midrule
+\ReportRows{representations}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Pour le vote lexical, un terme présent dans au moins cinq documents d’une classe est candidat si le log-rapport de ses fréquences documentaires lissées atteint 1. Le lexique conserve au plus 200 indices par classe. Une fréquence compte une fois par document. Les frontières de proposition et certaines exceptions bornent la portée de la négation. La sélection et les réglages de cette règle sont décrits dans \artifact{configs/rule_baselines_v1.json}. Le vote lexical reste un signal de cooccurrence associé aux labels. Le score correspond à un nombre de voix.
+
+L’essai hybride injecte les caractéristiques du vote et de la négation dans la régression logistique à caractères. Il les compare à un contrôle utilisant le même pipeline de transformation global. Le tableau~\ref{tab:hybrides} conserve les scores de l’essai pour faciliter la comparaison avec le vote seul et avec l’ablation de représentation. Le run de référence des caractères emploie sa propre provenance, indiquée dans le tableau principal.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Ajout de caractéristiques de règles à la représentation en caractères.}\label{tab:hybrides}
+\begin{tabularx}{\linewidth}{@{}lYrr@{}}
+\toprule
+Corpus & Système & Macro-F1 & Exactitude \\
+\midrule
+\ReportRows{hybrides}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{BiGRU et choix du checkpoint}
+La longueur est plafonnée à 128 unités lexicales. La validation détermine le checkpoint retenu au terme de chaque époque. Le nombre d’époques exécutées peut donc dépasser le numéro du checkpoint conservé. Le budget et l’arrêt précoce sont identiques pour les variantes d’une même tâche. Les six checkpoints ont été rechargés et leurs prédictions ont été reproduites. Les six entraînements et validations ont pris environ 151 secondes cumulées sur CPU à deux threads. Le nombre de paramètres dépend de la taille du vocabulaire. Il atteint 479\,106 sur TSAC et 307\,331 sur MADAR.
+
+\begin{table}[htbp]
+\centering\small
+\caption{BiGRU, résultats de validation et époques retenues par graine.}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Corpus & Graine & Époque retenue & Époques & Macro-F1 & Exactitude \\
+\midrule
+\ReportRows{bigru-graines}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{CAMeLBERT, du tokenizer au modèle confirmé}
+L’audit de longueur utilise le tokenizer WordPiece de la révision épinglée. Le tableau~\ref{tab:troncature} compte la longueur avec marqueurs spéciaux et les textes affectés par la limite. L’analyse de fragmentation et les exemples de sonde figurent dans \artifact{reports/camelbert_tokenizer_v1_2026-11-04/summary.json}. La phase gelée utilise un lot de 16 pour extraire les représentations. La tête linéaire CPU optimise sur des lots de 64, avec AdamW à 0,001, jusqu’à 50 époques et avec une patience de cinq. La référence à moyenne masquée et la référence CLS/pooler correspondent à deux expériences distinctes.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Distribution de longueur et dépassements du plafond WordPiece de 128.}\label{tab:troncature}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Corpus & Partition & Textes & P95 & Maximum & Textes tronqués \\
+\midrule
+\ReportRows{troncature}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le premier contraste apparié conserve la tête CLS native et la même initialisation par graine. Il compare un encodeur gelé à un encodeur entièrement entraînable. L’application du dropout de l’encodeur est désactivée dans les deux bras pour ce contraste. La moyenne masquée de la première référence gelée fournit une autre base de comparaison. Les scores des deux références gelées caractérisent deux protocoles avec des représentations et des têtes différentes.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Contraste initial avec tête CLS commune. Macro-F1 moyen de trois graines.}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Corpus & Encodeur gelé & Encodeur ajusté \\
+\midrule
+\ReportRows{cls-paire}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le criblage des taux a été effectué sur une graine pour limiter le coût, puis les deux choix issus de la campagne locale ont été confirmés sur trois graines. Les sorties Mac et les comptes rendus Kaggle restent associés à leurs environnements d’exécution. La campagne de criblage complète sur Mac a pris 2\,798 secondes. Le journal T4 donne environ 1\,610 secondes pour les six travaux correspondants. Les conditions de mesure et l’absence des fichiers complets de criblage distant limitent cette comparaison de plateformes. Les campagnes de confirmation sur Mac ont pris environ 31 min 25 s pour TSAC et 14 min 52 s pour MADAR. Les six modèles ont prédit les mêmes labels lors du rechargement contrôlé par le pipeline.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Criblage CAMeLBERT sur Mac, graine 42.}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Corpus & Taux & Macro-F1 & Époque retenue \\
+\midrule
+\ReportRows{criblage}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Confirmation CAMeLBERT. Chaque cellule de score provient du checkpoint sélectionné sur validation.}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Corpus & Graine & Époque retenue & Époques & Macro-F1 & Exactitude \\
+\midrule
+\ReportRows{encoder-graines}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Variabilité de Qwen3-0.6B et protocole 4B}
+La campagne 0.6B utilise trois adaptateurs, chacun partagé entre TSAC et MADAR pour sa graine. Le few-shot historique conserve les mêmes exemples que l’audit des prompts, avec une instruction par tâche. Une matrice conserve une colonne pour les sorties invalides. Les trois archives d’adaptateurs ont été vérifiées sur le Mac. Les agrégats du tableau~\ref{tab:q06graines} sont recalculés à partir des matrices archivées.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Macro-F1 de Qwen3-0.6B après LoRA, par graine et mode de consigne.}\label{tab:q06graines}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Corpus & Consigne & Graine 13 & Graine 42 & Graine 2026 \\
+\midrule
+\ReportRows{qwen06-graines}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dans le volet 4B, la conversion affine en quatre bits produit un fichier de poids de 2,26 Go. Un adaptateur de rang $r=8$ apprend une correction matricielle $sBA$ appliquée aux projections sélectionnées, où $s$ est le facteur d’échelle 2 du profil MLX. La base quantifiée seule et la base munie de l’adaptateur gardent le même nombre de textes et les mêmes consignes d’évaluation. L’emploi de quatre bits change l’espace de stockage des poids de base. Le coût d’apprentissage dépend aussi des activations, des gradients et de la taille du lot, qui ont fait l’objet d’un chronométrage distinct.
+\FloatBarrier

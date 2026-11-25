@@ -1,0 +1,120 @@
+\section{Résultats de classification sur validation}\label{sec:resultats}
+
+\subsection{Références et encodeur}
+Le tableau~\ref{tab:classiques} compare les systèmes sur les 1\,774 décisions de validation TSAC et les 800 de MADAR. Pour les méthodes entraînées avec plusieurs graines, il affiche la moyenne et l’écart-type échantillonnal. Cet écart-type décrit la dispersion entre répétitions. L’incertitude liée au choix des exemples est étudiée séparément par bootstrap.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Macro-F1 des références et de CAMeLBERT sur la validation v2. Les écarts-types sont exprimés dans la même échelle que les moyennes.}\label{tab:classiques}
+\begin{tabularx}{\linewidth}{@{}Yrrl@{}}
+\toprule
+Système & TSAC & MADAR & Protocole \\
+\midrule
+\ReportRows{classiques}
+\bottomrule
+\end{tabularx}
+\evidence{Sources : rapports de baselines, vote lexical, BiGRU et CAMeLBERT. Voir l’annexe~\ref{ann:preuves}.}
+\end{table}
+
+Le vote lexical fait mieux que la majorité. Sur TSAC, activer la négation locale modifie quatre décisions. Une erreur est corrigée et trois nouvelles erreurs sont introduites. La baisse du score montre les limites d’une portée fixe. Le contexte, les négations composées et les cibles multiples peuvent modifier l’interprétation. Nous conservons cette ablation comme résultat négatif.
+
+La normalisation minimale NFC/espaces modifie deux prédictions TSAC pour TF-IDF caractères et conserve le même total d’erreurs. Les prédictions MADAR restent identiques. Le gain de cette seule normalisation est donc négligeable ici. Les petits budgets données, étudiés dans l’audit, donnent un effet nettement plus visible.
+
+L’ablation de représentation confirme l’intérêt des caractères. En brut, les mots donnent 87,20\,\% sur TSAC et 91,71\,\% sur MADAR, contre 92,89\,\% et 94,92\,\% pour les caractères. L’ajout des mots aux caractères produit 92,38\,\% et 93,84\,\%. Cette combinaison améliore la référence mots et dégrade la référence caractères. Le contrôle apparié documente des changements dans les deux sens. La combinaison peut apporter des indices sur certains textes et en réduire le poids sur d’autres. Les comptes détaillés et l’essai de combinaison avec le vote lexical figurent à l’annexe~\ref{ann:campagnes}.
+
+Le BiGRU dépasse les références les plus simples mais reste sous le niveau de TF-IDF caractères. Son vocabulaire fixé sur le train laisse environ 29,5\,\% des tokens de validation TSAC et 21,8\,\% de ceux de MADAR hors des unités retenues. L’écart est compatible avec une sensibilité aux formes rares. Les scores seuls ne permettent pas d’attribuer toutes les erreurs à ce facteur.
+
+Le CAMeLBERT adapté obtient la moyenne la plus élevée dans les références reprises au tableau~\ref{tab:classiques}. L’avantage sur TF-IDF caractères est de 0,19 point sur TSAC et 0,42 point sur MADAR. Ces écarts restent faibles et leurs intervalles d’incertitude recouvrent zéro (section~\ref{sec:audit}). Le classifieur classique demeure un point de comparaison solide, notamment pour les textes avec variations de graphie.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Modèle de langage de caractères. Perplexité de validation, plus basse étant préférable.}\label{tab:langage}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Corpus & Unigramme & Trigramme \\
+\midrule
+\ReportRows{langage}
+\bottomrule
+\end{tabular}
+\end{table}
+
+La prise en compte du contexte immédiat réduit la perplexité sur les deux corpus (tableau~\ref{tab:langage}). Cette expérience montre l’intérêt de la dépendance locale pour prédire un caractère. La différence entre les corpus reflète aussi leurs écritures, alphabets observés et domaines.
+
+\subsection{Étude historique Qwen3-0.6B}
+La première campagne a comparé les consignes zero-shot et few-shot avec Qwen3-0.6B. L’adaptateur LoRA était partagé entre les tâches et entraîné sur trois graines. Le tableau~\ref{tab:qwen06} restitue les agrégats de la campagne. La variance du few-shot sur MADAR et le contraste avec zero-shot montrent que la forme de la consigne influe fortement sur les résultats.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Macro-F1 de la campagne historique Qwen3-0.6B. Les résultats LoRA sont agrégés sur trois graines.}\label{tab:qwen06}
+\begin{tabularx}{\linewidth}{@{}lYrr@{}}
+\toprule
+Corpus & Consigne & Base & LoRA \\
+\midrule
+\ReportRows{qwen06}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Sur MADAR, le zéro initial en zero-shot provient de sorties hors format. Le score de base mélange alors capacité à respecter la consigne et qualité de la décision de variété. En few-shot, le format s’améliore mais le modèle de base prédit souvent \code{EG}. Les archives CUDA permettent de reconstituer les agrégats et de recharger les adaptateurs. Les prédictions originales de chaque ligne et le JSON global de cette exécution ne sont pas disponibles. Le diagnostic local apparié sur 288 lignes, conservé séparément, décrit des sous-échantillons contrôlés.
+
+Le profil de 0.6B historique utilise FP32, deux époques et un lot effectif de 16 exemples obtenu par accumulation. L’optimiseur AdamW, le taux $10^{-4}$ et les projections cibles sont communs aux trois graines. Deux Tesla T4 ont traité les graines en parallèle lorsque deux travaux étaient prêts. Les durées d’apprentissage vont de 12 min 05 s à 12 min 19 s par graine. Le pic CUDA alloué atteint environ 6,60 Go par travail. Ces valeurs décrivent le profil historique et son matériel. Le benchmark court sur ce même modèle et la même configuration donne 4,76 s par mise à jour sur MPS et 1,39 s sur T4. L’architecture, la précision, le runtime et le matériel changent pour le 4B. Une comparaison directe des temps complets entre ces deux campagnes cumule ces différences.
+
+\FloatBarrier
+\subsection{Comparaison principale Qwen3-4B avant et après QLoRA}
+La comparaison présentée au tableau~\ref{tab:qwen4b} relit la totalité de la validation et maintient la même base quantifiée, les mêmes démonstrations et le même décodage. Seule la présence de l’adaptateur varie. En validant l’adaptateur rechargé, nous observons également que les résultats peuvent être reproduits depuis les poids conservés.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Validation few-shot de Qwen3-4B. L’écart de macro-F1 est donné en points de pourcentage (pp).}\label{tab:qwen4b}
+\begin{tabularx}{\linewidth}{@{}lrrrrrY@{}}
+\toprule
+Corpus & Textes & F1 base & F1 QLoRA & Écart & Exactitude QLoRA & Hors format \\
+\midrule
+\ReportRows{qwen4b}
+\bottomrule
+\end{tabularx}
+\evidence{Source : \artifact{reports/qwen3_4b_qlora_v1/summary.json}. Prédictions vérifiées avant agrégation.}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[xbar=5pt,width=.85\linewidth,height=56mm,bar width=8pt,
+  xmin=0,xmax=106,xtick={0,20,40,60,80,100},xlabel={Macro-F1 sur validation (\%)},
+  symbolic y coords={MADAR,TSAC},ytick=data,enlarge y limits=.42,
+  axis line style={Line},xmajorgrids,grid style={Line!60},tick style={Line},
+  tick label style={font=\small\sffamily,color=Ink},label style={font=\small\sffamily,color=Ink},
+  xticklabel style={/pgf/number format/precision=0},
+  legend style={at={(.98,.04)},anchor=south east,draw=none,fill=white,font=\footnotesize\sffamily},
+  nodes near coords, every node near coord/.append style={font=\footnotesize\sffamily,color=Ink},
+  point meta=x, /pgf/number format/.cd,fixed,fixed zerofill,precision=2,use comma]
+\addplot[fill=white,draw=black] coordinates { (\QwenTsacBase,TSAC) (\QwenMadarBase,MADAR) };
+\addplot[fill=black!68,draw=black] coordinates { (\QwenTsacAdapted,TSAC) (\QwenMadarAdapted,MADAR) };
+\legend{Base,Après QLoRA}
+\end{axis}
+\end{tikzpicture}
+\caption{Effet observé de l’adaptateur sur les mêmes validations few-shot.}\label{fig:qwen}
+\end{figure}
+
+
+
+\textbf{TSAC.} Le gain est principalement lié à une meilleure reconnaissance des avis négatifs. Le nombre de négatifs correctement reconnus passe de 393 à 567 sur 847. Les positifs reconnus passent de 844 à 886 sur 927. Une asymétrie demeure, avec un rappel d’environ 67\,\% pour \code{NEG} et 96\,\% pour \code{POS} après adaptation.
+
+\textbf{MADAR.} Le modèle de base choisit \code{EG} pour 709 des 800 textes. Après adaptation, ce nombre est de 401. Le rappel MSA passe de 14\,\% à 98\,\% et le rappel TN de 14,25\,\% à 42,75\,\%. Le rappel EG baisse de 98\,\% à 92,5\,\%. Le passage de 341 à 212 textes TN prédits EG explique une part du gain. Cette confusion reste la principale faiblesse de l’adaptateur sur MADAR. Les matrices complètes figurent en annexe~\ref{ann:matrices}.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Rappel par classe de Qwen3-4B avant et après QLoRA.}\label{tab:qwen-classes}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Corpus & Classe & Effectif & Rappel base & Rappel QLoRA \\
+\midrule
+\ReportRows{qwen4b-classes}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le 4B respecte presque toujours le format, avec une sortie invalide avant adaptation et aucune après, tous corpus confondus. Le gain de macro-F1 provient donc essentiellement de changements de classe sur ces validations. Le modèle adapté reste en dessous de TF-IDF et de CAMeLBERT, entraînés sur les ensembles complets. Le contraste entre deux architectures répond à une question d’usage. L’effet de l’adaptation se lit dans le contraste apparié sur le même Qwen3-4B.
+
+L’entraînement a pris \TrainingDuration{} sur Apple Silicon et a actualisé \AdapterParameters{} paramètres. L’adaptateur sauvegardé occupe \AdapterSize{} et le pic d’allocation MLX pendant l’apprentissage atteint \TrainMemory{}. La génération de validation du modèle adapté a pris \AfterDuration{}. Ces temps ont des périmètres distincts. Le pic de l’allocateur MLX décrit le calcul de ce processus.
+\FloatBarrier

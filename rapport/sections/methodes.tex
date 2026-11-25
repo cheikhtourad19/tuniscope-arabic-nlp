@@ -1,0 +1,68 @@
+\section{Méthodes et protocole expérimental}\label{sec:methodes}
+
+\subsection{Références classiques et indices linguistiques}
+La majorité choisit l’étiquette la plus fréquente dans le train. Le vote lexical apprend quelles unités sont surreprésentées dans une classe. À l’inférence, chaque indice distinct donne une voix et une égalité déclenche un recours à la majorité. Une variante TSAC inverse localement l’orientation des indices lorsqu’un marqueur de négation connu est rencontré. La fenêtre couvre au plus trois unités et s’interrompt aux frontières configurées. Cette règle vise une ablation contrôlée, car le lexique est commun aux deux versions du vote.
+
+TF-IDF transforme un texte en vecteur pondéré. Un fragment qui apparaît souvent dans un avis et rarement dans l’ensemble des avis reçoit davantage de poids. Les n-grammes de trois à cinq caractères représentent des fragments de mots, des affixes et certaines variantes d’écriture. Une régression logistique apprend à associer ces fragments aux étiquettes. Nous avons aussi évalué des unités de mots et une combinaison mots-caractères. Les fragments de caractères sont retenus comme référence classique forte.
+
+Le vocabulaire est appris sur le train uniquement, avec une fréquence documentaire minimale de deux. Les variantes mots utilisent les n-grammes de longueur 1 à 2. Les variantes caractères utilisent des n-grammes de longueur 3 à 5. Les deux appliquent une fréquence sous-linéaire et une normalisation $L_2$. La combinaison juxtapose les deux vecteurs avec un poids égal, puis normalise le vecteur joint. Le classifieur utilise L-BFGS, $C=1$, jusqu’à 1\,000 itérations, avec la même liste de classes. Cette comparaison conserve le split, le texte et le type de classifieur pour chaque ablation de représentation.
+
+\subsection{Modèle de langage et classifieur récurrent}
+Le modèle de langage de caractères prédit le prochain caractère. L’unigramme utilise la fréquence globale du caractère. Le trigramme utilise jusqu’à deux caractères précédents. Le lissage attribue une probabilité aux suites rares. La perplexité mesure l’incertitude sur les prochains caractères et se lit séparément des scores de classification.
+
+Les unités sont des points de code Unicode. Le vocabulaire appris sur le train comprend les caractères observés, un symbole inconnu et une fin de séquence. Les deux ordres partagent ce vocabulaire et les mêmes cibles de validation. Le compteur de contexte redémarre à chaque document, avec $n-1$ marqueurs de début et une cible de fin. Pour le contexte $h$, la cible $c$ et un vocabulaire de $V$ symboles prédits, le lissage additif fixe $\alpha=0{,}1$~:
+\[
+P(c\mid h)=\frac{\operatorname{compte}(h,c)+\alpha}{\operatorname{compte}(h)+\alpha V},\qquad
+\operatorname{PP}=\exp\!\left(-\frac{1}{N}\sum_{i=1}^{N}\log P(c_i\mid h_i)\right).
+\]
+La perplexité agrège les log-probabilités sur les $N$ cibles, marqueurs de fin inclus. Les vocabulaires de sortie comptent 381 unités pour TSAC et 61 pour MADAR. Les 71\,924 cibles TSAC et les 26\,297 cibles MADAR sont les dénominateurs respectifs à chacun des deux ordres. La comparaison de perplexité est conduite au sein de chaque corpus.
+
+Le BiGRU est un classifieur supervisé. Il lit une séquence de tokens dans les deux sens, agrège les états du réseau pour obtenir une représentation du texte, puis calcule une décision de sentiment ou de variété. Le vocabulaire est construit sur le train. La sélection de l’époque dépend du macro-F1 de validation. Les trois graines d’apprentissage permettent de constater la variation du système sous le même partage des données.
+
+Le tokenizer lexical conserve des unités de mots et des symboles. Les unités vues une seule fois sont rattachées à l’identifiant inconnu. Le vocabulaire compte 6\,702 entrées TSAC et 4\,016 MADAR, y compris les identifiants spéciaux. L’embedding entraînable a 64 composantes. Le GRU utilise 64 états par direction, concatène les représentations et applique une moyenne masquée puis un abandon aléatoire de 0,2. L’optimiseur Adam utilise des lots de 64, un taux de $10^{-3}$ et un clipping de norme 1. Le budget est de 12 époques au maximum, avec une patience de trois et une sélection sur le macro-F1 de validation. Le plus ancien checkpoint est retenu en cas d’égalité.
+
+\subsection{CAMeLBERT et adaptation générative}
+Le checkpoint CAMeLBERT Mix contextualise les sous-mots à l’aide d’un encodeur Transformer. La première référence gèle l’encodeur et apprend seulement une tête. La campagne d’adaptation actualise aussi les paramètres de l’encodeur. La confirmation utilise trois nouveaux entraînements par tâche, avec les taux d’apprentissage choisis lors du criblage. La comparaison avec la première référence gelée renseigne sur les systèmes construits. Les essais de tête gelée et d’adaptation à architecture commune sont documentés séparément.
+
+L’audit WordPiece mesure les sous-mots inconnus, la fragmentation et les longueurs avant apprentissage. La limite de 128 tokens, marqueurs spéciaux inclus, provient de cet audit. Sur TSAC, 33 textes du train et quatre de validation dépassent la limite. Sur MADAR, les deux partitions sont couvertes. La fragmentation évalue un motif lié au tokenizer. Elle documente notamment la différence entre les textes TSAC en écriture arabe (1,57 sous-mot par unité séparée par un espace en validation) et en écriture latine (3,89).
+
+La référence gelée moyenne les états masqués de l’encodeur, y compris les marqueurs spéciaux utiles au protocole, puis ajuste la tête linéaire sur CPU. Le contraste contrôlé suivant utilise la même tête native CLS/pooler et la même initialisation par graine pour les deux régimes. La campagne complète adapte l’encodeur par AdamW, avec des lots physiques de huit, accumulation sur deux lots, trois époques au maximum et FP32. Le criblage compare $10^{-5}$, $2\times10^{-5}$ et $5\times10^{-5}$ sur la graine 42. La confirmation retient $5\times10^{-5}$ pour TSAC et $2\times10^{-5}$ pour MADAR. Les tableaux détaillés figurent à l’annexe~\ref{ann:campagnes}.
+
+Qwen3 reçoit une consigne de classification et génère une courte réponse. En \emph{zero-shot}, la consigne indique la tâche et les étiquettes. En \emph{few-shot}, elle inclut en plus une démonstration par classe. Les deux démonstrations TSAC et les trois démonstrations MADAR sont choisies dans le train à l’aide d’une règle déterministe. Le service de génération utilise le gabarit du checkpoint sans raisonnement, un décodage glouton et un plafond de 32 nouveaux tokens. Le parseur exige une étiquette seule. Une réponse invalide entre dans la matrice et compte comme une erreur.
+
+L’audit des consignes porte sur 19\,015 textes de train et validation. Une première variante atteignait 501 tokens pour le plus long prompt few-shot TSAC du train et dépassait le budget sur trois lignes. L’instruction finale a été raccourcie en gardant les mêmes démonstrations. Le budget retenu est de 512 tokens, dont 480 pour le prompt et 32 pour la génération. Le prompt few-shot le plus long atteint 471 tokens dans le train TSAC et 350 en validation. Les valeurs correspondantes sur MADAR sont 232 et 224. Le texte est encapsulé en chaîne JSON, et les délimiteurs de rôle potentiels sont échappés. Les démonstrations du train occupent des groupes distincts. Elles sont toutes en caractères arabes, ce qui limite leur représentativité pour les avis latin et mixtes.
+
+\subsection{Réglages de la comparaison principale}
+Le checkpoint principal est Qwen3-4B, révision \code{1cfa9a7}, convertie localement au format MLX. Les poids compatibles sont quantifiés à quatre bits en groupes de 64 valeurs. L’adaptateur LoRA injecte une correction de faible rang aux projections de requête et de valeur. Les poids de base sont gelés. Nous employons ici « QLoRA » au sens d’une adaptation LoRA sur une base quantifiée. L’implémentation MLX utilise une quantification affine.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Configuration de l’adaptation Qwen3-4B sur Mac.}\label{tab:setup}
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+Paramètre & Choix expérimental \\
+\midrule
+Données SFT & 2\,000 textes TSAC et 2\,000 textes MADAR, pris dans le train v2 \\
+Supervision & Étiquette attendue et fin de réponse. La consigne ne contribue pas à la perte. \\
+Adaptateur & Partagé entre les tâches. Rang 8, facteur d’échelle 2, abandon aléatoire 0,05 \\
+Optimisation & AdamW, taux 0,0001, deux époques, graine 42 \\
+Budget & Un texte à la fois, accumulation sur 16 textes avant mise à jour, 500 mises à jour \\
+Comparaison & Même base MLX, mêmes démonstrations, même validation et même parseur \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Les masques du jeu d’instructions sont contrôlés pour distinguer le texte présenté au modèle de ce qu’il doit apprendre à produire. L’entraînement mélange les tâches à chaque époque. Une seule configuration est utilisée pour ce volet 4B. L’étude historique 0.6B possède trois graines. L’accord rapporté par l’auteur concernant la taille du modèle porte sur le passage à 4B. La portée statistique de la campagne à une seule graine est discutée en section~\ref{sec:discussion}.
+
+Le SFT utilise 1\,000 avis par polarité pour TSAC, et 667 textes MSA, 667 TN et 666 EG pour MADAR. La sélection dépend de l’étiquette et d’un ordre déterministe des identifiants du train. La séquence la plus longue mesure 370 tokens pour TSAC et 138 pour MADAR. On conserve l’entropie croisée sur les tokens de l’étiquette et le marqueur de fin, ce qui focalise la mise à jour sur les réponses attendues. La procédure vérifie que la tokenisation 4B reproduit les identifiants, séquences et masques du lot historique. Le notebook 11 affiche les étapes et sauvegarde ensemble l’adaptateur et l’état d’optimisation. Les checkpoints sont pris toutes les 15 mises à jour et aux fins d’époque, avec contrôle du compte des exemples et de la provenance lors de la reprise.
+
+\subsection{Indicateurs et séparation des évaluations}
+La précision d’une classe mesure la part de bonnes décisions parmi les prédictions de cette classe. Le rappel mesure la part de ses vrais exemples correctement reconnus. Le F1 est leur moyenne harmonique. Le macro-F1 donne le même poids à chaque classe~:
+\[
+ F_1 = \frac{2\,\mathrm{précision}\,\mathrm{rappel}}{\mathrm{précision}+\mathrm{rappel}},
+ \qquad \mathrm{macro\mbox{-}F_1} = \frac{1}{K}\sum_{k=1}^{K} F_{1,k}.
+\]
+L’exactitude est la proportion de décisions correctes. Elle complète la lecture sur l’ensemble des textes. Sur MADAR, une référence qui prédit toujours \code{TN} obtient la moitié des exemples juste tout en ignorant deux classes, ce qui motive l’usage du macro-F1 comme mesure principale. L’analyse associe chaque score aux matrices et effectifs.
+
+Le train ajuste les paramètres. La validation sert aux comparaisons, aux réglages et au choix de checkpoints. Le test officiel est réservé au protocole de classification final. L’évaluation documentaire utilise un autre jeu de questions et d’autres métriques. Nous présentons les résultats de ces deux tâches avec leur provenance de façon distincte dans les sections suivantes.
+\FloatBarrier

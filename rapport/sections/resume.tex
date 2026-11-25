@@ -1,0 +1,19 @@
+\section*{Résumé}
+
+TuniScope étudie deux tâches de classification en arabe à partir de ressources distinctes. Sur TSAC, le système classe des avis tunisiens en positif ou négatif. Sur MADAR, il distingue l’arabe standard moderne, le tunisien et l’égyptien dans un sous-ensemble de phrases parallèles du domaine du voyage. Le protocole groupe les exemples apparentés lors du partitionnement et mesure les modèles sur les mêmes exemples de validation. Il compare une référence TF-IDF de caractères, un réseau BiGRU, un encodeur CAMeLBERT et un modèle génératif Qwen3.
+
+La comparaison principale étudie Qwen3-4B en conditions \emph{few-shot}, avec quelques exemples dans la consigne, avant et après l’ajout d’un unique adaptateur multitâche. L’adaptation QLoRA porte sur 4\,000 textes d’entraînement répartis entre les deux tâches. Le macro-F1 de validation passe de \QwenTsacBasePercent{} à \QwenTsacAdaptedPercent{} sur TSAC et de \QwenMadarBasePercent{} à \QwenMadarAdaptedPercent{} sur MADAR. Le classifieur TF-IDF de caractères et CAMeLBERT conservent des scores de validation supérieurs. La comparaison examine aussi la qualité du format, la mémoire et les erreurs par classe.
+
+Le projet associe cette étude à une application locale et à un module de recherche documentaire bilingue. Le module compare BM25 et le modèle d’embedding multilingue E5, restitue un passage avec sa source, et s’abstient lorsque ses critères de réponse ne sont pas satisfaits. L’audit examine enfin la sensibilité aux variations d’écriture, la quantité de données d’entraînement, le compromis entre couverture et erreur, et l’incertitude des comparaisons. Les résultats de classification présentés correspondent à la validation. La consultation du test officiel suivra le gel du protocole révisé.
+
+\smallskip
+\smalltitle{Mots-clés}\quad sentiment tunisien, identification dialectale, QLoRA, validation groupée, recherche documentaire.
+
+\vfill
+\begin{center}
+\setlength{\fboxsep}{11pt}
+\colorbox{Wash}{\begin{minipage}{0.92\linewidth}
+\smalltitle{PÉRIMÈTRE DE CETTE VERSION}\par
+\small Publication de travail du \ReportDate. Elle rassemble le protocole, les résultats de validation vérifiés et les enseignements d’intégration. Le test officiel de classification, la validation sur une ressource indépendante et la relance finale par une autre personne restent à documenter.
+\end{minipage}}
+\end{center}

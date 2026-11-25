@@ -1,0 +1,120 @@
+\section{Évaluation documentaire détaillée}\label{ann:documentaire}
+
+Les tableaux présentent l’application telle qu’elle a été évaluée après l’ajustement de la politique lexicale sur validation. Les dénominateurs changent entre les 20 questions de validation et les 40 questions de test. « Pertinentes » compte les réponses qui citent la fiche attendue. « Abstentions » compte les rejets lorsque le catalogue est déclaré insuffisant. Une réponse sourcée demeure incorrecte si elle cite une fiche qui ne répond pas à la question.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Validation documentaire par langue, avec références de pertinence provisoires.}
+\begin{tabularx}{\linewidth}{@{}Ylrrrr@{}}
+\toprule
+Langue & Moteur & Rappel à 3 & MRR à 3 & Pertinentes & Abstentions \\
+\midrule
+\ReportRows{rag-langues-validation}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Test documentaire gelé par langue, avec références de pertinence provisoires.}
+\begin{tabularx}{\linewidth}{@{}Ylrrrr@{}}
+\toprule
+Langue & Moteur & Rappel à 3 & MRR à 3 & Pertinentes & Abstentions \\
+\midrule
+\ReportRows{rag-langues-test}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+L’ajustement BM25 sur validation fait passer le nombre de réponses pertinentes de neuf à treize sur les seize questions documentées et conserve quatre abstentions attendues. Cette mesure a servi à retenir la politique et décrit ses performances sur le jeu de mise au point. Les mesures du test portent sur un protocole gelé, avec contrôle des 35 fichiers liés aux questions, références, fiches, configuration, code et environnement. Quatre questions du test avaient été montrées auparavant à titre d’exemple. Leurs références restent fixes. Le rapport distingue ce fait de la séparation technique des fichiers et du contrôle des réponses. Les 80 réponses applicatives sont relues par le vérificateur, qui reconstitue chaque statut, chaque référence et chaque extrait.
+
+Le catalogue comporte une revue éditoriale réalisée par l’auteur. Les propositions de pertinence des questions sont déclarées comme assistées par IA et seront confrontées à des jugements indépendants. Les scores numériques mesurent l’accord avec le référentiel déclaré. La recette exécutable couvre aussi des conditions distinctes, telles que les entrées invalides, les modèles manquants et les questions sans source.
+\FloatBarrier
+
+\section{Mesures complémentaires d’audit}\label{ann:audit}
+
+\subsection{Évaluation des probabilités de l’encodeur}
+L’ajustement de température utilise la perte logarithmique sur les blocs de calibration. Le tableau agrège une prédiction par exemple et par graine, soit trois séries alignées. Le taux correct reste fixe par conservation de l’ordre des classes. La perte logarithmique et l’ECE diminuent sur les deux validations. Ces résultats ne dispensent pas d’évaluer le seuil sélectionné sur un partage final indépendant.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Calibration sur validation. L’ECE est exprimée en points et NLL désigne la perte logarithmique.}
+\begin{tabularx}{\linewidth}{@{}Yrrrrrr@{}}
+\toprule
+Corpus & Scores & ECE brut & ECE calibré & NLL brute & NLL calibrée & Exactitude \\
+\midrule
+\ReportRows{calibration}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sous-échantillon équilibré de Qwen3-0.6B}
+Le diagnostic local fixe une graine, un exemple par groupe et des quotas par étiquette. Le modèle de base et l’adaptateur sont exécutés en FP32 sur CPU avec les mêmes consignes zero-shot. Le bootstrap tire des groupes appariés et calcule les quantiles de l’écart sur 1\,000 répétitions. Le résultat décrit l’effet observé sur cet échantillon équilibré. Les textes du test officiel de classification restent réservés.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Diagnostic historique Qwen avant/après sur 144 textes par tâche. L’intervalle à 95\,\% concerne l’écart de macro-F1, en points.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Corpus & Textes & Base & LoRA & Intervalle de l’écart \\
+\midrule
+\ReportRows{qwen06-diagnostic}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sur MADAR, la base produit une sortie invalide pour les 144 textes de ce diagnostic. Après adaptation, toutes les sorties sont valides, avec encore 48 erreurs. Sur TSAC, 34 des 72 positifs sont classés négatifs après adaptation. Les dossiers d’erreurs séparent les cas de format des erreurs de décision. Les 60 hypothèses assistées par IA portent notamment sur la négation, l’Arabizi, les expressions locales et les formulations communes entre variétés. Elles constituent un point de départ pour la revue linguistique.
+\FloatBarrier
+
+\section{Schéma et procédures de reproduction}\label{ann:reproduction}
+
+\subsection{Données de travail et droits}
+Les deux manifestes v2 sont des tables CSV de provenance. Quand le chargeur travaille en mode autorisé, le couple fichier et numéro de ligne permet de retrouver le texte à partir de la source. Le résultat en mémoire inclut des champs de présentation et d’audit qui ne sont pas présents dans les CSV. La normalisation éventuelle se fait sur cette représentation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Champs utilisés pour relier les manifestes et les observations.}
+\begin{tabularx}{\linewidth}{@{}P{48mm}Y@{}}
+\toprule
+Champs & Usage \\
+\midrule
+\code{id}, \code{source\_id} & Identifiant de travail et référence d’origine lorsqu’elle est disponible. \\
+\code{source\_file}, \code{source\_line} & Nom du fichier autorisé et position de l’enregistrement source. \\
+\code{group\_id} & Groupe apparenté conservé dans une seule partition. \\
+\code{official\_split}, \code{split} & Partition de la source puis partition de travail du projet. \\
+\code{label}, \code{city} & Étiquette de tâche et ville MADAR lorsqu’elle est applicable. \\
+\code{text\_raw}, \code{text\_norm} & Textes résolus par le chargeur. Le brut est conservé, la variante d’inférence reste versionnée. \\
+\code{script}, \code{languages} & Écriture observée et langue éventuellement annotée dans la représentation de travail. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Les manifestes et les agrégats se prêtent au partage dans le cadre des droits déclarés. Les archives originales, prédictions ligne à ligne et états d’optimisation doivent rester dans le stockage privé prévu pour les artefacts. Un jeu fictif vérifie le fonctionnement des scripts sans accès aux ressources protégées. Le registre des sources documente les démarches d’accès et les licences applicables.
+
+\subsection{Environnements et points d’entrée}
+Le profil classique sous Python 3.12 et \code{uv.lock} sert au chargement, aux références simples et aux métriques. Les profils BiGRU, CAMeLBERT, Qwen historique et Qwen4B conservent leurs dépendances dans des environnements séparés. La quantification de Qwen3-4B est locale, avec MLX sur Apple Silicon. Les campagnes CUDA antérieures utilisent leurs verrous et preuves d’exécution propres. Les configurations fixent la graine, les variantes du texte et les paramètres de sélection. Le GPU et son environnement sont consignés dans les journaux.
+
+Les notebooks 01 et 02 donnent les points d’entrée données et baselines. Le 03 traite la BiGRU. Les 04 à 08 couvrent l’audit du tokenizer, la référence gelée, l’ajustement, le criblage et la confirmation CAMeLBERT. Les 09 et 10 couvrent les campagnes LoRA historiques. Le 11 lance l’unique entraînement de Qwen3-4B puis affiche les mesures few-shot avant/après. Le test officiel est soumis à un protocole distinct, à versionner avant exécution. La documentation de l’application précise les profils de modèles et les étapes de construction Docker.
+
+Le rapport se régénère depuis les agrégats par la commande suivante.
+\begin{verbatim}
+make -C rapport
+\end{verbatim}
+La vérification du protocole de classification historique est exécutable avec les artefacts autorisés.
+\begin{verbatim}
+sh scripts/project_uv.sh run --locked --offline python \
+  scripts/classification_protocol.py check \
+  --protocol configs/classification_final_v1.json
+\end{verbatim}
+Ce contrôle lie 36 entrées de modèles et 48 conditions tâche/modèle à leurs artefacts. Il constitue une vérification de gel pour l’étude historique. La prochaine version ajoutera les fichiers 4B retenus, les consignes correspondantes et les conditions d’évaluation figées.
+
+\subsection{Contrats applicatifs}
+La route de prédiction reçoit une tâche, un texte, un modèle et éventuellement un identifiant. Le résultat contient la décision, le statut, la version et les informations de prétraitement. L’import CSV accepte les colonnes \code{id,text}, avec identifiants uniques et des plafonds documentés. Une erreur de ligne reste visible dans le résultat. L’export CSV protège l’interprétation de débuts de cellule comme formules. Le service documentaire utilise séparément une question, une langue et une méthode de recherche. Une abstention et une citation sont retournées sous des statuts distincts.
+
+Les bundles locaux sont construits à partir de modèles choisis et vérifiés. Au démarrage, les services contrôlent les empreintes et le chargement avant de se déclarer prêts. Les objets sont réutilisés en mémoire pendant l’inférence. La démonstration s’appuie sur des exemples fictifs. Une recette finale couvrira saisie, lot, export, cas limites, une source documentaire manquante et la traçabilité des modèles exposés.
+
+\subsection{Éléments attendus pour la remise finale}
+Le carnet d’expériences lie les calculs aux versions, aux durées et aux traces de rechargement. La version de remise demandera le protocole final incluant le 4B, les mesures officielles, l’analyse d’erreurs correspondante et une relance indépendante documentée. La collecte des jeux de défi prévoit 300 avis répartis entre arabe, Arabizi et mélange de langues, ainsi que 150 phrases réparties entre MSA, tunisien et égyptien. Ces volumes sont des cibles de travail. Les données confirmées, leurs droits et les jugements linguistiques doivent être établis avant publication de mesures externes.
+
+Le dossier technique intermédiaire réunit 245 fichiers de preuve liés par empreinte et recalcule 14 groupes de résultats à trois graines. Plusieurs groupes correspondent aux mêmes adaptateurs évalués sous des consignes différentes. Le document 72 distingue les vérifications locales, les rechargements documentés, les archives historiques incomplètes et la relance attendue par une autre personne. Pour le protocole final, le contraste principal compare le même Qwen3-4B avant et après ajout de l’adaptateur. L’analyse par groupe et par classe accompagnera le macro-F1. Les systèmes stochastiques garderont leurs agrégats de graines dans les campagnes pour lesquelles ces répétitions sont disponibles.
+\FloatBarrier

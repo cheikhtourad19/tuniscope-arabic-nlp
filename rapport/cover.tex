@@ -1,0 +1,51 @@
+\begingroup
+\definecolor{CoverNavy}{HTML}{102730}
+\definecolor{CoverAccent}{HTML}{77D1BF}
+\definecolor{CoverPale}{HTML}{E1EEE9}
+\definecolor{CoverGrid}{HTML}{335B62}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\null
+\begin{tikzpicture}[remember picture,overlay]
+  \coordinate (origin) at (current page.north west);
+  \fill[CoverNavy] (origin) rectangle ([xshift=210mm,yshift=-158mm]origin);
+  \fill[CoverPale] ([yshift=-158mm]origin) rectangle ([xshift=210mm,yshift=-217mm]origin);
+  \fill[CoverAccent] ([xshift=23mm,yshift=-18mm]origin) rectangle ([xshift=43mm,yshift=-19.2mm]origin);
+  \begin{scope}[shift={(origin)},x=1mm,y=1mm]
+    \clip (150,-158) rectangle (210,-30);
+    \foreach \y in {-43,-56,-69,-82,-95,-108,-121,-134,-147} {
+      \draw[CoverGrid,line width=.45pt] (157,\y) -- (174,\y) -- (191,{\y-13}) -- (210,{\y-13});
+      \fill[CoverGrid] (157,\y) circle[radius=1.05];
+    }
+    \draw[CoverAccent,line width=.65pt] (157,-82) -- (174,-82) -- (191,-95) -- (210,-95);
+    \fill[CoverAccent] (157,-82) circle[radius=1.15];
+    \draw[CoverAccent,line width=.65pt] (157,-121) -- (174,-121) -- (191,-108) -- (210,-108);
+    \fill[CoverAccent] (157,-121) circle[radius=1.15];
+  \end{scope}
+  \tikzset{covertext/.style={anchor=north west,inner sep=0pt,align=left}}
+  \node[covertext,text=CoverAccent,font=\small\sffamily\bfseries] at ([xshift=23mm,yshift=-26mm]origin)
+    {RAPPORT SCIENTIFIQUE};
+  \node[covertext,text=white,font=\fontsize{59}{62}\selectfont\sffamily\bfseries] at ([xshift=22mm,yshift=-48mm]origin)
+    {TuniScope};
+  \node[covertext,text=CoverAccent,font=\LARGE,text width=132mm] at ([xshift=23mm,yshift=-80mm]origin)
+    {Analyse du sentiment tunisien\\et identification des variétés d’arabe};
+  \node[covertext,text=white,font=\large,text width=117mm] at ([xshift=23mm,yshift=-116mm]origin)
+    {Des références classiques à l’adaptation de Qwen3-4B, avec une application expérimentale et un module documentaire bilingue.};
+  \draw[CoverGrid!35,line width=.5pt] ([xshift=104mm,yshift=-171mm]origin) -- ([xshift=104mm,yshift=-202mm]origin);
+  \node[covertext,text=CoverNavy,font=\large\sffamily\bfseries] at ([xshift=23mm,yshift=-173mm]origin) {TSAC};
+  \node[covertext,text=CoverNavy,text width=68mm] at ([xshift=23mm,yshift=-186mm]origin)
+    {Classer la polarité des avis tunisiens.};
+  \node[covertext,text=CoverNavy,font=\large\sffamily\bfseries] at ([xshift=118mm,yshift=-173mm]origin) {MADAR};
+  \node[covertext,text=CoverNavy,text width=65mm] at ([xshift=118mm,yshift=-186mm]origin)
+    {Distinguer l’arabe standard,\\le tunisien et l’égyptien.};
+  \node[covertext,text=CoverNavy,font=\Large\sffamily\bfseries] at ([xshift=23mm,yshift=-232mm]origin) {Mohamed Elgheith};
+  \node[covertext,text=CoverNavy!85,font=\small\sffamily,text width=150mm] at ([xshift=23mm,yshift=-245mm]origin)
+    {Projet individuel · Cinquième année de génie informatique\\Module NLP et spécialisation};
+  \draw[CoverGrid!35,line width=.5pt] ([xshift=23mm,yshift=-265mm]origin) -- ([xshift=187mm,yshift=-265mm]origin);
+  \node[covertext,text=CoverNavy,font=\footnotesize\sffamily\bfseries] at ([xshift=23mm,yshift=-272mm]origin)
+    {ANNÉE UNIVERSITAIRE 2026–2027};
+  \node[anchor=north east,inner sep=0pt,text=CoverNavy,font=\footnotesize\sffamily] at ([xshift=187mm,yshift=-272mm]origin)
+    {\ReportDate};
+\end{tikzpicture}
+\end{titlepage}
+\endgroup

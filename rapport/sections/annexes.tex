@@ -1,0 +1,103 @@
+\section{Matrices de confusion de Qwen3-4B}\label{ann:matrices}
+
+Les lignes représentent les étiquettes de référence, les colonnes les décisions du modèle. Le protocole compte les sorties hors format comme des erreurs. Ces matrices détaillent les deux validations v2. Le tableau~\ref{tab:qwen-classes} donne les rappels associés.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Matrices TSAC avant et après QLoRA, sur les mêmes 1\,774 avis.}
+\begin{minipage}[t]{.485\linewidth}
+\centering
+\smalltitle{Qwen3-4B de base}\par\smallskip
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Réel / prédit & NEG & POS & Hors format \\
+\midrule
+\ReportRows{tsac-base}
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{.485\linewidth}
+\centering
+\smalltitle{Qwen3-4B après QLoRA}\par\smallskip
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Réel / prédit & NEG & POS & Hors format \\
+\midrule
+\ReportRows{tsac-qlora}
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Matrices MADAR avant et après QLoRA. Les 800 textes sont identiques dans les deux conditions.}
+\begin{minipage}[t]{.485\linewidth}
+\centering
+\smalltitle{Qwen3-4B de base}\par\smallskip
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Réel / prédit & MSA & TN & EG & Hors format \\
+\midrule
+\ReportRows{madar-base}
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{.485\linewidth}
+\centering
+\smalltitle{Qwen3-4B après QLoRA}\par\smallskip
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Réel / prédit & MSA & TN & EG & Hors format \\
+\midrule
+\ReportRows{madar-qlora}
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Précision et F1 par classe, sur les validations complètes.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Classe & Préc. base & Préc. QLoRA & F1 base & F1 QLoRA \\
+\midrule
+\multicolumn{5}{@{}l}{TSAC} \\
+\ReportRows{tsac-precision-f1}
+\addlinespace
+\multicolumn{5}{@{}l}{MADAR} \\
+\ReportRows{madar-precision-f1}
+\bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+\section{Cartographie des preuves}\label{ann:preuves}
+
+Les références du dépôt ci-dessous identifient les éléments de preuve. Une reconstruction des tableaux du présent rapport utilise directement les agrégats indiqués et les manifestes sans texte.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Artefacts principaux et points de contrôle.}\label{tab:preuves}
+\begin{tabularx}{\linewidth}{@{}P{28mm}YY@{}}
+\toprule
+Périmètre & Artefact & Vérification \\
+\midrule
+Données (L02–L03) & \artifact{SOURCE_REGISTER.md}, \artifact{data/manifests/v2/}, notebook 01 & Effectifs, groupes, source, version et droits documentés. \\
+Baselines (L04) & Notebooks 02 et 03, \artifact{reports/baselines_grouped_v2_2026-10-17/metrics.json} & Comptes et métriques sur validation v2. \\
+Encodeur (L05) & Notebooks 04 à 08, \artifact{reports/camelbert_confirmation_2026-11-06/} & Révisions, scores par graine et rechargement. \\
+LLM (L06) & Notebooks 09 à 11, \artifact{reports/qwen3_4b_qlora_v1/summary.json} & Adaptateur partagé, métriques avant/après et empreintes. \\
+Évaluation (L07) & \artifact{reports/gold_audit_2026-11-22/}, \artifact{docs/73_protocole_classification_finale.md} & Audit sur validation. Version finale 4B et test encore à exécuter. \\
+RAG et app (L08–L09) & \artifact{rag/}, \artifact{App/README.md}, \artifact{reports/rag_documentary_test_v1_2026-11-12/} & Fiches sourcées, test documentaire et contrats de l’API. \\
+Rapport et relance (L10–L12) & \artifact{rapport/}, \artifact{EXPERIMENTS.md}, fichiers \code{uv.lock} & Rapport compilable, configurations et provenance. Relance indépendante à joindre. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier
+
+\section{Reconstruction du rapport et lecture des preuves}
+
+Le rapport se compile avec LuaLaTeX, PlantUML et un convertisseur SVG. Le fichier \artifact{rapport/README.md} documente la commande de construction et les sources chiffrées. Les tableaux et le graphique QLoRA sont générés à partir des rapports JSON. Les schémas sont maintenus dans les fichiers PlantUML.
+
+Pour vérifier les résultats QLoRA, le script d’import recalcule les matrices et métriques à partir des sorties individuelles privées. Il contrôle les manifestes, le code, le reçu d’adaptation et les empreintes de la comparaison. Les deux séries de prédictions sont alignées sur les identifiants de validation. L’export ne conserve que les résultats agrégés, le coût et la provenance nécessaires au rapport.

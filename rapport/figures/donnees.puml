@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+skinparam backgroundColor white
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 14
+skinparam ArrowColor #595959
+skinparam shadowing false
+skinparam rectangle {
+ BorderColor #4C4C4C
+ FontColor #171717
+ RoundCorner 10
+}
+rectangle "Sources autorisées\nTSAC · MADAR" as sources #F5F5F5
+rectangle "Audit et groupes\nDoublons · variantes" as audit #F5F5F5
+rectangle "Manifestes v2\nRéférences · partitions" as manifest #F5F5F5
+rectangle "Train\nAjuster les modèles" as train #E9E9E9
+rectangle "Validation\nComparer et choisir" as dev #F1F1F1
+rectangle "Test officiel\nÉvaluation après gel" as test #FFFFFF
+sources --> audit
+audit --> manifest
+manifest --> train
+manifest --> dev
+manifest --> test
+@enduml

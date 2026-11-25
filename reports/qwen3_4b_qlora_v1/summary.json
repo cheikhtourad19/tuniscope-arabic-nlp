@@ -1,0 +1,255 @@
+{
+  "partition": "validation",
+  "mode": "few_shot",
+  "manifest_version": "v2",
+  "training": {
+    "mode": "qlora",
+    "split": "train",
+    "smoke": false,
+    "steps": 8000,
+    "rows_per_epoch": 4000,
+    "epochs": 2,
+    "seed": 42,
+    "settings": {
+      "sft_selection": "configs/qwen_sft_v1.json",
+      "epochs": 2,
+      "accumulation_steps": 16,
+      "learning_rate": 0.0001,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "checkpoint_interval_updates": 15,
+      "lora": {
+        "rank": 8,
+        "scale": 2.0,
+        "dropout": 0.05,
+        "keys": [
+          "self_attn.q_proj",
+          "self_attn.v_proj"
+        ]
+      }
+    },
+    "max_sequence_tokens": 512,
+    "dropout_seed_policy": "seed times 1000000000 plus one-based example step",
+    "source_model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "conversion_sha256": "0b1d7130be57b0b60faaa30926fe55e7c26d07df9d868ebfc879268a2fcba8db",
+    "lock_sha256": "67d373ab606485b9c03cf6c34ce8f44fe7c4fa2764d6a5a0b462cc56f3bd903d",
+    "dataset_sha256": "06b989403697fa8a01aaa0278c9f9df5bf9283080664486d77042222fe235786",
+    "code_sha256": {
+      "run_qwen4b_qlora.py": "0c11e42cf9704170e05730678d1af3d3295cfb3b700bf46932392e38bb70b833",
+      "build_qwen_sft.py": "fed5f3a9bd32af64def37ca36209e4255bde2b84b9b509850f6e47287cd4ac39",
+      "load_working_data.py": "6f65ff4d8bcdf7e0127f7ae16e75e726fe7fc581b7cca2800e0fe444f4a1847e",
+      "qwen_prompting.py": "8b21fc6a1218bf1d9bdb109388c3d3dd083220192535abfd07bb86120a0a3e6a"
+    },
+    "manifest_hashes": {
+      "tsac": "ac8a453de6115bea6b51255fe7badc1eab72e2649e0056a1ad918aa963730fa7",
+      "madar": "3d81826b70437aa37a286d2d8fded745b01295165395b26cf868f91f90204474"
+    }
+  },
+  "completion": {
+    "run_sha256": "94cdfbae596cb1478dfdd85096e4695ebb5adb6a74678326eac54a80e98972c8",
+    "steps": 8000,
+    "optimizer_updates": 500,
+    "trainable_parameters": 2949120,
+    "peak_mlx_bytes": 3452634244,
+    "adapter_sha256": {
+      "adapter_config.json": "981f9b2242173c86aa62ab0465e5491c58c2f46377d6178d81c0d2264d5ff831",
+      "adapters.safetensors": "9a55aaf1682441e7895f57dfb15e212490698914aab2a5b5dbf628151d52bd86"
+    }
+  },
+  "training_seconds_from_log": 6623,
+  "adapter_bytes": 11812032,
+  "results": {
+    "tsac": {
+      "base": {
+        "accuracy": 0.6972942502818489,
+        "macro_f1": 0.6766026959492768,
+        "invalid_rows": 1,
+        "n": 1774,
+        "correct_rows": 1237,
+        "per_class": {
+          "NEG": {
+            "precision": 0.8273684210526315,
+            "recall": 0.4639905548996458,
+            "f1-score": 0.594553706505295,
+            "support": 847.0
+          },
+          "POS": {
+            "precision": 0.650231124807396,
+            "recall": 0.9104638619201726,
+            "f1-score": 0.7586516853932584,
+            "support": 927.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            393,
+            454,
+            0
+          ],
+          [
+            82,
+            844,
+            1
+          ]
+        ],
+        "labels": [
+          "NEG",
+          "POS"
+        ],
+        "seconds": 411.66135974800636
+      },
+      "qlora": {
+        "accuracy": 0.8190529875986471,
+        "macro_f1": 0.813006536269647,
+        "invalid_rows": 0,
+        "n": 1774,
+        "correct_rows": 1453,
+        "per_class": {
+          "NEG": {
+            "precision": 0.9325657894736842,
+            "recall": 0.6694214876033058,
+            "f1-score": 0.7793814432989691,
+            "support": 847.0
+          },
+          "POS": {
+            "precision": 0.7598627787307033,
+            "recall": 0.9557713052858684,
+            "f1-score": 0.8466316292403249,
+            "support": 927.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            567,
+            280,
+            0
+          ],
+          [
+            41,
+            886,
+            0
+          ]
+        ],
+        "labels": [
+          "NEG",
+          "POS"
+        ],
+        "seconds": 384.22372562403325
+      }
+    },
+    "madar": {
+      "base": {
+        "accuracy": 0.35125,
+        "macro_f1": 0.3069961492430514,
+        "invalid_rows": 0,
+        "n": 800,
+        "correct_rows": 281,
+        "per_class": {
+          "MSA": {
+            "precision": 0.875,
+            "recall": 0.14,
+            "f1-score": 0.2413793103448276,
+            "support": 200.0
+          },
+          "TN": {
+            "precision": 0.9661016949152542,
+            "recall": 0.1425,
+            "f1-score": 0.24836601307189543,
+            "support": 400.0
+          },
+          "EG": {
+            "precision": 0.2764456981664316,
+            "recall": 0.98,
+            "f1-score": 0.4312431243124312,
+            "support": 200.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            28,
+            0,
+            172,
+            0
+          ],
+          [
+            2,
+            57,
+            341,
+            0
+          ],
+          [
+            2,
+            2,
+            196,
+            0
+          ]
+        ],
+        "labels": [
+          "MSA",
+          "TN",
+          "EG"
+        ],
+        "seconds": 131.02000629299073
+      },
+      "qlora": {
+        "accuracy": 0.69,
+        "macro_f1": 0.711270785169715,
+        "invalid_rows": 0,
+        "n": 800,
+        "correct_rows": 552,
+        "per_class": {
+          "MSA": {
+            "precision": 0.8711111111111111,
+            "recall": 0.98,
+            "f1-score": 0.9223529411764706,
+            "support": 200.0
+          },
+          "TN": {
+            "precision": 0.9827586206896551,
+            "recall": 0.4275,
+            "f1-score": 0.5958188153310104,
+            "support": 400.0
+          },
+          "EG": {
+            "precision": 0.4613466334164589,
+            "recall": 0.925,
+            "f1-score": 0.6156405990016639,
+            "support": 200.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            196,
+            0,
+            4,
+            0
+          ],
+          [
+            17,
+            171,
+            212,
+            0
+          ],
+          [
+            12,
+            3,
+            185,
+            0
+          ]
+        ],
+        "labels": [
+          "MSA",
+          "TN",
+          "EG"
+        ],
+        "seconds": 130.78930637599842
+      }
+    }
+  },
+  "source_sha256": {
+    "comparison": "478c9543ae5a2ab218ab13c72b9e4f1a793fad99998279de836c4242d7460d2c",
+    "training_log": "835fb06e4dbbc0cb218e584f5a72d5008e8154257c2d932e3af16dc4f40f3e3a",
+    "baseline": "31b07c5660fb5f34fbe40e3fe655775748ab2e97daa6a312b96431ea653d5828",
+    "validation": "7a98dc75abd35040b88cda1904921c2969a04866248fb565c8c0a5b5114f9897"
+  }
+}

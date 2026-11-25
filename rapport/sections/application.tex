@@ -1,0 +1,51 @@
+\section{Application et accès à la documentation}\label{sec:application}
+
+\subsection{Architecture d’inférence}
+L’application est une interface React avec un backend FastAPI. Elle accepte une saisie libre ou un CSV UTF-8, affiche le texte brut et la version normalisée lorsque le modèle la prend en charge, puis retourne un résultat avec l’identifiant de tâche et la version du modèle. Docker Compose configure les deux services. Les dossiers locaux de modèles sont préparés séparément et les chargements sont contrôlés avant l’ouverture de l’API.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{build/figures/systeme.png}
+\caption{Chaîne d’inférence de classification, de la saisie à la sortie structurée.}\label{fig:application}
+\end{figure}
+
+L’application peut comparer plusieurs modèles pour le même texte et fournir des exports JSON ou CSV. Le mode de classification s’appuie sur TF-IDF, CAMeLBERT et le bundle historique de Qwen3-0.6B avec ou sans LoRA. Le Qwen3-4B quantifié est à ce stade un artefact d’expérience exécuté avec MLX sur Mac. Les tableaux 4B de ce rapport proviennent du notebook de recherche. Une intégration dans l’application demanderait un runtime compatible et une recette dédiée.
+
+Le serveur conserve les objets chargés entre les requêtes, et l’inférence ne dépend pas de la disponibilité des corpus d’entraînement dans le conteneur. Les entrées vides ou invalides, les fichiers hors contrat, les modèles indisponibles et les sorties génératives hors format ont des réponses explicites. La confiance en production et les mesures de validation restent des objets distincts.
+
+\subsection{Catalogue bilingue et recherche}
+Le catalogue contient 22 sujets, chacun représenté par une fiche en français et une en arabe standard. Une fiche regroupe un titre, un passage, une langue, une version et des références. Les fiches synthétisent des documents du projet. Les données TSAC et MADAR servent aux tâches de classification. Les corpus et prédictions individuels restent hors du catalogue.
+
+BM25 compte les termes et estime leur importance relative. La politique de l’application tient aussi compte de la couverture de la question et du titre pour les requêtes courtes. E5 multilingue transforme chaque passage en un vecteur de 384 composantes. Au chargement, les vecteurs des fiches sont calculés et conservés en mémoire. Une requête E5 encode seulement la question puis calcule les similarités. La langue fournie avec la requête limite le catalogue aux fiches pertinentes pour cette langue.
+
+E5 encode les fiches avec le préfixe \code{passage:} et les questions avec \code{query:}. Les représentations masquées des tokens sont moyennées et normalisées. La recherche ordonne les candidats selon la similarité cosinus de ces vecteurs. Avec un catalogue de 44 fiches, le calcul est effectué en mémoire. Le modèle d’embedding fournit la représentation et la couche de classement détermine les passages transmis à la règle de décision.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{build/figures/recherche.png}
+\caption{Recherche et décision de réponse. Le passage cité est repris de la première fiche acceptée.}\label{fig:rag}
+\end{figure}
+
+\subsection{Du classement à la réponse}
+Les essais génératifs historiques comparent Qwen3-0.6B avec un contexte de trois fiches et avec un contexte vide sur 20 questions de validation. Avec contexte, une seule réponse a des citations toutes présentes dans les passages fournis, et aucune n’a des citations toutes pertinentes selon les références proposées. Certains textes déforment des informations. L’application retient donc une réponse extractive qui reproduit le passage de la fiche et ses références. L’expérience de génération avec documents constitue une étude à part.
+
+Le rappel à 3 mesure si la fiche attendue apparaît parmi les trois premiers candidats. Le MRR à 3 donne une valeur plus forte aux fiches attendues classées plus haut, et zéro si elles sont absentes du classement retenu. Ces mesures portent sur les questions documentées. Une seconde famille de métriques vérifie si le système fournit effectivement un passage pertinent et s’il s’abstient lorsque le catalogue ne couvre pas la question.
+
+La comparaison documentaire se déroule en deux étapes. Vingt questions servent de validation et quarante sont conservées pour le test documentaire, soit 60 au total. Le jeu inclut des questions sans réponse dont les passages ne doivent pas être inventés. Le test répartit 20 questions par langue, avec 16 questions documentées et quatre sans réponse dans chaque langue. Le dossier d’évaluation lie les questions, les fiches et les règles de décision par leurs empreintes. Les références éditoriales des fiches et l’annotation de pertinence des questions sont des preuves distinctes.
+
+Les critères retenus dépendent du moteur. Pour BM25 et les questions d’au plus cinq termes utiles, la première fiche doit couvrir au moins 40\,\% du poids des termes et dépasser la deuxième d’au moins 5\,\% de son score. Pour les questions plus longues, la règle accepte un score d’au moins 8,187, ou un score d’au moins 3,5 avec une avance relative de 25\,\%. E5 applique un seuil de cosinus de 0,8687. Les valeurs sont des critères calibrés pour les scores de ces moteurs. D’autres index, langues ou corpus de fiches demanderaient une nouvelle étude de décision. Les résultats séparés par langue figurent à l’annexe~\ref{ann:documentaire}.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Test documentaire de 40 questions. Références de pertinence provisoires.}\label{tab:rag}
+\begin{tabularx}{\linewidth}{@{}Yrr@{}}
+\toprule
+Mesure & BM25 applicatif & E5 multilingue \\
+\midrule
+\ReportRows{retrieval}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+E5 retrouve la fiche attendue parmi les trois premières pour 30 des 32 questions documentées, contre 27 pour BM25. Après décision, BM25 fournit davantage de réponses pertinentes, 19 contre 13, tandis qu’E5 réduit le nombre de réponses non pertinentes, de neuf à trois. Les moteurs répondent donc à des compromis distincts entre couverture et pertinence. La fidélité de l’extraction au texte des fiches a été vérifiée. La pertinence reste évaluée au regard de références proposées avec assistance IA et attend une double revue humaine. Le test documentaire comprend 20 questions dans chacune des deux langues et reste distinct de l’évaluation de classification.
+\FloatBarrier

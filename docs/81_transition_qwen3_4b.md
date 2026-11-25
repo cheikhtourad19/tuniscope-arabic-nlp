@@ -54,7 +54,7 @@ L’évaluation couvre les deux validations v2, avec les textes bruts, le format
 
 Sur TSAC, le modèle a identifié 393 des 847 avis négatifs et 844 des 927 avis positifs. Sur MADAR, il a répondu `EG` pour 709 textes sur 800, dont 341 textes tunisiens. Le format est respecté sur MADAR et les prédictions sont fortement concentrées sur la classe égyptienne.
 
-La génération a pris 542,68 s et l’allocateur MLX a indiqué un pic de 4 544 688 214 octets pendant l’inférence. Cette mesure concerne MLX et ne représente ni la mémoire totale du Mac ni la mémoire nécessaire à l’entraînement, qui reste à mesurer. Le [rapport agrégé](../reports/qwen3_4b_few_shot_v1/summary.json) conserve les matrices, le rappel par classe et les empreintes. Les scores et les matrices ont été recalculés indépendamment à partir des 2 574 prédictions privées. Le test officiel reste réservé.
+La génération a pris 542,68 s et l’allocateur MLX a indiqué un pic de 4 544 688 214 octets pendant l’inférence. Cette mesure est propre à l’allocateur MLX. Le [rapport agrégé](../reports/qwen3_4b_few_shot_v1/summary.json) conserve les matrices, le rappel par classe et les empreintes. Les scores et les matrices ont été recalculés indépendamment à partir des 2 574 prédictions privées. Le test officiel reste réservé.
 
 ## Lancer le QLoRA dans VS Code
 
@@ -63,3 +63,14 @@ Ouvrir le [notebook 11](../notebooks/11_qlora_qwen4b_mac.ipynb), sélectionner *
 La cellule d’entraînement affiche l’époque, le nombre d’exemples traités, la perte et une estimation du temps restant. Toutes les 15 mises à jour, soit 240 exemples, et à chaque fin d’époque, elle sauvegarde l’adaptateur et l’état d’AdamW. Une relance avec le même dossier reprend au dernier point complet. La cellule suivante recharge l’adaptateur et évalue les mêmes textes de validation avec les mêmes exemples few-shot.
 
 Le dossier `outputs/qwen/qwen3_4b_qlora_full_v1/` contient l’adaptateur `adapters.safetensors`, les journaux et `comparison.json`. Les prédictions individuelles y restent privées. Le code exact de la génération avant adaptation a été conservé avec le run de base dans `outputs/qwen/qwen3_4b_few_shot_v1/generation_source.py`.
+
+## Résultats du run complet, 24 novembre 2026
+
+Le notebook a entraîné un adaptateur partagé sur deux époques de 4 000 textes, pour un total de 500 mises à jour. L’adaptateur de 2 949 120 paramètres a été sauvegardé et rechargé pour évaluer les 2 574 textes de validation. La procédure d’import du rapport recalcule les prédictions agrégées, les matrices et les métriques en alignant les identifiants de validation. Elle contrôle la base de départ, les démonstrations et l’empreinte des poids de l’adaptateur.
+
+| Corpus | Macro-F1 avant | Macro-F1 après | Écart en points | Exactitude après |
+| --- | ---: | ---: | ---: | ---: |
+| TSAC | 67,66 % | 81,30 % | +13,64 | 81,91 % |
+| MADAR | 30,70 % | 71,13 % | +40,43 | 69,00 % |
+
+Le rappel TN reste de 42,75 %. Le modèle prédit EG sur 212 des 400 vrais textes TN, contre 341 avant adaptation. Sur TSAC, le rappel NEG passe de 46,40 % à 66,94 %. Le run complet a pris 1 h 50 min 23 s d’apprentissage selon le journal et environ 8 min 35 s de génération après rechargement. Le pic alloué par MLX pendant l’apprentissage était de 3,45 Go. Les [agrégats d’adaptation](../reports/qwen3_4b_qlora_v1/summary.json) alimentent le [rapport scientifique LaTeX](../rapport/README.md). L’ouverture du test officiel dépend du protocole final révisé.
